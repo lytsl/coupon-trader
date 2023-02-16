@@ -8,6 +8,7 @@ specifiers:
   '@mantine/form': ^5.10.4
   '@mantine/hooks': ^5.10.4
   '@mantine/notifications': ^5.10.4
+  '@tabler/icons-react': ^2.4.0
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
   '@vitejs/plugin-react': ^3.1.0
@@ -25,6 +26,7 @@ dependencies:
   '@mantine/form': 5.10.4_react@18.2.0
   '@mantine/hooks': 5.10.4_react@18.2.0
   '@mantine/notifications': 5.10.4_zvr3twhaqlaxovla5vk46k3pgm
+  '@tabler/icons-react': 2.4.0_react@18.2.0
   dayjs: 1.11.7
   embla-carousel-react: 7.0.9_react@18.2.0
   react: 18.2.0
@@ -838,6 +840,20 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.13
       react: 18.2.0
+    dev: false
+
+  /@tabler/icons-react/2.4.0_react@18.2.0:
+    resolution: {integrity: sha512-U04bSknpXPdZP8soAnMPiz4g6PXPfWHfMoe2qhDoRlnS8UJ8JHHE/k4Lx4rw2Tfy9a2QJeoPV5HQIeKXrNPHGA==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tabler/icons': 2.4.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
+  /@tabler/icons/2.4.0:
+    resolution: {integrity: sha512-JZY9Kk3UsQoqp7Rw/BuWw1PrkRwv5h0psjJBbj+Cn9UVyhdzr5vztg2mywXBAJ+jFBUL/pjnVcIvOzKFw4CXng==}
     dev: false
 
   /@types/parse-json/4.0.0:

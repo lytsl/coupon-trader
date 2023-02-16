@@ -1,7 +1,10 @@
-import { Button, Code, Title, MantineProvider } from '@mantine/core';
+import { MantineProvider, Text } from '@mantine/core';
+// import { Navbar } from './components/Navbar';
 
-function Demo() {
+export default function App() {
   return (
-    <h1>Hello word</h1>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <Text>Welcome to Mantine!</Text>
+    </MantineProvider>
   );
 }
