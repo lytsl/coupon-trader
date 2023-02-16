@@ -1,11 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { Button, Code, Title, MantineProvider } from '@mantine/core';
 
-function App() {
-
+function Demo() {
   return (
-    <h1>Hello Wor</h1>
-  )
+    <MantineProvider
+      theme={{
+        fontFamily: 'Verdana, sans-serif',
+        fontFamilyMonospace: 'Monaco, Courier, monospace',
+        headings: { fontFamily: 'Greycliff CF, sans-serif' },
+      }}
+    >
+      <Title order={3}>Greycliff CF or sans-serif title</Title>
+      <Button>Verdana button</Button>
+      <Code>Monaco, Courier Code</Code>
+    </MantineProvider>
+  );
 }
-
-export default App
