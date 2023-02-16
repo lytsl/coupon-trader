@@ -1,10 +1,12 @@
-import { MantineProvider, Text } from '@mantine/core';
-// import { Navbar } from './components/Navbar';
+import { Hero } from './components/Hero';
+import { Navbar } from './components/Navbar';
 
-export default function App() {
+function App() {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Text>Welcome to Mantine!</Text>
-    </MantineProvider>
+    <>
+      <Navbar fluid/>
+      <Hero fluid/>
+    </>
   );
 }
+export default App;

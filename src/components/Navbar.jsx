@@ -17,7 +17,7 @@ import {
     Collapse,
     ScrollArea,
   } from '@mantine/core';
-  import { MantineLogo } from '../assets/react.svg';
+  // import { MantineLogo } from '../assets/react.svg';
   import { useDisclosure } from '@mantine/hooks';
   import {
     IconNotification,
@@ -30,6 +30,12 @@ import {
   } from '@tabler/icons-react';
   
   const useStyles = createStyles((theme) => ({
+    header: {
+      position: 'fixed',
+      top: 0,
+      overflow: 'hidden',
+    },
+
     link: {
       display: 'flex',
       alignItems: 'center',
@@ -122,7 +128,7 @@ import {
     },
   ];
   
-  export function Navbar() {
+export function Navbar() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
     const { classes, theme } = useStyles();
@@ -146,10 +152,10 @@ import {
     ));
   
     return (
-      <Box pb={120}>
-        <Header height={60} px="md">
+      <Box pb={0}>
+        <Header lassName={classes.header} height={60} px="md">
           <Group position="apart" sx={{ height: '100%' }}>
-            <MantineLogo size={30} />
+            <IconCode size={30} />
   
             <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
               <a href="#" className={classes.link}>
