@@ -2,7 +2,7 @@ import { Navbar } from "./Navbar";
 import { useForm } from "@mantine/form";
 import { PasswordInput, Box, TextInput, Button, Group, Grid, Space, Image } from "@mantine/core";
 
-export default function Login() {
+export function Login() {
   const form = useForm({
     initialValues: { email: "", password: "" },
 
