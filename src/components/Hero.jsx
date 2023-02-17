@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   container: {
-    height: '100vh',
+    height: '100svh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
