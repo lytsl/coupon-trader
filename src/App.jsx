@@ -8,8 +8,8 @@ function App() {
     <>
       <Navbar fluid/>
       <Hero fluid/>
-      <Signin fluid/>
-      <Login fluid/>
+      {/* <Signin fluid/>
+      <Login fluid/> */}
     </>
   );
 }
