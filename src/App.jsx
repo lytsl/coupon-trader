@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core'
-import { useColorScheme } from '@mantine/hooks'
 
 import { Hero } from './components/Hero'
-import Login from './components/Login'
+import { Login } from './components/Login'
 import { Navbar } from './components/Navbar'
-import Signin from './components/Signin'
+import { SignIn } from './components/SignIn'
 
 function App () {
   const preferredColorScheme =
@@ -31,7 +30,7 @@ function App () {
       >
         <Navbar fluid />
         <Hero fluid />
-        <Signin fluid />
+        <SignIn fluid />
         <Login fluid />
       </MantineProvider>
     </ColorSchemeProvider>
