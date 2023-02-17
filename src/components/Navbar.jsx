@@ -17,7 +17,7 @@ import {
     Collapse,
     ScrollArea,
   } from '@mantine/core';
-  // import { MantineLogo } from '../assets/react.svg';
+  //import { MantineLogo } from '../assets/react.svg';
   import { useDisclosure } from '@mantine/hooks';
   import {
     IconNotification,
