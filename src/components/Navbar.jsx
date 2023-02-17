@@ -124,7 +124,7 @@ const links = [
 
 export function Navbar () {
   // TODO make unique state for each link
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
@@ -135,7 +135,7 @@ export function Navbar () {
 
     if (menuItems) {
       return (
-        <Menu key={link.label} trigger="hover" exitTransitionDuration={0}>
+        <Menu key={link.label} trigger='hover' exitTransitionDuration={0}>
           <Menu.Target>
             <a
               href={link.link}
@@ -172,13 +172,13 @@ export function Navbar () {
         className={classes.link}
         onClick={event => event.preventDefault()}
       >
-       <Center>{item.label}</Center> 
+        <Center>{item.label}</Center>
       </a>
     ))
 
     if (menuItems) {
       return (
-        <Stack align="center" spacing={0} justify="flex-start">
+        <Stack align='center' spacing={0} justify='flex-start'>
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center>
               <span className={classes.linkLabel}>{link.label}</span>
@@ -200,7 +200,7 @@ export function Navbar () {
       </a>
     )
   })
-  
+
   return (
     <Box>
       <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
