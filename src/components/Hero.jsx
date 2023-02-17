@@ -80,7 +80,7 @@ export function Hero () {
             </Text>
 
             <Group mt={30}>
-              <Button radius='xl' size='md' className={classes.control}>
+              <Button radius='md' size='lg' className={classes.control}>
                 Get started
               </Button>
             </Group>

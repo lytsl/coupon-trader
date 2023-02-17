@@ -32,7 +32,7 @@ function App () {
         <Navbar fluid />
         <Hero fluid />
         <SignIn fluid />
-        <Login fluid />
+        {/* <Login fluid /> */}
       </MantineProvider>
     </ColorSchemeProvider>
   )
