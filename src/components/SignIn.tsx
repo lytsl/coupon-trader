@@ -2,6 +2,7 @@ import { Navbar } from './Navbar'
 import { useForm } from '@mantine/form'
 import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
 import { Avatar } from '@mantine/core'
+import { Footerbar } from './Footerbar'
 
 export function SignIn() {
   const form = useForm({
@@ -89,6 +90,30 @@ export function SignIn() {
           </Group>
         </form>
       </Box>
+      <Footerbar
+        links={[
+          {
+            link: '#',
+            label: 'Contact',
+          },
+          {
+            link: '#',
+            label: 'Privacy',
+          },
+          {
+            link: '#',
+            label: 'Blog',
+          },
+          {
+            link: '#',
+            label: 'Store',
+          },
+          {
+            link: '#',
+            label: 'Careers',
+          },
+        ]}
+      />
     </div>
   )
 }

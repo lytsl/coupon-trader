@@ -3,11 +3,13 @@ import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
+  Footer,
 } from '@mantine/core'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { SignIn } from './components/SignIn'
 import { Login } from './components/Login'
+import { Footerbar } from './components/Footerbar'
 
 function App() {
   const preferredColorScheme =
@@ -30,7 +32,6 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Navbar />
         <Hero />
         <SignIn />
         <Login />

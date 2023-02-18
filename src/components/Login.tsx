@@ -9,6 +9,7 @@ import {
   Space,
   Image,
 } from '@mantine/core'
+import { Footerbar } from './Footerbar'
 
 /* FIXME Login is taking more than available width. It makes the page horizontally scrollable. */
 export function Login() {
@@ -41,24 +42,48 @@ export function Login() {
           </div>
         </Grid.Col>
         <Grid.Col>
-            <form onSubmit={form.onSubmit(console.log)}>
-              <TextInput
-                mt="sm"
-                label="Email"
-                placeholder="Email"
-                {...form.getInputProps('email')}
-              />
-              <PasswordInput
-                label="Password"
-                placeholder="Password"
-                {...form.getInputProps('password')}
-              />
-              <Group position="right" mt="md">
-                <Button type="submit">Submit</Button>
-              </Group>
-            </form>
+          <form onSubmit={form.onSubmit(console.log)}>
+            <TextInput
+              mt="sm"
+              label="Email"
+              placeholder="Email"
+              {...form.getInputProps('email')}
+            />
+            <PasswordInput
+              label="Password"
+              placeholder="Password"
+              {...form.getInputProps('password')}
+            />
+            <Group position="right" mt="md">
+              <Button type="submit">Submit</Button>
+            </Group>
+          </form>
         </Grid.Col>
       </Grid>
+      <Footerbar
+        links={[
+          {
+            link: '#',
+            label: 'Contact',
+          },
+          {
+            link: '#',
+            label: 'Privacy',
+          },
+          {
+            link: '#',
+            label: 'Blog',
+          },
+          {
+            link: '#',
+            label: 'Store',
+          },
+          {
+            link: '#',
+            label: 'Careers',
+          },
+        ]}
+      />
     </div>
   )
 }
