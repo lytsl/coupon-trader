@@ -7,6 +7,7 @@ import {
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { SignIn } from './components/SignIn'
+import { Login } from './components/Login'
 
 function App() {
   const preferredColorScheme =
@@ -32,6 +33,7 @@ function App() {
         <Navbar />
         <Hero />
         <SignIn />
+        <Login />
       </MantineProvider>
     </ColorSchemeProvider>
   )

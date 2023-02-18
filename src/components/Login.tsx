@@ -2,7 +2,6 @@ import { Navbar } from './Navbar'
 import { useForm } from '@mantine/form'
 import {
   PasswordInput,
-  Box,
   TextInput,
   Button,
   Group,
@@ -27,12 +26,11 @@ export function Login() {
     <div>
       <Navbar />
       <Space h="xl" />
-      <Space h="xl" />
       <center>
         <h1 className="Heading">Log In your Profile</h1>
       </center>
       <Space h="xl" />
-      <Grid grow gutter="xs">
+      <Grid grow gutter="xs" sx={{ maxWidth: 340 }} mx="auto">
         <Grid.Col>
           <div style={{ width: 240, marginLeft: 'auto', marginRight: 'auto' }}>
             <Image
@@ -42,9 +40,7 @@ export function Login() {
             />
           </div>
         </Grid.Col>
-        <Space h="xl" />
         <Grid.Col>
-          <Box sx={{ maxWidth: 340 }} mx="auto">
             <form onSubmit={form.onSubmit(console.log)}>
               <TextInput
                 mt="sm"
@@ -61,7 +57,6 @@ export function Login() {
                 <Button type="submit">Submit</Button>
               </Group>
             </form>
-          </Box>
         </Grid.Col>
       </Grid>
     </div>
