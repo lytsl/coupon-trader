@@ -2,7 +2,6 @@ import { Navbar } from './Navbar'
 import { useForm } from '@mantine/form'
 import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
 import { Avatar } from '@mantine/core'
-import { GetInputProps } from '@mantine/form/lib/types'
 
 export function SignIn() {
   const form = useForm({

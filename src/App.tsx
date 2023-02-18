@@ -4,7 +4,6 @@ import {
   ColorSchemeProvider,
   ColorScheme,
 } from '@mantine/core'
-import { useColorScheme } from '@mantine/hooks'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { SignIn } from './components/SignIn'

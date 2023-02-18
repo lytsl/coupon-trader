@@ -15,7 +15,6 @@ import {
   UnstyledButton,
   Stack,
 } from '@mantine/core'
-import { useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { IconChevronDown, IconTicket } from '@tabler/icons-react'
 

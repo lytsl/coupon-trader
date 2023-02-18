@@ -6,10 +6,7 @@ import {
   Button,
   Group,
   Text,
-  List,
-  ThemeIcon,
 } from '@mantine/core'
-import { IconCheck } from '@tabler/icons-react'
 import image from '../assets/image.svg'
 const useStyles = createStyles((theme) => ({
   inner: {
