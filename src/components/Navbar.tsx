@@ -13,7 +13,7 @@ import {
   ScrollArea,
   Divider,
   UnstyledButton,
-  Stack
+  Stack,
 } from '@mantine/core'
 import { useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
@@ -21,24 +21,24 @@ import { IconChevronDown, IconTicket } from '@tabler/icons-react'
 
 const HEADER_HEIGHT = 60
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme) => ({
   inner: {
     height: HEADER_HEIGHT,
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   hiddenMobile: {
     [theme.fn.smallerThan('sm')]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
 
   hiddenDesktop: {
     [theme.fn.largerThan('sm')]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
 
   link: {
@@ -58,19 +58,19 @@ const useStyles = createStyles(theme => ({
       backgroundColor:
         theme.colorScheme === 'dark'
           ? theme.colors.dark[6]
-          : theme.colors.gray[0]
-    }
+          : theme.colors.gray[0],
+    },
   },
 
   linkLabel: {
-    marginRight: 5
-  }
+    marginRight: 5,
+  },
 }))
 
 const links = [
   {
     link: '/about',
-    label: 'Features'
+    label: 'Features',
   },
   {
     link: '#1',
@@ -78,29 +78,29 @@ const links = [
     links: [
       {
         link: '/docs',
-        label: 'Documentation'
+        label: 'Documentation',
       },
       {
         link: '/resources',
-        label: 'Resources'
+        label: 'Resources',
       },
       {
         link: '/community',
-        label: 'Community'
+        label: 'Community',
       },
       {
         link: '/blog',
-        label: 'Blog'
-      }
-    ]
+        label: 'Blog',
+      },
+    ],
   },
   {
     link: '/about',
-    label: 'About'
+    label: 'About',
   },
   {
     link: '/pricing',
-    label: 'Pricing'
+    label: 'Pricing',
   },
   {
     link: '#2',
@@ -108,39 +108,39 @@ const links = [
     links: [
       {
         link: '/faq',
-        label: 'FAQ'
+        label: 'FAQ',
       },
       {
         link: '/demo',
-        label: 'Book a demo'
+        label: 'Book a demo',
       },
       {
         link: '/forums',
-        label: 'Forums'
-      }
-    ]
-  }
+        label: 'Forums',
+      },
+    ],
+  },
 ]
 
-export function Navbar () {
+export function Navbar() {
   // TODO make unique state for each link
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
-  const items = links.map(link => {
-    const menuItems = link.links?.map(item => (
+  const items = links.map((link) => {
+    const menuItems = link.links?.map((item) => (
       <Menu.Item key={item.link}>{item.label}</Menu.Item>
     ))
 
     if (menuItems) {
       return (
-        <Menu key={link.label} trigger='hover' exitTransitionDuration={0}>
+        <Menu key={link.label} trigger="hover" exitTransitionDuration={0}>
           <Menu.Target>
             <a
               href={link.link}
               className={classes.link}
-              onClick={event => event.preventDefault()}
+              onClick={(event) => event.preventDefault()}
             >
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
@@ -158,19 +158,19 @@ export function Navbar () {
         key={link.label}
         href={link.link}
         className={classes.link}
-        onClick={event => event.preventDefault()}
+        onClick={(event) => event.preventDefault()}
       >
         {link.label}
       </a>
     )
   })
 
-  const mItems = links.map(link => {
-    const menuItems = link.links?.map(item => (
+  const mItems = links.map((link) => {
+    const menuItems = link.links?.map((item) => (
       <a
         href={item.link}
         className={classes.link}
-        onClick={event => event.preventDefault()}
+        onClick={(event) => event.preventDefault()}
       >
         <Center>{item.label}</Center>
       </a>
@@ -178,7 +178,7 @@ export function Navbar () {
 
     if (menuItems) {
       return (
-        <Stack align='center' spacing={0} justify='flex-start'>
+        <Stack align="center" spacing={0} justify="flex-start">
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center>
               <span className={classes.linkLabel}>{link.label}</span>
@@ -194,7 +194,7 @@ export function Navbar () {
       <a
         href={link.link}
         className={classes.link}
-        onClick={event => event.preventDefault()}
+        onClick={(event) => event.preventDefault()}
       >
         <Center> {link.label}</Center>
       </a>
@@ -210,7 +210,7 @@ export function Navbar () {
               opened={drawerOpened}
               onClick={toggleDrawer}
               className={classes.hiddenDesktop}
-              size='sm'
+              size="sm"
             />
             <IconTicket size={28} />
           </Group>
@@ -218,7 +218,7 @@ export function Navbar () {
             {items}
           </Group>
           <Group>
-            <Button variant='light'>Log In</Button>
+            <Button variant="light">Log In</Button>
             <Button>Sign Up</Button>
           </Group>
         </Container>
@@ -227,27 +227,27 @@ export function Navbar () {
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
-        size='100%'
-        padding='md'
-        title='Coupon Trader'
+        size="100%"
+        padding="md"
+        title="Coupon Trader"
         className={classes.hiddenDesktop}
         zIndex={1000000}
       >
-        <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx='-md'>
+        <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
           <Divider
-            mb='sm'
+            mb="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
 
           {mItems}
 
           <Divider
-            my='sm'
+            my="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
 
-          <Group position='center' grow pb='xl' px='md'>
-            <Button variant='default'>Log in</Button>
+          <Group position="center" grow pb="xl" px="md">
+            <Button variant="default">Log in</Button>
             <Button>Sign up</Button>
           </Group>
         </ScrollArea>

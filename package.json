@@ -1,16 +1,18 @@
 {
-  "name": "coupon-trader-front-end",
+  "name": "coupon-trader",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@mantine/carousel": "^5.10.4",
+    "@emotion/react": "^11.10.6",
     "@mantine/core": "^5.10.4",
     "@mantine/dates": "^5.10.4",
     "@mantine/form": "^5.10.4",
@@ -18,14 +20,22 @@
     "@mantine/notifications": "^5.10.4",
     "@tabler/icons-react": "^2.4.0",
     "dayjs": "^1.11.7",
-    "embla-carousel-react": "^7.0.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/parser": "^5.52.0",
     "@vitejs/plugin-react": "^3.1.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.3",
     "vite": "^4.1.0"
   }
 }

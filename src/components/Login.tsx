@@ -1,23 +1,31 @@
-import { Navbar } from "./Navbar";
-import { useForm } from "@mantine/form";
-import { PasswordInput, Box, TextInput, Button, Group, Grid, Space, Image } from "@mantine/core";
+import { Navbar } from './Navbar'
+import { useForm } from '@mantine/form'
+import {
+  PasswordInput,
+  Box,
+  TextInput,
+  Button,
+  Group,
+  Grid,
+  Space,
+  Image,
+} from '@mantine/core'
 
 /* FIXME Login is taking more than available width. It makes the page horizontally scrollable. */
 export function Login() {
   const form = useForm({
-    initialValues: { email: "", password: "" },
+    initialValues: { email: '', password: '' },
 
     // functions will be used to validate values at corresponding key
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) => 
-        value.password == null ? "Enter Password" : null,
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      password: (value) => (value == null ? 'Enter Password' : null),
     },
-  });
+  })
 
   return (
     <div>
-      <Navbar fluid />
+      <Navbar />
       <Space h="xl" />
       <Space h="xl" />
       <center>
@@ -26,7 +34,7 @@ export function Login() {
       <Space h="xl" />
       <Grid grow gutter="xs">
         <Grid.Col>
-          <div style={{ width: 240, marginLeft: "auto", marginRight: "auto" }}>
+          <div style={{ width: 240, marginLeft: 'auto', marginRight: 'auto' }}>
             <Image
               radius="md"
               src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
@@ -42,12 +50,12 @@ export function Login() {
                 mt="sm"
                 label="Email"
                 placeholder="Email"
-                {...form.getInputProps("email")}
+                {...form.getInputProps('email')}
               />
               <PasswordInput
                 label="Password"
                 placeholder="Password"
-                {...form.getInputProps("password")}
+                {...form.getInputProps('password')}
               />
               <Group position="right" mt="md">
                 <Button type="submit">Submit</Button>
@@ -57,5 +65,5 @@ export function Login() {
         </Grid.Col>
       </Grid>
     </div>
-  );
+  )
 }

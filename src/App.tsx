@@ -1,23 +1,24 @@
 import { useState } from 'react'
-import { MantineProvider, ColorSchemeProvider } from '@mantine/core'
+import {
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
+} from '@mantine/core'
 import { useColorScheme } from '@mantine/hooks'
-
-import { Hero } from './components/Hero'
-import { Login } from './components/Login'
 import { Navbar } from './components/Navbar'
+import { Hero } from './components/Hero'
 import { SignIn } from './components/SignIn'
 
-function App () {
+function App() {
   const preferredColorScheme =
     window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light'
-  const [colorScheme, setColorScheme] = useState(preferredColorScheme)
-  const toggleColorScheme = value => {
-    console.log(value)
+  const [colorScheme, setColorScheme] =
+    useState<ColorScheme>(preferredColorScheme)
+  const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
-  }
 
   return (
     <ColorSchemeProvider
@@ -29,10 +30,9 @@ function App () {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Navbar fluid />
-        <Hero fluid />
-        <SignIn fluid />
-        {/* <Login fluid /> */}
+        <Navbar />
+        <Hero />
+        <SignIn />
       </MantineProvider>
     </ColorSchemeProvider>
   )
