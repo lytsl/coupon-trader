@@ -8,8 +8,7 @@ import {
   Text,
 } from '@mantine/core'
 import image from '../assets/image.svg'
-import { Footerbar } from './Footerbar'
-import { Navbar } from './Navbar'
+
 const useStyles = createStyles((theme) => ({
   inner: {
     display: 'flex',
@@ -62,7 +61,6 @@ export function Hero() {
   const { classes } = useStyles()
   return (
     <div>
-      <Navbar />
       <Container size="lg">
         <div className={classes.inner}>
           <div className={classes.content}>
@@ -88,30 +86,6 @@ export function Hero() {
           <Image src={image} className={classes.image} />
         </div>
       </Container>
-      <Footerbar
-        links={[
-          {
-            link: '#',
-            label: 'Contact',
-          },
-          {
-            link: '#',
-            label: 'Privacy',
-          },
-          {
-            link: '#',
-            label: 'Blog',
-          },
-          {
-            link: '#',
-            label: 'Store',
-          },
-          {
-            link: '#',
-            label: 'Careers',
-          },
-        ]}
-      />
     </div>
   )
 }

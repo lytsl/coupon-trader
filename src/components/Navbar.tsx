@@ -136,8 +136,8 @@ export function Navbar() {
       return (
         <Menu key={link.label} trigger="hover" exitTransitionDuration={0}>
           <Menu.Target>
-            <a
-              href={link.link}
+            <UnstyledButton
+              // href={link.link}
               className={classes.link}
               onClick={(event) => event.preventDefault()}
             >
@@ -145,7 +145,7 @@ export function Navbar() {
                 <span className={classes.linkLabel}>{link.label}</span>
                 <IconChevronDown size={12} stroke={1.5} />
               </Center>
-            </a>
+            </UnstyledButton>
           </Menu.Target>
           <Menu.Dropdown>{menuItems}</Menu.Dropdown>
         </Menu>

@@ -1,15 +1,15 @@
 import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
-  Footer,
 } from '@mantine/core'
-import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { SignIn } from './components/SignIn'
 import { Login } from './components/Login'
-import { Footerbar } from './components/Footerbar'
+import { Footer } from './components/Footer'
+import { Navbar } from './components/Navbar'
 
 function App() {
   const preferredColorScheme =
@@ -32,9 +32,11 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
+        <Navbar />
         <Hero />
         <SignIn />
         <Login />
+        <Footer />
       </MantineProvider>
     </ColorSchemeProvider>
   )

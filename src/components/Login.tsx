@@ -1,4 +1,3 @@
-import { Navbar } from './Navbar'
 import { useForm } from '@mantine/form'
 import {
   PasswordInput,
@@ -9,9 +8,7 @@ import {
   Space,
   Image,
 } from '@mantine/core'
-import { Footerbar } from './Footerbar'
 
-/* FIXME Login is taking more than available width. It makes the page horizontally scrollable. */
 export function Login() {
   const form = useForm({
     initialValues: { email: '', password: '' },
@@ -25,7 +22,6 @@ export function Login() {
 
   return (
     <div>
-      <Navbar />
       <Space h="xl" />
       <center>
         <h1 className="Heading">Log In your Profile</h1>
@@ -60,30 +56,6 @@ export function Login() {
           </form>
         </Grid.Col>
       </Grid>
-      <Footerbar
-        links={[
-          {
-            link: '#',
-            label: 'Contact',
-          },
-          {
-            link: '#',
-            label: 'Privacy',
-          },
-          {
-            link: '#',
-            label: 'Blog',
-          },
-          {
-            link: '#',
-            label: 'Store',
-          },
-          {
-            link: '#',
-            label: 'Careers',
-          },
-        ]}
-      />
     </div>
   )
 }

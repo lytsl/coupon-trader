@@ -3,7 +3,7 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
   IconBrandInstagram,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -36,7 +36,26 @@ interface FooterCenteredProps {
   links: { link: string; label: string }[]
 }
 
-export function Footerbar({ links }: FooterCenteredProps) {
+const links: FooterCenteredProps['links'] = [
+  {
+    link: '#',
+    label: 'Contact',
+  },
+  {
+    link: '#',
+    label: 'Privacy',
+  },
+  {
+    link: '#',
+    label: 'Blog',
+  },
+  {
+    link: '#',
+    label: 'Careers',
+  },
+]
+
+export function Footer() {
   const { classes } = useStyles()
   const items = links.map((link) => (
     <Anchor<'a'>
