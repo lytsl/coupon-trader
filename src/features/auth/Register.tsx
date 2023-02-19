@@ -2,7 +2,7 @@ import { useForm } from '@mantine/form'
 import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 
-export function SignIn() {
+export function Register() {
   const form = useForm({
     initialValues: {
       name: '',

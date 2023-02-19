@@ -7,7 +7,7 @@ import {
   Group,
   Text,
 } from '@mantine/core'
-import image from '../assets/image.svg'
+import image from './image.svg'
 
 const useStyles = createStyles((theme) => ({
   inner: {

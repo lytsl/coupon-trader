@@ -8,6 +8,7 @@ import {
   Space,
   Image,
 } from '@mantine/core'
+import { useNavigate } from 'react-router-dom'
 
 export function Login() {
   const form = useForm({

@@ -2,7 +2,7 @@ import {
   createStyles,
   Menu,
   Center,
-  Header,
+  Header as MantineHeader,
   Container,
   Group,
   Button,
@@ -121,7 +121,7 @@ const links = [
   },
 ]
 
-export function Navbar() {
+export function Header() {
   // TODO make unique state for each link
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -202,7 +202,7 @@ export function Navbar() {
 
   return (
     <Box>
-      <Header height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
+      <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group>
             <Burger
@@ -221,7 +221,7 @@ export function Navbar() {
             <Button>Sign Up</Button>
           </Group>
         </Container>
-      </Header>
+      </MantineHeader>
 
       <Drawer
         opened={drawerOpened}
