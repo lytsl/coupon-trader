@@ -18,8 +18,12 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconChevronDown, IconTicket } from '@tabler/icons-react'
+import { useAtom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils'
+import { ThemeSwitch } from './ThemeSwitch'
 
 const HEADER_HEIGHT = 60
+const darkModeAtom = atomWithStorage('darkMode', false)
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -30,13 +34,13 @@ const useStyles = createStyles((theme) => ({
   },
 
   hiddenMobile: {
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan('md')]: {
       display: 'none',
     },
   },
 
   hiddenDesktop: {
-    [theme.fn.largerThan('sm')]: {
+    [theme.fn.largerThan('md')]: {
       display: 'none',
     },
   },
@@ -123,7 +127,7 @@ const links = [
 ]
 
 export function Header() {
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
+  const linksArray: Array<any> = []
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
@@ -176,6 +180,7 @@ export function Header() {
     ))
 
     if (menuItems) {
+      const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
       return (
         <Stack align="center" spacing={0} justify="flex-start">
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
@@ -221,6 +226,7 @@ export function Header() {
             {items}
           </Group>
           <Group className={classes.hiddenMobile}>
+            <ThemeSwitch />
             <Button variant="light">Log In</Button>
             <Button>Sign Up</Button>
           </Group>
@@ -242,7 +248,8 @@ export function Header() {
         className={classes.hiddenDesktop}
         zIndex={1000000}
       >
-        <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
+        <ThemeSwitch height={HEADER_HEIGHT} />
+        <ScrollArea sx={{ height: 'calc(100vh - 120px)' }} mx="-md">
           <Divider
             mb="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
