@@ -1,6 +1,7 @@
 import { useForm } from '@mantine/form'
 import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
 import { Avatar } from '@mantine/core'
+import { atom, useAtom } from 'jotai'
 
 export function Register() {
   const form = useForm({

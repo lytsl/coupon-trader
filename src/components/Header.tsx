@@ -18,12 +18,9 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconChevronDown, IconTicket } from '@tabler/icons-react'
-import { useAtom } from 'jotai'
-import { atomWithStorage } from 'jotai/utils'
 import { ThemeSwitch } from './ThemeSwitch'
 
 const HEADER_HEIGHT = 60
-const darkModeAtom = atomWithStorage('darkMode', false)
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -127,7 +124,6 @@ const links = [
 ]
 
 export function Header() {
-  const linksArray: Array<any> = []
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
