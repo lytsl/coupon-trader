@@ -27,6 +27,7 @@ specifiers:
   typescript: ^4.9.3
   vite: ^4.1.0
   vite-tsconfig-paths: ^4.0.5
+  zod: ^3.20.6
 
 dependencies:
   '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
@@ -41,6 +42,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
+  zod: 3.20.6
 
 devDependencies:
   '@types/react': 18.0.28
@@ -2991,3 +2993,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod/3.20.6:
+    resolution: {integrity: sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==}
+    dev: false

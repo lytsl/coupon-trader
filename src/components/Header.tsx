@@ -209,7 +209,7 @@ export function Header() {
             <IconTicket size={28} />
             <Text
               variant="gradient"
-              gradient={{ from: '#9600FF', to: '#AEBAF8' }}
+              gradient={{ from: '#9600FF', to: '#AEBAF8', deg: 0 }}
               sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
               ta="center"
               fz="xl"
