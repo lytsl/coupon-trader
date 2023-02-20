@@ -14,6 +14,13 @@ const useStyles = createStyles((theme) => ({
     }`,
   },
 
+  info: {
+    marginBottom: theme.spacing.xs * 1.5,
+    [theme.fn.smallerThan('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+
   inner: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -76,7 +83,14 @@ export function Footer() {
       <div className={classes.inner}>
         <Group>
           <IconTicket size={28} />
-          <Text fz="lg" fw={700}>
+          <Text
+            variant="gradient"
+            gradient={{ from: 'indigo', to: 'Pink', deg: 45 }}
+            sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
+            ta="center"
+            fz="xl"
+            fw={700}
+          >
             Coupon Trader
           </Text>
         </Group>
@@ -93,6 +107,11 @@ export function Footer() {
             <IconBrandInstagram size={18} stroke={1.5} />
           </ActionIcon>
         </Group>
+      </div>
+      <div className={classes.info}>
+        <Text align="center" fz="xs" fw={10} fs="italic" c="dimmed">
+          Copyright 2023 Coupon Tader | All Rights Reserved
+        </Text>
       </div>
     </div>
   )

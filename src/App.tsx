@@ -10,6 +10,7 @@ import { Register } from './features/auth/Register'
 import { Login } from './features/auth/Login'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
+import { Faq } from 'features/static/components/Faq'
 
 function App() {
   const preferredColorScheme =
@@ -34,6 +35,7 @@ function App() {
       >
         <Header />
         <Hero />
+        <Faq />
         <Register />
         <Login />
         <Footer />
