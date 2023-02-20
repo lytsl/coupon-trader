@@ -14,6 +14,7 @@ import {
   Divider,
   UnstyledButton,
   Stack,
+  Text,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconChevronDown, IconTicket } from '@tabler/icons-react'
@@ -122,7 +123,6 @@ const links = [
 ]
 
 export function Header() {
-  // TODO make unique state for each link
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
@@ -206,23 +206,23 @@ export function Header() {
         <Container className={classes.inner} fluid>
           <Group>
             <IconTicket size={28} />
-            <h3>Coupon Trader</h3>
-          </Group>
-          <Group>
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.hiddenDesktop}
-              size="sm"
-            />
+            <Text fz="lg" fw={700}>
+              Coupon Trader
+            </Text>
           </Group>
           <Group spacing={5} className={classes.hiddenMobile}>
             {items}
           </Group>
-          <Group>
+          <Group className={classes.hiddenMobile}>
             <Button variant="light">Log In</Button>
             <Button>Sign Up</Button>
           </Group>
+          <Burger
+            opened={drawerOpened}
+            onClick={toggleDrawer}
+            className={classes.hiddenDesktop}
+            size="sm"
+          />
         </Container>
       </MantineHeader>
 
