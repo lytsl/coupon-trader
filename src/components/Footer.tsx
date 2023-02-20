@@ -1,4 +1,4 @@
-import { createStyles, Anchor, Group, ActionIcon } from '@mantine/core'
+import { createStyles, Anchor, Group, ActionIcon, Text } from '@mantine/core'
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -76,7 +76,9 @@ export function Footer() {
       <div className={classes.inner}>
         <Group>
           <IconTicket size={28} />
-          <h3>Coupon Trader</h3>
+          <Text fz="lg" fw={700}>
+            Coupon Trader
+          </Text>
         </Group>
         <Group className={classes.links}>{items}</Group>
 
