@@ -207,7 +207,14 @@ export function Header() {
         <Container className={classes.inner} fluid>
           <Group>
             <IconTicket size={28} />
-            <Text fz="lg" fw={700}>
+            <Text
+              variant="gradient"
+              gradient={{ from: '#9600FF', to: '#AEBAF8' }}
+              sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
+              ta="center"
+              fz="xl"
+              fw={700}
+            >
               Coupon Trader
             </Text>
           </Group>
