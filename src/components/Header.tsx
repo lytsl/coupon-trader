@@ -205,13 +205,16 @@ export function Header() {
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group>
+            <IconTicket size={28} />
+            <h3>Coupon Trader</h3>
+          </Group>
+          <Group>
             <Burger
               opened={drawerOpened}
               onClick={toggleDrawer}
               className={classes.hiddenDesktop}
               size="sm"
             />
-            <IconTicket size={28} />
           </Group>
           <Group spacing={5} className={classes.hiddenMobile}>
             {items}

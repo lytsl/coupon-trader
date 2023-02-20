@@ -3,6 +3,7 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
   IconBrandInstagram,
+  IconTicket,
 } from '@tabler/icons-react'
 
 const useStyles = createStyles((theme) => ({
@@ -73,7 +74,10 @@ export function Footer() {
   return (
     <div className={classes.footer}>
       <div className={classes.inner}>
-        <IconBrandTwitter size={18} stroke={1.5} />
+        <Group>
+          <IconTicket size={28} />
+          <h3>Coupon Trader</h3>
+        </Group>
         <Group className={classes.links}>{items}</Group>
 
         <Group spacing="xs" position="right" noWrap>
