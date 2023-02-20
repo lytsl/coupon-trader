@@ -82,8 +82,10 @@ export function Register() {
             placeholder="Confirm password"
             {...form.getInputProps('confirmPassword')}
           />
-          <Group position="right" mt="md">
-            <Button type="submit">Submit</Button>
+          <Group position="center" mt="md">
+            <Button type="submit" style={{ width: 340 }}>
+              Submit
+            </Button>
           </Group>
         </form>
       </Box>
