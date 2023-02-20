@@ -9,8 +9,8 @@ export function Register() {
       email: '',
       phone_number: '',
       upi_id: '',
-      password: 'secret',
-      confirmPassword: 'secret',
+      password: '',
+      confirmPassword: '',
     },
 
     // functions will be used to validate values at corresponding key
@@ -35,18 +35,18 @@ export function Register() {
         <h1 className="Heading">Sign Up your Profile</h1>
       </center>
       <Box sx={{ maxWidth: 340 }} mx="auto">
-        <center>
-          <Avatar
-            src={null}
-            alt={{ ...form.getInputProps('name').value }}
-            radius="xs"
-            size="xl"
-            color="red"
-          >
-            SD
-          </Avatar>
-        </center>
         <form onSubmit={form.onSubmit(console.log)}>
+          <center>
+            <Avatar
+              src={null}
+              alt={{ ...form.getInputProps('name').value }}
+              radius="xs"
+              size="xl"
+              color="red"
+            >
+              SD
+            </Avatar>
+          </center>
           <TextInput
             label="Name"
             placeholder="Full Name"
