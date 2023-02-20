@@ -85,7 +85,7 @@ export function Footer() {
           <IconTicket size={28} />
           <Text
             variant="gradient"
-            gradient={{ from: 'indigo', to: 'Pink', deg: 45 }}
+            gradient={{ from: '#9600FF', to: '#AEBAF8' }}
             sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
             ta="center"
             fz="xl"
