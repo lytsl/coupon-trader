@@ -14,13 +14,12 @@ const useStyles = createStyles((theme) => ({
     }`,
   },
 
-  info: {
-    marginBottom: theme.spacing.xs * 1.5,
-    marginLeft: theme.spacing.xs * 1.5,
-    [theme.fn.smallerThan('sm')]: {
-      flexDirection: 'column',
-    },
-  },
+  // info: {
+  //   marginBottom: theme.spacing.xs * 1.5,
+  //   [theme.fn.smallerThan('sm')]: {
+  //     flexDirection: 'column',
+  //   },
+  // },
 
   inner: {
     display: 'flex',
@@ -109,11 +108,11 @@ export function Footer() {
           </ActionIcon>
         </Group>
       </div>
-      <div className={classes.info}>
-        <Text align="left" fz="xs" fw={10} c="dimmed">
-          Copyright 2023 Coupon Trader | All Rights Reserved
+      {/* <div className={classes.info}>
+        <Text align="center" fz="xs" fw={10} fs="italic" c="dimmed">
+          Copyright 2023 Coupon Tader | All Rights Reserved
         </Text>
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -240,7 +240,8 @@ export function Header() {
         onClose={closeDrawer}
         size="100%"
         padding="md"
-        title="Coupon Trader"
+        title={'Navigate'}
+        // TO DO: Input the gradient text
         className={classes.hiddenDesktop}
         zIndex={1000000}
       >

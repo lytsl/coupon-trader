@@ -28,12 +28,12 @@ export function Login() {
         <h1 className="Heading">Log In your Profile</h1>
       </center>
       <Space h="xl" />
-      <Grid grow gutter="xs" sx={{ maxWidth: 340 }} mx="auto">
+      <Grid sx={{ maxWidth: 340 }} mx="auto">
         <Grid.Col>
-          <div style={{ width: 240, marginLeft: 'auto', marginRight: 'auto' }}>
+          <div style={{ width: 200, marginLeft: 'auto', marginRight: 'auto' }}>
             <Image
               radius="md"
-              src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+              src="\src\assets\coupon-logo.png"
               alt="Login Image"
             />
           </div>
@@ -51,8 +51,10 @@ export function Login() {
               placeholder="Password"
               {...form.getInputProps('password')}
             />
-            <Group position="right" mt="md">
-              <Button type="submit">Submit</Button>
+            <Group position="center" mt="md">
+              <Button type="submit" style={{ width: 330 }}>
+                Submit
+              </Button>
             </Group>
           </form>
         </Grid.Col>
