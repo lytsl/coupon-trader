@@ -8,7 +8,7 @@ import {
 
 const useStyles = createStyles((theme) => ({
   footer: {
-    marginTop: 120,
+    marginTop: 52,
     borderTop: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
@@ -82,7 +82,7 @@ export function Footer() {
     <div className={classes.footer}>
       <div className={classes.inner}>
         <Group>
-          <IconTicket size={28} />
+          <IconTicket size={32} stroke={1.1} color="#AEBAF8" />
           <Text
             variant="gradient"
             gradient={{ from: '#9600FF', to: '#AEBAF8', deg: 0 }}
@@ -110,7 +110,7 @@ export function Footer() {
       </div>
       {/* <div className={classes.info}>
         <Text align="center" fz="xs" fw={10} fs="italic" c="dimmed">
-          Copyright 2023 Coupon Tader | All Rights Reserved
+          Copyright 2023 Coupon Trader | All Rights Reserved
         </Text>
       </div> */}
     </div>

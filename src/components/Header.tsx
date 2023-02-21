@@ -206,7 +206,7 @@ export function Header() {
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group>
-            <IconTicket size={28} />
+            <IconTicket size={32} stroke={1.1} color="#AEBAF8" />
             <Text
               variant="gradient"
               gradient={{ from: '#9600FF', to: '#AEBAF8', deg: 0 }}

@@ -9,49 +9,49 @@ import {
   Container,
 } from '@mantine/core'
 import {
-  IconPlus,
-  IconUser,
   IconTicket,
+  IconShieldLock,
+  IconWallet,
+  IconHeartHandshake,
+  IconZoomCheck,
   IconFriends,
-  IconTransferIn,
-  Icon24Hours,
 } from '@tabler/icons-react'
 
-const mockdata = [
+const mockData = [
   {
     title: 'Wide Selection of Coupons',
     description:
-      'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
+      'Discover the best deals and discounts with our extensive range of coupons for your favorite brands and stores. Save big on your purchases with our vast selection of voucher codes and coupons.',
     icon: IconTicket,
   },
   {
     title: 'Safe and secure Transactions',
     description:
-      'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
-    icon: IconUser,
+      'Shop with confidence knowing that all your transactions are safe and secure. Our website uses the latest encryption technologies to protect your personal and financial information.',
+    icon: IconShieldLock,
   },
   {
     title: 'Convenient Payment Options',
     description:
-      'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
-    icon: IconTransferIn,
+      'We offer a variety of convenient payment options. Choose the option that works best for you and enjoy a seamless shopping experience.',
+    icon: IconWallet,
   },
   {
     title: 'Customer Support',
     description:
-      'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
-    icon: Icon24Hours,
+      'Our dedicated customer support team is available to assist you with any questions or concerns you may have.',
+    icon: IconHeartHandshake,
   },
   {
     title: 'Verified Coupons',
     description:
-      'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
-    icon: IconPlus,
+      'Trust that you are getting the best deals with our verified coupons.',
+    icon: IconZoomCheck,
   },
   {
     title: 'User-Friendly',
     description:
-      'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
+      'Enjoy a hassle-free shopping experience with our user-friendly trading system. Buy and sell coupons with ease, and manage your account effortlessly.',
     icon: IconFriends,
   },
 ]
@@ -101,7 +101,7 @@ const useStyles = createStyles((theme) => ({
 
 export function Features() {
   const { classes, theme } = useStyles()
-  const features = mockdata.map((feature) => (
+  const features = mockData.map((feature) => (
     <Card
       key={feature.title}
       shadow="md"
@@ -109,7 +109,7 @@ export function Features() {
       className={classes.card}
       p="xl"
     >
-      <feature.icon size={50} stroke={2} color={theme.fn.primaryColor()} />
+      <feature.icon size={50} stroke={1.4} color={theme.fn.primaryColor()} />
       <Text size="lg" weight={500} className={classes.cardTitle} mt="md">
         {feature.title}
       </Text>
@@ -120,14 +120,8 @@ export function Features() {
   ))
   return (
     <Container size="lg" py="xl">
-      <Group position="center">
-        <Badge variant="filled" size="lg">
-          Browse Our Set of Features
-        </Badge>
-      </Group>
-
       <Title order={2} className={classes.title} align="center" mt="sm">
-        Integrate your coupons effortlessly with our platform technology
+        Convenient and Secure Voucher Trading with Verified Coupons
       </Title>
 
       <Text
@@ -136,8 +130,8 @@ export function Features() {
         align="center"
         mt="md"
       >
-        In every platform, there is a loop hole to generate an idea and build a
-        new business like boss.
+        Shop with Confidence and Discover Incredible Deals on a Wide Range of
+        Products and Services from Trusted Brands and Stores
       </Text>
 
       <SimpleGrid
