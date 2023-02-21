@@ -43,6 +43,7 @@ export function Register() {
       setAvatarText('')
       return
     }
+
     const words = text.split(' ')
 
     if (words.length > 1 && words[1].length > 0) {
