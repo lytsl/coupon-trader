@@ -17,10 +17,6 @@ export function Register() {
 
     // functions will be used to validate values at corresponding key
     validate: {
-      name: (value) => {
-        console.log('from validator ' + value)
-        return value.length < 2 ? 'Name must have at least 2 letters' : null
-      },
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       phone_number: (value: string) =>
         /^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$/.test(value)
@@ -39,18 +35,26 @@ export function Register() {
   const handleChange = (e: any) => {
     let text = e.target.value
     setName(text)
-    if (text.length < 2) {
+    text = text.trim()
+
+    if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text))) {
       setAvatarText('')
+      form.setFieldError(
+        'name',
+        'Name must have at least 2 letters and only contain letters',
+      )
       return
     }
-
-    const words = text.split(' ')
+    const words = text.split(/[^A-Za-z]+/)
+    console.log(words)
 
     if (words.length > 1 && words[1].length > 0) {
       text = words[0][0] + words[1][0]
     } else {
       text = words[0][0] + words[0][1]
     }
+
+    form.clearFieldError('name')
     setAvatarText(text.toUpperCase())
   }
 
@@ -77,7 +81,10 @@ export function Register() {
             label="Name"
             placeholder="Full Name"
             value={name}
+            error={form.getInputProps('name').error}
+            onFocus={() => form.getInputProps('name').onFocus()}
             onChange={(e) => handleChange(e)}
+            onBlur={() => form.getInputProps('name').onBlur()}
             // {...form.getInputProps('name')}
           />
           <TextInput
