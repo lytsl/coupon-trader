@@ -25,9 +25,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const placeholder =
-  'It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.It was born from sludge on the ocean floor. In a sterile environment, the germs within its body can’t multiply, and it dies.It has no eyeballs, so it can’t see. It checks its surroundings via the ultrasonic waves it emits from its mouth.'
-
 export function Faq() {
   const { classes } = useStyles()
   return (
@@ -42,7 +39,7 @@ export function Faq() {
       </Text>
 
       <Accordion variant="separated">
-        <Accordion.Item className={classes.item} value="reset-password">
+        <Accordion.Item className={classes.item} value="working">
           <Accordion.Control>
             How does the coupon trader work?
           </Accordion.Control>
@@ -54,7 +51,7 @@ export function Faq() {
           </Accordion.Panel>
         </Accordion.Item>
 
-        <Accordion.Item className={classes.item} value="another-account">
+        <Accordion.Item className={classes.item} value="security">
           <Accordion.Control>Is the platform secure?</Accordion.Control>
           <Accordion.Panel>
             Yes, we take security very seriously. Our platform is designed with
@@ -64,7 +61,7 @@ export function Faq() {
           </Accordion.Panel>
         </Accordion.Item>
 
-        <Accordion.Item className={classes.item} value="newsletter">
+        <Accordion.Item className={classes.item} value="withdrawal">
           <Accordion.Control>Can I withdraw my earnings?</Accordion.Control>
           <Accordion.Panel>
             Yes, you can withdraw your earnings at any time. Simply go to your
@@ -73,7 +70,7 @@ export function Faq() {
           </Accordion.Panel>
         </Accordion.Item>
 
-        <Accordion.Item className={classes.item} value="credit-card">
+        <Accordion.Item className={classes.item} value="payment-options">
           <Accordion.Control>
             What payments options are available?
           </Accordion.Control>
@@ -83,7 +80,7 @@ export function Faq() {
           </Accordion.Panel>
         </Accordion.Item>
 
-        <Accordion.Item className={classes.item} value="payment">
+        <Accordion.Item className={classes.item} value="coupons-for-sale">
           <Accordion.Control>
             How do I list a coupon for sale?
           </Accordion.Control>
@@ -96,7 +93,7 @@ export function Faq() {
           </Accordion.Panel>
         </Accordion.Item>
 
-        <Accordion.Item className={classes.item} value="payment">
+        <Accordion.Item className={classes.item} value="verified-coupons">
           <Accordion.Control>Are the coupons verified?</Accordion.Control>
           <Accordion.Panel>
             Yes, we verify all the coupons listed on our platform to ensure that
