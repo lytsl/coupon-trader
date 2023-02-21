@@ -49,9 +49,9 @@ export function Register() {
     console.log(words)
 
     if (words.length > 1 && words[1].length > 0) {
-      text = words[0][0] + ' ' + words[1][0]
+      text = words[0][0] + words[1][0]
     } else {
-      text = words[0][0] + ' ' + words[0][1]
+      text = words[0][0] + words[0][1]
     }
 
     form.clearFieldError('name')
