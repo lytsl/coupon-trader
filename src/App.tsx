@@ -11,6 +11,8 @@ import { Login } from './features/auth/Login'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Faq } from 'features/static/components/Faq'
+import { Features } from 'features/static/components/Features'
+// import { Team } from 'features/static/components/Team'
 
 function App() {
   const preferredColorScheme =
@@ -35,9 +37,11 @@ function App() {
       >
         <Header />
         <Hero />
+        <Features />
         <Faq />
-        <Register />
-        <Login />
+        {/* <Team /> */}
+        {/* <Register />
+        <Login /> */}
         <Footer />
       </MantineProvider>
     </ColorSchemeProvider>
