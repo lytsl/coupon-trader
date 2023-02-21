@@ -15,7 +15,7 @@ import {
   IconFriends,
   IconTransferIn,
   Icon24Hours,
-} from '@tabler/icons'
+} from '@tabler/icons-react'
 
 const mockdata = [
   {

@@ -68,7 +68,7 @@ export function Register() {
               alt={form.getInputProps('name').value}
               radius="xs"
               size="xl"
-              color="red"
+              color="sky"
             >
               {avatarText}
             </Avatar>
