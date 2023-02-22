@@ -1,10 +1,35 @@
-import { useForm } from '@mantine/form'
+import { useForm, UseFormReturnType } from '@mantine/form'
 import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
 import { Avatar } from '@mantine/core'
-import { useState } from 'react'
+import { atom, useAtom } from 'jotai'
+
+let form: any
+const nameAtom = atom('')
+const avatarAtom = atom((get) => {
+  let text = get(nameAtom)
+  text = text.trim()
+
+  if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text))) {
+    form.setFieldError(
+      'name',
+      'Name must have at least 2 letters and only contain letters',
+    )
+    return ''
+  }
+
+  const words = text.split(/[^A-Za-z]+/)
+  if (words.length > 1 && words[1].length > 0) {
+    text = words[0][0] + words[1][0]
+  } else {
+    text = words[0][0] + words[0][1]
+  }
+
+  form.clearFieldError('name')
+  return text.toUpperCase()
+})
 
 export function Register() {
-  const form = useForm({
+  form = useForm({
     validateInputOnBlur: true,
     initialValues: {
       name: '',
@@ -15,7 +40,6 @@ export function Register() {
       confirmPassword: '',
     },
 
-    // functions will be used to validate values at corresponding key
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       phone_number: (value: string) =>
@@ -29,34 +53,8 @@ export function Register() {
     },
   })
 
-  const [name, setName] = useState('')
-  const [avatarText, setAvatarText] = useState('')
-
-  const handleChange = (e: any) => {
-    let text = e.target.value
-    setName(text)
-    text = text.trim()
-
-    if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text))) {
-      setAvatarText('')
-      form.setFieldError(
-        'name',
-        'Name must have at least 2 letters and only contain letters',
-      )
-      return
-    }
-    const words = text.split(/[^A-Za-z]+/)
-    console.log(words)
-
-    if (words.length > 1 && words[1].length > 0) {
-      text = words[0][0] + words[1][0]
-    } else {
-      text = words[0][0] + words[0][1]
-    }
-
-    form.clearFieldError('name')
-    setAvatarText(text.toUpperCase())
-  }
+  const [name, setName] = useAtom(nameAtom)
+  const [avatarText] = useAtom(avatarAtom)
 
   return (
     <div>
@@ -69,7 +67,7 @@ export function Register() {
           <center>
             <Avatar
               src={null}
-              alt={form.getInputProps('name').value}
+              alt={avatarText}
               radius="xs"
               size="xl"
               color="sky"
@@ -80,12 +78,9 @@ export function Register() {
           <TextInput
             label="Name"
             placeholder="Full Name"
+            {...form.getInputProps('name')}
             value={name}
-            error={form.getInputProps('name').error}
-            onFocus={() => form.getInputProps('name').onFocus()}
-            onChange={(e) => handleChange(e)}
-            onBlur={() => form.getInputProps('name').onBlur()}
-            // {...form.getInputProps('name')}
+            onChange={(e) => setName(e.target.value)}
           />
           <TextInput
             mt="sm"

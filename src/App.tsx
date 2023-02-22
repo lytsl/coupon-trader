@@ -40,8 +40,8 @@ function App() {
         <Features />
         <Faq />
         {/* <Team /> */}
-        {/* <Register />
-        <Login /> */}
+        <Register />
+        <Login />
         <Footer />
       </MantineProvider>
     </ColorSchemeProvider>
