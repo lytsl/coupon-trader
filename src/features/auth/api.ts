@@ -18,10 +18,11 @@ export type LoginDTO = {
 }
 
 export type RegisterDTO = {
-  email: string
-  password: string
-  name: string
-  upi_id: string
+  name: ''
+  email: ''
+  phoneNumber: ''
+  upiId: ''
+  password: ''
 }
 
 const tempUser: AuthUser = {
@@ -61,6 +62,14 @@ export const registerWithEmailAndPassword = (
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(tempUserResponse)
+    }, 1000)
+  })
+}
+
+export function logout(): Promise<{ message: string }> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ message: 'success' })
     }, 1000)
   })
 }

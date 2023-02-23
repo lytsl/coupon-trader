@@ -1,65 +1,77 @@
-// import { useRoutes } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 
-// import { Landing } from 'features/static/Landing'
-// // import { useAuth } from 'lib/auth'
+import { Landing } from 'features/static/Landing'
 
-// import { Suspense } from 'react'
-// import { Navigate, Outlet } from 'react-router-dom'
+import { Suspense } from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 
-// import { Loader } from '@mantine/core'
-// import { Layout } from 'components/Layout'
-// import { lazyImport } from 'lib/lazyImports'
+import { Center, Loader } from '@mantine/core'
+import { Layout } from 'components/Layout'
+import { lazyImport } from 'lib/lazyImports'
+import storage from 'lib/storage'
 
-// const { AuthRoutes } = lazyImport(() => import('features/auth'), 'routes')
+const { AuthRoutes } = lazyImport(
+  () => import('../features/auth'),
+  'AuthRoutes',
+)
 
-// const App = () => {
-//   return (
-//     <Layout>
-//       <Suspense
-//         fallback={
-//           <div className="h-full w-full flex items-center justify-center">
-//             <Loader size="xl" />
-//           </div>
-//         }
-//       >
-//         <Outlet />
-//       </Suspense>
-//     </Layout>
-//   )
-// }
+const App = () => {
+  return (
+    <Layout>
+      <Suspense
+        fallback={
+          <Center>
+            <Loader size="xl" />
+          </Center>
+        }
+      >
+        <Outlet />
+      </Suspense>
+    </Layout>
+  )
+}
 
-// export const protectedRoutes = [
-//   {
-//     path: '/app',
-//     element: <App />,
-//     children: [
-//       // { path: '/inquiry/*', element: <Inquiry /> },
-//       // { path: '/users', element: <Users /> },
-//       // { path: '/profile', element: <Profile /> },
-//       // { path: '/', element: <Dashboard /> },
-//       // { path: '*', element: <Navigate to="." /> },
-//     ],
-//   },
-// ]
+const protectedRoutes = [
+  {
+    path: '/app',
+    element: <App />,
+    children: [
+      // { path: '/inquiry/*', element: <Inquiry /> },
+      // { path: '/users', element: <Users /> },
+      // { path: '/profile', element: <Profile /> },
+      // { path: '/', element: <Dashboard /> },
+      // { path: '*', element: <Navigate to="." /> },
+    ],
+  },
+]
 
-// const publicRoutes = [
-//   {
-//     path: '/auth/*',
-//     element: <AuthRoutes />,
-//   },
-// ]
+const publicRoutes = [
+  {
+    path: '/auth/*',
+    element: <AuthRoutes />,
+  },
+]
 
-// export const AppRoutes = () => {
-//   // const auth = useAuth()
-//   const tempAuth = false
+const commonRoutes = [
+  {
+    path: '/',
+    element: (
+      <Layout>
+        <Landing />
+      </Layout>
+    ),
+  },
+]
 
-//   const commonRoutes = [{ path: '/', element: <Landing /> }]
+export const AppRoutes = () => {
+  const auth = storage.getToken() == null ? false : true
 
-//   // const routes = auth.user ? protectedRoutes : publicRoutes
-//   const routes = tempAuth ? protectedRoutes : publicRoutes
+  //   const commonRoutes = [{ path: '/', element: <Landing /> }]
 
-//   const element = useRoutes([...routes, ...commonRoutes])
+  const routes = auth ? protectedRoutes : publicRoutes
 
-//   return <>{element}</>
-// }
+  const element = useRoutes([...routes, ...commonRoutes])
+
+  return <>{element}</>
+}
 export {}

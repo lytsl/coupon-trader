@@ -5,9 +5,17 @@ import {
   loginWithEmailAndPassword,
   getUser,
   registerWithEmailAndPassword,
+  logout,
+  AuthUser,
 } from 'features/auth/api'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+} from '@tanstack/react-query'
 import storage from 'lib/storage'
+import React from 'react'
 import { useCallback } from 'react'
 
 async function handleUserResponse(data: UserResponse) {
@@ -15,13 +23,6 @@ async function handleUserResponse(data: UserResponse) {
   storage.setToken(jwt)
   return user
 }
-
-const queryClient = useQueryClient()
-
-const setUser = useCallback(
-  (data: any) => queryClient.setQueryData(userKey, data),
-  [queryClient],
-)
 
 const userKey = ['authenticated-user']
 
@@ -35,6 +36,13 @@ const useUser = () =>
   })
 
 const useLogin = () => {
+  const queryClient = useQueryClient()
+
+  const setUser = React.useCallback(
+    (data: any) => queryClient.setQueryData(userKey, data),
+    [queryClient],
+  )
+
   return useMutation(
     async (data: LoginDTO) => {
       const response = await loginWithEmailAndPassword(data)
@@ -48,8 +56,14 @@ const useLogin = () => {
 }
 
 const useRegister = () => {
+  const queryClient = useQueryClient()
+
+  const setUser = React.useCallback(
+    (data: any) => queryClient.setQueryData(userKey, data),
+    [queryClient],
+  )
   return useMutation({
-    mutationFn: async (data: RegisterDTO) => {
+    mutationFn: async (data: RegisterDTO): Promise<AuthUser> => {
       const response = await registerWithEmailAndPassword(data)
       const user = await handleUserResponse(response)
       return user
@@ -59,12 +73,19 @@ const useRegister = () => {
 }
 
 const useLogout = () => {
+  const queryClient = useQueryClient()
+
+  const setUser = React.useCallback(
+    (data: any) => queryClient.setQueryData(userKey, data),
+    [queryClient],
+  )
   return useMutation({
     mutationFn: async () => {
       storage.clearToken()
       window.location.assign(window.location.origin as unknown as string)
+      await logout()
     },
-    onSuccess: (user) => setUser(user),
+    onSuccess: () => setUser(null),
   })
 }
 

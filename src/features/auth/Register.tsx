@@ -2,12 +2,14 @@ import { useForm, UseFormReturnType } from '@mantine/form'
 import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
+import { useRegister } from 'lib/auth'
 
 let form: any
 const nameAtom = atom('')
 const avatarAtom = atom((get) => {
   let text = get(nameAtom)
   text = text.trim()
+  form.setFieldValue('name', text)
 
   if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text))) {
     form.setFieldError(
@@ -34,19 +36,18 @@ export function Register() {
     initialValues: {
       name: '',
       email: '',
-      phone_number: '',
-      upi_id: '',
+      phoneNumber: '',
+      upiId: '',
       password: '',
       confirmPassword: '',
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      phone_number: (value: string) =>
-        /^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$/.test(value)
-          ? null
-          : 'Invalid phone number',
-      upi_id: (value) =>
+      phoneNumber: (value: string) =>
+        // /^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$/.test(value)
+        value.length > 9 ? null : 'Invalid phone number',
+      upiId: (value) =>
         /[a-zA-Z0-9_]{3,}@[a-zA-Z]{3,}/.test(value) ? null : 'Invalid UPI ID',
       confirmPassword: (value, values) =>
         value !== values.password ? 'Passwords did not match' : null,
@@ -55,6 +56,7 @@ export function Register() {
 
   const [name, setName] = useAtom(nameAtom)
   const [avatarText] = useAtom(avatarAtom)
+  const { mutate, isLoading, isError, isSuccess } = useRegister()
 
   return (
     <div>
@@ -63,7 +65,7 @@ export function Register() {
       </center>
 
       <Box sx={{ maxWidth: 340 }} mx="auto">
-        <form onSubmit={form.onSubmit(console.log)}>
+        <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
           <center>
             <Avatar
               src={null}
@@ -92,13 +94,13 @@ export function Register() {
             mt="sm"
             label="Phone Number"
             placeholder="+91 XXXXX XXXXX"
-            {...form.getInputProps('phone_number')}
+            {...form.getInputProps('phoneNumber')}
           />
           <TextInput
             mt="sm"
             label="UPI ID"
             placeholder="UPI ID"
-            {...form.getInputProps('upi_id')}
+            {...form.getInputProps('upiId')}
           />
           <PasswordInput
             label="Password"
