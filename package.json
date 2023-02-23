@@ -19,6 +19,7 @@
     "@mantine/hooks": "^5.10.4",
     "@mantine/notifications": "^5.10.4",
     "@tabler/icons-react": "^2.4.0",
+    "@tanstack/react-query": "^4.24.10",
     "dayjs": "^1.11.7",
     "jotai": "^2.0.2",
     "react": "^18.2.0",
