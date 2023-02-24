@@ -47,19 +47,15 @@ interface FooterCenteredProps {
 const links: FooterCenteredProps['links'] = [
   {
     link: '#',
-    label: 'Contact',
+    label: 'Explore',
   },
   {
     link: '#',
-    label: 'Privacy',
+    label: 'About',
   },
   {
     link: '#',
-    label: 'Blog',
-  },
-  {
-    link: '#',
-    label: 'Careers',
+    label: 'Inquiry',
   },
 ]
 

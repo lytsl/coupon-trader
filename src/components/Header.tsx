@@ -78,54 +78,36 @@ const useStyles = createStyles((theme) => ({
 
 const links = [
   {
-    link: '/about',
-    label: 'Features',
+    link: '#',
+    label: 'Explore',
   },
   {
-    link: '#1',
-    label: 'Learn',
-    links: [
-      {
-        link: '/docs',
-        label: 'Documentation',
-      },
-      {
-        link: '/resources',
-        label: 'Resources',
-      },
-      {
-        link: '/community',
-        label: 'Community',
-      },
-      {
-        link: '/blog',
-        label: 'Blog',
-      },
-    ],
-  },
-  {
-    link: '/about',
+    link: '#',
     label: 'About',
   },
   {
-    link: '/pricing',
-    label: 'Pricing',
+    link: '#',
+    label: 'Inquiry',
   },
   {
     link: '#2',
-    label: 'Support',
+    label: 'members',
     links: [
       {
-        link: '/faq',
-        label: 'FAQ',
+        link: '#',
+        label: 'Ayush Sakariya',
       },
       {
-        link: '/demo',
-        label: 'Book a demo',
+        link: '#',
+        label: 'Sanket Detroja',
       },
       {
-        link: '/forums',
-        label: 'Forums',
+        link: '#',
+        label: 'Ayush Savani',
+      },
+      {
+        link: '#',
+        label: 'Harshil Buha',
       },
     ],
   },
@@ -268,7 +250,6 @@ export function Header(props: { hasLoggedIn: boolean }) {
         size="100%"
         padding="md"
         title={'Navigate'}
-        // TODO: Input the gradient text
         className={classes.hiddenDesktop}
         zIndex={1000000}
       >
@@ -283,7 +264,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
             my="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
-          {!hasLoggedIn ? (
+          {hasLoggedIn ? (
             <IconUserCircle size={32} stroke={1.1} color="#AEBAF8" />
           ) : (
             <>
