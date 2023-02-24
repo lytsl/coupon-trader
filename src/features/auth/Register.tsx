@@ -7,6 +7,7 @@ import {
   Group,
   Center,
   Loader,
+  LoadingOverlay,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
@@ -66,7 +67,7 @@ export function Register() {
   const [avatarText] = useAtom(avatarAtom)
   const { mutate, isLoading, isError, isSuccess } = useRegister()
   const navigate = useNavigate()
-  if (isLoading) return <div>Loading...</div>
+  // if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error</div>
   if (isSuccess) {
     navigate('../login')
@@ -80,6 +81,7 @@ export function Register() {
       </center>
 
       <Box sx={{ maxWidth: 340 }} mx="auto">
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form
           onSubmit={form.onSubmit((values: any) =>
             mutate({ ...values, name: name, avatar: avatarText }),

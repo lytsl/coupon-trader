@@ -9,6 +9,7 @@ import {
   Image,
   Center,
   Loader,
+  LoadingOverlay,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
@@ -25,7 +26,7 @@ export function Login() {
 
   const { mutate, isLoading, isError, isSuccess } = useLogin()
   const navigate = useNavigate()
-  if (isLoading) return <div>Loading...</div>
+  // if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error</div>
   if (isSuccess) {
     navigate('/')
@@ -50,6 +51,7 @@ export function Login() {
           </div>
         </Grid.Col>
         <Grid.Col>
+          <LoadingOverlay visible={isLoading} overlayBlur={2} />
           <form onSubmit={form.onSubmit((values: any) => mutate(values))}>
             <TextInput
               mt="sm"
