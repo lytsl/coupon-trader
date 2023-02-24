@@ -19,7 +19,7 @@ const avatarAtom = atom((get) => {
   let text = get(nameAtom)
   text = text.trim()
 
-  if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text))) {
+  if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text) && text.length == 0)) {
     form.setFieldError(
       'name',
       'Name must have at least 2 letters and only contain letters',
@@ -53,8 +53,7 @@ export function Register() {
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       phoneNumber: (value: string) =>
-        // /^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$/.test(value)
-        value.length > 9 ? null : 'Invalid phone number',
+        /^(0|91)?[6-9][0-9]{9}$/.test(value) ? null : 'Invalid Phone number',
       upiId: (value) =>
         /[a-zA-Z0-9_]{3,}@[a-zA-Z]{3,}/.test(value) ? null : 'Invalid UPI ID',
       confirmPassword: (value, values) =>
@@ -112,7 +111,7 @@ export function Register() {
           <TextInput
             mt="sm"
             label="Phone Number"
-            placeholder="+91 XXXXX XXXXX"
+            placeholder="Indian Phone Number"
             {...form.getInputProps('phoneNumber')}
           />
           <TextInput
