@@ -12,7 +12,6 @@ import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
 import { useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
-import { Suspense } from 'react'
 
 let form: any
 const nameAtom = atom('')
@@ -75,13 +74,7 @@ export function Register() {
   }
 
   return (
-    <Suspense
-      fallback={
-        <Center>
-          <Loader size="xl" />
-        </Center>
-      }
-    >
+    <>
       <center>
         <h1 className="Heading">Sign Up your Profile</h1>
       </center>
@@ -147,6 +140,6 @@ export function Register() {
           </Group>
         </form>
       </Box>
-    </Suspense>
+    </>
   )
 }

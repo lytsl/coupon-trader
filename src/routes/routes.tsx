@@ -14,21 +14,23 @@ const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
   'AuthRoutes',
 )
-
-// const OtherComponent = loadable(() => import('../features/auth/routes'))
+// const { Landing } = lazyImport(
+//   () => import('features/static/Landing'),
+//   'Landing',
+// )
 
 const App = () => {
   return (
     <Layout hasLoggedIn={true}>
-      {/* <Suspense
+      <Suspense
         fallback={
           <Center>
             <Loader size="xl" />
           </Center>
         }
-      > */}
-      <Outlet />
-      {/* </Suspense> */}
+      >
+        <Outlet />
+      </Suspense>
     </Layout>
   )
 }
@@ -74,8 +76,4 @@ export const AppRoutes = () => {
   // ])
 
   return <>{element}</>
-}
-export {}
-function loadable(arg0: () => Promise<any>) {
-  throw new Error('Function not implemented.')
 }

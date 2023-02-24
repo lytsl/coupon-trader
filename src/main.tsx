@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import { Provider } from 'jotai'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Center, Loader } from '@mantine/core'
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Suspense
+      fallback={
+        <Center>
+          <Loader size="xl" />
+        </Center>
+      }
+    >
       <QueryClientProvider client={queryClient}>
         <Provider>
-          <App />
+          <Router>
+            <App />
+          </Router>
         </Provider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </BrowserRouter>
+    </Suspense>
   </React.StrictMode>,
 )

@@ -24,7 +24,6 @@ import {
   IconTicket,
   IconUserCircle,
 } from '@tabler/icons-react'
-import { Suspense } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ThemeSwitch } from './ThemeSwitch'
 
@@ -120,7 +119,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
   const { classes, theme } = useStyles()
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
+      <Menu.Item key={item.label}>{item.label}</Menu.Item>
     ))
 
     if (menuItems) {
@@ -161,6 +160,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
         href={item.link}
         className={classes.link}
         onClick={(event) => event.preventDefault()}
+        key={item.label}
       >
         <Center>{item.label}</Center>
       </a>
@@ -169,7 +169,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
     if (menuItems) {
       const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
       return (
-        <Stack align="center" spacing={0} justify="flex-start">
+        <Stack key={link.label} align="center" spacing={0} justify="flex-start">
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center>
               <span className={classes.linkLabel}>{link.label}</span>
@@ -183,6 +183,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
 
     return (
       <a
+        key={link.label}
         href={link.link}
         className={classes.link}
         onClick={(event) => event.preventDefault()}
@@ -195,13 +196,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
   const navigate = useNavigate()
 
   return (
-    <Suspense
-      fallback={
-        <Center>
-          <Loader size="xl" />
-        </Center>
-      }
-    >
+    <>
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group>
@@ -283,6 +278,6 @@ export function Header(props: { hasLoggedIn: boolean }) {
           )}
         </ScrollArea>
       </Drawer>
-    </Suspense>
+    </>
   )
 }

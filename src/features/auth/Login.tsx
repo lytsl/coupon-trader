@@ -11,7 +11,6 @@ import {
   Loader,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { Suspense } from 'react'
 import { useLogin } from 'lib/auth'
 
 export function Login() {
@@ -34,13 +33,7 @@ export function Login() {
   }
 
   return (
-    <Suspense
-      fallback={
-        <Center>
-          <Loader size="xl" />
-        </Center>
-      }
-    >
+    <>
       <Space h="xl" />
       <center>
         <h1 className="Heading">Log In your Profile</h1>
@@ -77,6 +70,6 @@ export function Login() {
           </form>
         </Grid.Col>
       </Grid>
-    </Suspense>
+    </>
   )
 }
