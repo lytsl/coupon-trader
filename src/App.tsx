@@ -12,6 +12,7 @@ import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Faq } from 'features/static/components/Faq'
 import { Features } from 'features/static/components/Features'
+import { AppRoutes } from 'routes/routes'
 // import { Team } from 'features/static/components/Team'
 
 function App() {
@@ -35,14 +36,7 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Header />
-        <Hero />
-        <Features />
-        <Faq />
-        {/* <Team /> */}
-        <Register />
-        <Login />
-        <Footer />
+        <AppRoutes />
       </MantineProvider>
     </ColorSchemeProvider>
   )

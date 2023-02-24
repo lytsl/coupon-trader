@@ -1,15 +1,24 @@
 import { useForm, UseFormReturnType } from '@mantine/form'
-import { PasswordInput, Box, TextInput, Button, Group } from '@mantine/core'
+import {
+  PasswordInput,
+  Box,
+  TextInput,
+  Button,
+  Group,
+  Center,
+  Loader,
+} from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
 import { useRegister } from 'lib/auth'
+import { useNavigate } from 'react-router-dom'
+import { Suspense } from 'react'
 
 let form: any
 const nameAtom = atom('')
 const avatarAtom = atom((get) => {
   let text = get(nameAtom)
   text = text.trim()
-  form.setFieldValue('name', text)
 
   if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text))) {
     form.setFieldError(
@@ -57,15 +66,32 @@ export function Register() {
   const [name, setName] = useAtom(nameAtom)
   const [avatarText] = useAtom(avatarAtom)
   const { mutate, isLoading, isError, isSuccess } = useRegister()
+  const navigate = useNavigate()
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error</div>
+  if (isSuccess) {
+    navigate('../login')
+    return <div>Success</div>
+  }
 
   return (
-    <div>
+    <Suspense
+      fallback={
+        <Center>
+          <Loader size="xl" />
+        </Center>
+      }
+    >
       <center>
         <h1 className="Heading">Sign Up your Profile</h1>
       </center>
 
       <Box sx={{ maxWidth: 340 }} mx="auto">
-        <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
+        <form
+          onSubmit={form.onSubmit((values: any) =>
+            mutate({ ...values, name: name, avatar: avatarText }),
+          )}
+        >
           <center>
             <Avatar
               src={null}
@@ -115,12 +141,12 @@ export function Register() {
             {...form.getInputProps('confirmPassword')}
           />
           <Group position="center" mt="md">
-            <Button type="submit" style={{ width: 340 }}>
+            <Button disabled={isLoading} type="submit" style={{ width: 340 }}>
               Submit
             </Button>
           </Group>
         </form>
       </Box>
-    </div>
+    </Suspense>
   )
 }

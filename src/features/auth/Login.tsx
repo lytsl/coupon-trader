@@ -7,22 +7,40 @@ import {
   Grid,
   Space,
   Image,
+  Center,
+  Loader,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
+import { Suspense } from 'react'
+import { useLogin } from 'lib/auth'
 
 export function Login() {
   const form = useForm({
     initialValues: { email: '', password: '' },
 
-    // functions will be used to validate values at corresponding key
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       password: (value) => (value == null ? 'Enter Password' : null),
     },
   })
 
+  const { mutate, isLoading, isError, isSuccess } = useLogin()
+  const navigate = useNavigate()
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error</div>
+  if (isSuccess) {
+    navigate('/')
+    return <div>Success</div>
+  }
+
   return (
-    <div>
+    <Suspense
+      fallback={
+        <Center>
+          <Loader size="xl" />
+        </Center>
+      }
+    >
       <Space h="xl" />
       <center>
         <h1 className="Heading">Log In your Profile</h1>
@@ -39,7 +57,7 @@ export function Login() {
           </div>
         </Grid.Col>
         <Grid.Col>
-          <form onSubmit={form.onSubmit(console.log)}>
+          <form onSubmit={form.onSubmit((values: any) => mutate(values))}>
             <TextInput
               mt="sm"
               label="Email"
@@ -52,13 +70,13 @@ export function Login() {
               {...form.getInputProps('password')}
             />
             <Group position="center" mt="md">
-              <Button type="submit" style={{ width: 330 }}>
+              <Button disabled={isLoading} type="submit" style={{ width: 330 }}>
                 Submit
               </Button>
             </Group>
           </form>
         </Grid.Col>
       </Grid>
-    </div>
+    </Suspense>
   )
 }

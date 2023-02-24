@@ -16,9 +16,16 @@ import {
   UnstyledButton,
   Stack,
   Text,
+  Loader,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconChevronDown, IconTicket } from '@tabler/icons-react'
+import {
+  IconChevronDown,
+  IconTicket,
+  IconUserCircle,
+} from '@tabler/icons-react'
+import { Suspense } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ThemeSwitch } from './ThemeSwitch'
 
 const HEADER_HEIGHT = 60
@@ -124,7 +131,8 @@ const links = [
   },
 ]
 
-export function Header() {
+export function Header(props: { hasLoggedIn: boolean }) {
+  const { hasLoggedIn } = props
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
@@ -202,8 +210,16 @@ export function Header() {
     )
   })
 
+  const navigate = useNavigate()
+
   return (
-    <Box>
+    <Suspense
+      fallback={
+        <Center>
+          <Loader size="xl" />
+        </Center>
+      }
+    >
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group>
@@ -224,8 +240,18 @@ export function Header() {
           </Group>
           <Group className={classes.hiddenMobile}>
             <ThemeSwitch />
-            <Button variant="light">Log In</Button>
-            <Button>Sign Up</Button>
+            {hasLoggedIn ? (
+              <IconUserCircle size={32} stroke={1.1} color="#AEBAF8" />
+            ) : (
+              <>
+                <Button variant="light" onClick={(e) => navigate('auth/login')}>
+                  Log In
+                </Button>
+                <Button onClick={(e) => navigate('auth/register')}>
+                  Sign Up
+                </Button>
+              </>
+            )}
           </Group>
           <Burger
             opened={drawerOpened}
@@ -242,7 +268,7 @@ export function Header() {
         size="100%"
         padding="md"
         title={'Navigate'}
-        // TO DO: Input the gradient text
+        // TODO: Input the gradient text
         className={classes.hiddenDesktop}
         zIndex={1000000}
       >
@@ -252,20 +278,30 @@ export function Header() {
             mb="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
-
           {mItems}
-
           <Divider
             my="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
-
-          <Group position="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
+          {!hasLoggedIn ? (
+            <IconUserCircle size={32} stroke={1.1} color="#AEBAF8" />
+          ) : (
+            <>
+              <Group position="center" grow pb="xl" px="md">
+                <Button
+                  onClick={(e) => navigate('auth/login')}
+                  variant="default"
+                >
+                  Log in
+                </Button>
+                <Button onClick={(e) => navigate('auth/register')}>
+                  Sign up
+                </Button>
+              </Group>
+            </>
+          )}
         </ScrollArea>
       </Drawer>
-    </Box>
+    </Suspense>
   )
 }

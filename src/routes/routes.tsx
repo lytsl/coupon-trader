@@ -11,22 +11,24 @@ import { lazyImport } from 'lib/lazyImports'
 import storage from 'lib/storage'
 
 const { AuthRoutes } = lazyImport(
-  () => import('../features/auth'),
+  () => import('../features/auth/routes'),
   'AuthRoutes',
 )
 
+// const OtherComponent = loadable(() => import('../features/auth/routes'))
+
 const App = () => {
   return (
-    <Layout>
-      <Suspense
+    <Layout hasLoggedIn={true}>
+      {/* <Suspense
         fallback={
           <Center>
             <Loader size="xl" />
           </Center>
         }
-      >
-        <Outlet />
-      </Suspense>
+      > */}
+      <Outlet />
+      {/* </Suspense> */}
     </Layout>
   )
 }
@@ -40,7 +42,7 @@ const protectedRoutes = [
       // { path: '/users', element: <Users /> },
       // { path: '/profile', element: <Profile /> },
       // { path: '/', element: <Dashboard /> },
-      // { path: '*', element: <Navigate to="." /> },
+      { path: '*', element: <Navigate to="." /> },
     ],
   },
 ]
@@ -52,26 +54,28 @@ const publicRoutes = [
   },
 ]
 
-const commonRoutes = [
-  {
-    path: '/',
-    element: (
-      <Layout>
-        <Landing />
-      </Layout>
-    ),
-  },
-]
-
 export const AppRoutes = () => {
   const auth = storage.getToken() == null ? false : true
 
-  //   const commonRoutes = [{ path: '/', element: <Landing /> }]
+  const commonRoutes = [
+    {
+      path: '/',
+      element: <Landing />,
+    },
+  ]
 
   const routes = auth ? protectedRoutes : publicRoutes
 
   const element = useRoutes([...routes, ...commonRoutes])
+  // const element = useRoutes([
+  //   ...protectedRoutes,
+  //   ...publicRoutes,
+  //   ...commonRoutes,
+  // ])
 
   return <>{element}</>
 }
 export {}
+function loadable(arg0: () => Promise<any>) {
+  throw new Error('Function not implemented.')
+}

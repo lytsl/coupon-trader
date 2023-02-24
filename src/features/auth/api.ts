@@ -61,6 +61,7 @@ export const registerWithEmailAndPassword = (
 ): Promise<UserResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
+      console.log(tempUserResponse)
       resolve(tempUserResponse)
     }, 1000)
   })
