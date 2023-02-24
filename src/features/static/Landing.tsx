@@ -7,6 +7,7 @@ import { Hero } from './components/Hero'
 
 export const Landing = () => {
   const navigate = useNavigate()
+  storage.clearToken()
   const auth = storage.getToken() == null ? false : true
 
   // const handleStart = () => {
