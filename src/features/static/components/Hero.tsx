@@ -68,7 +68,7 @@ export function Hero() {
               Join <span className={classes.highlight}>Coupon Trader</span>
               <br /> Trade Your Unused Coupon Today
             </Title>
-            <Text color="dimmed" mt="md">
+            <Text mt="md">
               Looking to sell your unused coupons? Join Coupon Trader and take
               advantage of our user-friendly platform, multiple payment options,
               and dedicated customer support team. With our secure system, you

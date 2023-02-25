@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Faq } from './components/Faq'
 import { Features } from './components/Features'
 import { Hero } from './components/Hero'
+import { Blob } from './components/Blob'
 
 export const Landing = () => {
   const navigate = useNavigate()
@@ -19,11 +20,13 @@ export const Landing = () => {
   // }
 
   return (
-    <Layout hasLoggedIn={auth}>
-      <Hero />
-      <Features />
-      <Faq />
-    </Layout>
+    <Blob>
+      <Layout hasLoggedIn={auth}>
+        <Hero />
+        <Features />
+        <Faq />
+      </Layout>
+    </Blob>
   )
 }
 export {}
