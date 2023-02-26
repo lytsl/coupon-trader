@@ -13,7 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
 
-export function ForgetEmail() {
+export function ForgotPassword() {
   const form = useForm({
     initialValues: { email: '' },
 

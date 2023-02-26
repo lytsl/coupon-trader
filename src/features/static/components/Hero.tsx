@@ -8,7 +8,6 @@ import {
   Text,
 } from '@mantine/core'
 import image from 'assets/image.svg'
-import { ForgetEmail } from 'features/auth/ForgetEmail'
 
 const useStyles = createStyles((theme) => ({
   inner: {

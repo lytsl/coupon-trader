@@ -9,6 +9,7 @@ import {
   Image,
   LoadingOverlay,
   Text,
+  Anchor,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
@@ -67,7 +68,9 @@ export function Login() {
               <Button disabled={isLoading} type="submit" style={{ width: 330 }}>
                 Submit
               </Button>
-              <Text color="dimmed">Forget Password? CLick here to Reset.</Text>
+              <Anchor href="#" onClick={(e) => navigate('../forgot')}>
+                Forgot Password? Click here to Reset
+              </Anchor>
             </Group>
           </form>
         </Grid.Col>
