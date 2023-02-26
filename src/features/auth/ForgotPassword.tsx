@@ -8,7 +8,6 @@ import {
   Grid,
   Space,
   LoadingOverlay,
-  createStyles,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
@@ -21,24 +20,15 @@ export function ForgotPassword() {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   })
-  //   const useStyles = createStyles((theme) => ({
-  //     title: {
-  //       fontSize: 34,
-  //       fontWeight: 900,
-  //       [theme.fn.smallerThan('sm')]: {
-  //         fontSize: 24,
-  //       },
-  //     },
-  //   }))
 
   const { mutate, isLoading, isError, isSuccess } = useLogin()
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
-  if (isSuccess) {
-    navigate('/')
-    return <div>Success</div>
-  }
+  // if (isError) return <div>Error</div>
+  // if (isSuccess) {
+  //   navigate('/')
+  //   return <div>Success</div>
+  // }
 
   return (
     <>

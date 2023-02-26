@@ -8,6 +8,9 @@ import {
   Text,
 } from '@mantine/core'
 import image from 'assets/image.svg'
+import { ChangePassword } from 'features/auth/ChangePassword'
+import { CheckEmailApp } from 'features/auth/CheckEmailApp'
+import { ForgotPassword } from 'features/auth/ForgotPassword'
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -86,6 +89,9 @@ export function Hero() {
           <Image src={image} className={classes.image} />
         </div>
       </Container>
+      <ForgotPassword />
+      <CheckEmailApp />
+      <ChangePassword />
     </div>
   )
 }
