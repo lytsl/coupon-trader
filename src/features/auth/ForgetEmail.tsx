@@ -1,27 +1,35 @@
 import { useForm } from '@mantine/form'
 import {
-  PasswordInput,
+  Title,
+  Text,
   TextInput,
   Button,
   Group,
   Grid,
   Space,
-  Image,
   LoadingOverlay,
-  Text,
+  createStyles,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
 
-export function Login() {
+export function ForgetEmail() {
   const form = useForm({
-    initialValues: { email: '', password: '' },
+    initialValues: { email: '' },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      password: (value) => (value == null ? 'Enter Password' : null),
     },
   })
+  //   const useStyles = createStyles((theme) => ({
+  //     title: {
+  //       fontSize: 34,
+  //       fontWeight: 900,
+  //       [theme.fn.smallerThan('sm')]: {
+  //         fontSize: 24,
+  //       },
+  //     },
+  //   }))
 
   const { mutate, isLoading, isError, isSuccess } = useLogin()
   const navigate = useNavigate()
@@ -35,18 +43,21 @@ export function Login() {
   return (
     <>
       <Space h="xl" />
-      <center>
-        <h1 className="Heading">Log In your Profile</h1>
-      </center>
       <Space h="xl" />
       <Grid sx={{ maxWidth: 340 }} mx="auto">
         <Grid.Col>
-          <div style={{ width: 200, marginLeft: 'auto', marginRight: 'auto' }}>
-            <Image
-              radius="md"
-              src="\src\assets\coupon-logo.png"
-              alt="Login Image"
-            />
+          <div
+            className="heading"
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+          >
+            <Title mt="sm" style={{ fontSize: 34, fontWeight: 900 }}>
+              Reset Password
+            </Title>
+
+            <Text color="dimmed" mt="md">
+              Enter the Email associated with your account and we will send an
+              email with instructions to reset your password.
+            </Text>
           </div>
         </Grid.Col>
         <Grid.Col>
@@ -54,24 +65,20 @@ export function Login() {
           <form onSubmit={form.onSubmit((values: any) => mutate(values))}>
             <TextInput
               mt="sm"
-              label="Email"
-              placeholder="Email"
+              label="Email Address"
+              placeholder="Your account email Address"
               {...form.getInputProps('email')}
-            />
-            <PasswordInput
-              label="Password"
-              placeholder="Password"
-              {...form.getInputProps('password')}
             />
             <Group position="center" mt="md">
               <Button disabled={isLoading} type="submit" style={{ width: 330 }}>
-                Submit
+                Send Instructions
               </Button>
-              <Text color="dimmed">Forget Password? CLick here to Reset.</Text>
             </Group>
           </form>
         </Grid.Col>
       </Grid>
+      <Space h="xl" />
+      <Space h="xl" />
     </>
   )
 }
