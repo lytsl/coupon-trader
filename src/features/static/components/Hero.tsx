@@ -8,6 +8,7 @@ import {
   Text,
 } from '@mantine/core'
 import image from 'assets/image.svg'
+import { NavbarProfile } from 'components/NavbarProfile'
 import { ChangePassword } from 'features/auth/ChangePassword'
 import { CheckEmailApp } from 'features/auth/CheckEmailApp'
 import { ForgotPassword } from 'features/auth/ForgotPassword'
@@ -92,6 +93,7 @@ export function Hero() {
       <ForgotPassword />
       <CheckEmailApp />
       <ChangePassword />
+      <NavbarProfile />
     </div>
   )
 }
