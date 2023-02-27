@@ -10,6 +10,7 @@ import {
   LoadingOverlay,
   Text,
   Anchor,
+  Title,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
@@ -37,7 +38,9 @@ export function Login() {
     <>
       <Space h="xl" />
       <center>
-        <h1 className="Heading">Log In your Profile</h1>
+        <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
+          LogIn Your Profile
+        </Title>
       </center>
       <Space h="xl" />
       <Grid sx={{ maxWidth: 340 }} mx="auto">

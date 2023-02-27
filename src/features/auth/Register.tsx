@@ -8,6 +8,8 @@ import {
   Center,
   Loader,
   LoadingOverlay,
+  Title,
+  Space,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
@@ -76,9 +78,11 @@ export function Register() {
   return (
     <>
       <center>
-        <h1 className="Heading">Sign Up your Profile</h1>
+        <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
+          SignUp Your Profile
+        </Title>
       </center>
-
+      <Space h="xl" />
       <Box sx={{ maxWidth: 340 }} mx="auto">
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form
