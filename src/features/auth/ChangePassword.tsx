@@ -45,7 +45,7 @@ export function ChangePassword() {
           Change New Password
         </Title>
         <Text color="dimmed" mt="md">
-          Your new password must be difficult from previous used passwords.
+          Your new password must be difference from previous used passwords.
         </Text>
         <Space h="xl" />
         <LoadingOverlay visible={isLoading} overlayBlur={2} />

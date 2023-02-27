@@ -1,12 +1,9 @@
 import { useForm, UseFormReturnType } from '@mantine/form'
 import {
-  PasswordInput,
   Box,
   TextInput,
   Button,
   Group,
-  Center,
-  Loader,
   LoadingOverlay,
   Title,
   Space,
@@ -15,6 +12,7 @@ import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
 import { useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
+import { NavbarProfile } from 'components/NavbarProfile'
 
 let form: any
 const nameAtom = atom('')
@@ -41,23 +39,20 @@ const avatarAtom = atom((get) => {
   return text.toUpperCase()
 })
 
-export function Register() {
+// todo fetch placeholder values from database as from register..............................
+export function Profile() {
   form = useForm({
     validateInputOnBlur: true,
     initialValues: {
       name: '',
       email: '',
       upiId: '',
-      password: '',
-      confirmPassword: '',
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       upiId: (value) =>
         /[a-zA-Z0-9_]{3,}@[a-zA-Z]{3,}/.test(value) ? null : 'Invalid UPI ID',
-      confirmPassword: (value, values) =>
-        value !== values.password ? 'Passwords did not match' : null,
     },
   })
 
@@ -66,19 +61,16 @@ export function Register() {
   const { mutate, isLoading, isError, isSuccess } = useRegister()
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
-  if (isSuccess) {
-    navigate('../login')
-    return <div>Success</div>
-  }
 
   return (
     <>
       <Space h="xl" />
       <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
       <center>
         <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
-          SignUp Your Profile
+          Profile
         </Title>
       </center>
       <Space h="xl" />
@@ -100,6 +92,8 @@ export function Register() {
               {avatarText}
             </Avatar>
           </center>
+          <Space h="xl" />
+          <Space h="xl" />
           <TextInput
             label="Name"
             placeholder="Full Name"
@@ -119,25 +113,17 @@ export function Register() {
             placeholder="UPI ID"
             {...form.getInputProps('upiId')}
           />
-          <PasswordInput
-            label="Password"
-            placeholder="Password"
-            {...form.getInputProps('password')}
-          />
-
-          <PasswordInput
-            mt="sm"
-            label="Confirm password"
-            placeholder="Confirm password"
-            {...form.getInputProps('confirmPassword')}
-          />
           <Group position="center" mt="md">
             <Button disabled={isLoading} type="submit" style={{ width: 340 }}>
-              Submit
+              Save Changes
             </Button>
           </Group>
         </form>
       </Box>
+      <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
     </>
   )
 }
