@@ -124,7 +124,12 @@ export function Header(props: { hasLoggedIn: boolean }) {
 
     if (menuItems) {
       return (
-        <Menu key={link.label} trigger="hover" exitTransitionDuration={0}>
+        <Menu
+          key={link.label}
+          trigger="hover"
+          transitionProps={{ exitDuration: 0 }}
+          withinPortal
+        >
           <Menu.Target>
             <UnstyledButton
               // href={link.link}
@@ -218,7 +223,12 @@ export function Header(props: { hasLoggedIn: boolean }) {
           <Group className={classes.hiddenMobile}>
             <ThemeSwitch />
             {hasLoggedIn ? (
-              <IconUserCircle size={32} stroke={1.1} color="#AEBAF8" />
+              <IconUserCircle
+                size={32}
+                stroke={1.1}
+                color="#AEBAF8"
+                onClick={(e) => navigate('app/dashboard')}
+              />
             ) : (
               <>
                 <Button variant="light" onClick={(e) => navigate('auth/login')}>
@@ -260,7 +270,12 @@ export function Header(props: { hasLoggedIn: boolean }) {
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
           {hasLoggedIn ? (
-            <IconUserCircle size={32} stroke={1.1} color="#AEBAF8" />
+            <IconUserCircle
+              size={32}
+              stroke={1.1}
+              color="#AEBAF8"
+              onClick={(e) => navigate('app/dashboard')}
+            />
           ) : (
             <>
               <Group position="center" grow pb="xl" px="md">

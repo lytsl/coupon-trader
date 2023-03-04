@@ -1,19 +1,11 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import {
   MantineProvider,
   ColorSchemeProvider,
   ColorScheme,
 } from '@mantine/core'
-import { Hero } from './features/static/components/Hero'
-import { Register } from './features/auth/Register'
-import { Login } from './features/auth/Login'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { Faq } from 'features/static/components/Faq'
-import { Features } from 'features/static/components/Features'
 import { AppRoutes } from 'routes/routes'
-// import { Team } from 'features/static/components/Team'
+import { Notifications } from '@mantine/notifications'
 
 function App() {
   const preferredColorScheme =
@@ -36,6 +28,7 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
+        <Notifications />
         <AppRoutes />
       </MantineProvider>
     </ColorSchemeProvider>

@@ -65,10 +65,8 @@ export function Register() {
   const [avatarText] = useAtom(avatarAtom)
   const { mutate, isLoading, isError, isSuccess } = useRegister()
   const navigate = useNavigate()
-  // if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
   if (isSuccess) {
-    navigate('../login')
+    navigate('../confirmation')
     return <div>Success</div>
   }
 

@@ -1,25 +1,27 @@
-import { Container, Title, Accordion, createStyles, Text } from '@mantine/core'
+import {
+  Container,
+  Title,
+  Accordion,
+  createStyles,
+  Text,
+  rem,
+} from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    paddingTop: theme.spacing.xl * 2,
-    paddingBottom: theme.spacing.xl * 2,
+    paddingTop: `calc(${theme.spacing.xl} * 2)`,
+    paddingBottom: `calc(${theme.spacing.xl} * 2)`,
     minHeight: 650,
   },
 
   title: {
-    marginBottom: theme.spacing.xl * 1.5,
-  },
-
-  info: {
-    marginBottom: theme.spacing.lg * 1.5,
+    marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
   },
 
   item: {
     borderRadius: theme.radius.md,
     marginBottom: theme.spacing.lg,
-
-    border: `1px solid ${
+    border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
   },
@@ -32,7 +34,7 @@ export function Faq() {
       <Title align="center" className={classes.title}>
         Frequently Asked Questions
       </Title>
-      <Text align="center" c="dimmed" className={classes.info}>
+      <Text align="center" c="dimmed" className={classes.title}>
         Here you can read the most questions asked by people to ease their
         productivity through our platform. Moreover, you can also understand the
         motto of our platform

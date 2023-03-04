@@ -8,7 +8,7 @@ import { Blob } from './components/Blob'
 
 export const Landing = () => {
   const navigate = useNavigate()
-  storage.clearToken()
+  // storage.clearToken()
   const auth = storage.getToken() == null ? false : true
 
   // const handleStart = () => {

@@ -1,4 +1,11 @@
-import { createStyles, Anchor, Group, ActionIcon, Text } from '@mantine/core'
+import {
+  createStyles,
+  Anchor,
+  Group,
+  ActionIcon,
+  Text,
+  rem,
+} from '@mantine/core'
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -8,24 +15,17 @@ import {
 
 const useStyles = createStyles((theme) => ({
   footer: {
-    marginTop: 52,
-    borderTop: `1px solid ${
+    marginTop: rem(120),
+    borderTop: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
   },
-
-  // info: {
-  //   marginBottom: theme.spacing.xs * 1.5,
-  //   [theme.fn.smallerThan('sm')]: {
-  //     flexDirection: 'column',
-  //   },
-  // },
 
   inner: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
+    padding: `${theme.spacing.md} ${theme.spacing.md}`,
 
     [theme.fn.smallerThan('sm')]: {
       flexDirection: 'column',

@@ -8,18 +8,17 @@ import {
   Text,
 } from '@mantine/core'
 import image from 'assets/image.svg'
-import { Profile } from '../Profile'
 
 const useStyles = createStyles((theme) => ({
   inner: {
     display: 'flex',
     justifyContent: 'space-between',
-    paddingTop: theme.spacing.xl * 4,
-    paddingBottom: theme.spacing.xl * 4,
+    paddingTop: `calc(${theme.spacing.xl} * 4)`,
+    paddingBottom: `calc(${theme.spacing.xl} * 4)`,
   },
   content: {
     maxWidth: 540,
-    marginRight: theme.spacing.xl * 3,
+    marginRight: `calc(${theme.spacing.xl} * 3)`,
     [theme.fn.smallerThan('md')]: {
       maxWidth: '100%',
       marginRight: 0,
@@ -87,7 +86,6 @@ export function Hero() {
           <Image src={image} className={classes.image} />
         </div>
       </Container>
-      <Profile />
     </div>
   )
 }

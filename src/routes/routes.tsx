@@ -9,6 +9,7 @@ import { Center, Loader } from '@mantine/core'
 import { Layout } from 'components/Layout'
 import { lazyImport } from 'lib/lazyImports'
 import storage from 'lib/storage'
+import { Dashboard } from 'features/user/Dashboard'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -41,9 +42,7 @@ const protectedRoutes = [
     element: <App />,
     children: [
       // { path: '/inquiry/*', element: <Inquiry /> },
-      // { path: '/users', element: <Users /> },
-      // { path: '/profile', element: <Profile /> },
-      // { path: '/', element: <Dashboard /> },
+      { path: 'dashboard', element: <Dashboard /> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },

@@ -18,9 +18,8 @@ export function CheckEmailApp() {
   const { mutate, isLoading, isError, isSuccess } = useLogin()
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
   if (isSuccess) {
-    navigate('/')
+    navigate('../login')
     return <div>Success</div>
   }
 
@@ -49,10 +48,7 @@ export function CheckEmailApp() {
         <Grid.Col>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
           <Group position="center" mt="md">
-            <Button disabled={isLoading} type="submit" style={{ width: 330 }}>
-              Open Email App
-            </Button>
-            <Anchor href="#" onClick={(e) => navigate('../forgot')}>
+            <Anchor href="#" onClick={(e) => navigate('../login')}>
               Skip, I'll confirm later.
             </Anchor>
           </Group>

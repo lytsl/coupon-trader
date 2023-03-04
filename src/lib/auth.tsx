@@ -63,13 +63,13 @@ const useRegister = () => {
     [queryClient],
   )
   return useMutation({
-    mutationFn: async (data: RegisterDTO): Promise<AuthUser> => {
+    mutationFn: async (data: RegisterDTO) => {
       console.log(data)
       const response = await registerWithEmailAndPassword(data)
-      const user = await handleUserResponse(response)
-      return user
+      // const user = await handleUserResponse(response)
+      // return user
     },
-    onSuccess: (user) => setUser(user),
+    // onSuccess: (user) => setUser(user),
   })
 }
 
