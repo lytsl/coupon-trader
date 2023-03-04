@@ -10,6 +10,8 @@ import { Layout } from 'components/Layout'
 import { lazyImport } from 'lib/lazyImports'
 import storage from 'lib/storage'
 import { Dashboard } from 'features/user/Dashboard'
+import { NotFoundAuth } from 'features/static/NotFoundAuth'
+import { NotFound } from 'features/static/NotFound'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -46,6 +48,10 @@ const protectedRoutes = [
       { path: '*', element: <Navigate to="." /> },
     ],
   },
+  {
+    path: '/auth/*',
+    element: <NotFoundAuth />,
+  },
 ]
 
 const publicRoutes = [
@@ -55,15 +61,19 @@ const publicRoutes = [
   },
 ]
 
+const commonRoutes = [
+  {
+    path: '/',
+    element: <Landing />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+]
+
 export const AppRoutes = () => {
   const auth = storage.getToken() == null ? false : true
-
-  const commonRoutes = [
-    {
-      path: '/',
-      element: <Landing />,
-    },
-  ]
 
   const routes = auth ? protectedRoutes : publicRoutes
 

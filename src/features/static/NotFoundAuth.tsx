@@ -31,12 +31,12 @@ const useStyles = createStyles((theme) => ({
   },
 
   content: {
-    paddingTop: 220,
+    paddingTop: theme.spacing.sm,
     position: 'relative',
     zIndex: 1,
 
     [theme.fn.smallerThan('sm')]: {
-      paddingTop: 120,
+      paddingTop: theme.spacing.xs,
     },
   },
 
@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: 38,
 
     [theme.fn.smallerThan('sm')]: {
-      fontSize: 32,
+      fontSize: 30,
     },
   },
 
@@ -59,29 +59,35 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export function NotFound() {
+export function NotFoundAuth() {
   const { classes } = useStyles()
   const navigate = useNavigate()
+  const { mutate: logout, isLoading, isError, isSuccess } = useLogout()
+  if (isSuccess) {
+    navigate('/')
+    return <div>Success</div>
+  }
 
   return (
     <Container className={classes.root}>
       <div className={classes.inner}>
-        <Illustration className={classes.image} />
+        {/* <Illustration className={classes.image} /> */}
         <div className={classes.content}>
-          <Title className={classes.title}>Nothing to see here</Title>
+          <Title className={classes.title}>Already Logged In</Title>
           <Text
             color="dimmed"
             size="lg"
             align="center"
             className={classes.description}
           >
-            Page you are trying to open does not exist. You may have mistyped
-            the address, or the page has been moved to another URL. If you think
-            this is an error contact support.
+            You seem to have already logged in. If you are experiencing
+            difficulties logging into your account, please check your account
+            settings or try refreshing the page. If you want to sign in to a
+            different account, you can also log out of your existing account.
           </Text>
           <Group position="center">
-            <Button onClick={(e) => navigate('/')} size="md">
-              Take me back to home page
+            <Button disabled={isLoading} onClick={(e) => logout()} size="md">
+              Logout
             </Button>
           </Group>
         </div>
