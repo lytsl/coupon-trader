@@ -8,6 +8,7 @@ import {
   Text,
 } from '@mantine/core'
 import image from 'assets/image.svg'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -57,8 +58,11 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export function Hero() {
+export function Hero(props: { hasLoggedIn: boolean }) {
+  const { hasLoggedIn } = props
   const { classes } = useStyles()
+  const navigate = useNavigate()
+
   return (
     <div>
       <Container size="lg">
@@ -78,7 +82,16 @@ export function Hero() {
             </Text>
 
             <Group mt={30}>
-              <Button radius="md" size="lg" className={classes.control}>
+              <Button
+                onClick={(e) => {
+                  hasLoggedIn
+                    ? navigate('app/user/profile')
+                    : navigate('auth/register')
+                }}
+                radius="md"
+                size="lg"
+                className={classes.control}
+              >
                 Get started
               </Button>
             </Group>

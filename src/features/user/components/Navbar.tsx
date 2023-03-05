@@ -7,6 +7,7 @@ import {
   getStylesRef,
   rem,
   UnstyledButton,
+  Flex,
 } from '@mantine/core'
 import {
   IconSwitchHorizontal,
@@ -18,7 +19,7 @@ import {
 } from '@tabler/icons-react'
 import { IconIndentIncrease, IconPassword, IconPlus } from '@tabler/icons-react'
 import { useLogout } from 'lib/auth'
-import { useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -91,8 +92,8 @@ const useStyles = createStyles((theme) => ({
 
 const data = [
   { link: '', label: 'DashBoard', icon: IconDashboard },
-  { link: '', label: 'Profile', icon: IconIcons },
-  { link: '', label: 'Password', icon: IconPassword },
+  { link: 'profile', label: 'Profile', icon: IconIcons },
+  { link: 'password', label: 'Password', icon: IconPassword },
   { link: '', label: 'Transactions', icon: IconTransferIn },
   { link: '', label: 'Add Coupon', icon: IconPlus },
   { link: '', label: 'Update Coupon', icon: IconIndentIncrease },
@@ -100,7 +101,7 @@ const data = [
 
 export function Navbar() {
   const { classes, cx } = useStyles()
-  const [active, setActive] = useState('Billing')
+  const [active, setActive] = useState('Profile')
   const { mutate, isLoading, isError, isSuccess } = useLogout()
   const navigate = useNavigate()
   if (isSuccess) {
@@ -109,45 +110,46 @@ export function Navbar() {
   }
 
   const links = data.map((item) => (
-    <a
+    <Link
       className={cx(classes.link, {
         [classes.linkActive]: item.label === active,
       })}
-      href={item.link}
+      to={item.link}
       key={item.label}
       onClick={(event) => {
-        event.preventDefault()
         setActive(item.label)
+        navigate('../' + item.link)
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ))
 
   return (
-    <MantineNavbar height={600} width={{ sm: 300 }} p="md">
-      <MantineNavbar.Section grow>{links}</MantineNavbar.Section>
+    <Flex
+      gap="xl"
+      justify="flex-start"
+      align="center"
+      direction="row"
+      wrap="wrap"
+    >
+      <MantineNavbar height={600} width={{ sm: 300 }} p="md">
+        <MantineNavbar.Section grow>{links}</MantineNavbar.Section>
 
-      <MantineNavbar.Section className={classes.footer}>
-        <a
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
-
-        <UnstyledButton
-          disabled={isLoading}
-          className={classes.link}
-          onClick={(event) => mutate()}
-        >
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </UnstyledButton>
-      </MantineNavbar.Section>
-    </MantineNavbar>
+        <MantineNavbar.Section className={classes.footer}>
+          <UnstyledButton
+            w={'100%'}
+            disabled={isLoading}
+            className={classes.link}
+            onClick={(event) => mutate()}
+          >
+            <IconLogout className={classes.linkIcon} stroke={1.5} />
+            <span>Logout</span>
+          </UnstyledButton>
+        </MantineNavbar.Section>
+      </MantineNavbar>
+      <Outlet />
+    </Flex>
   )
 }

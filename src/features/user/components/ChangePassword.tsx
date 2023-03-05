@@ -8,6 +8,7 @@ import {
   Text,
   Space,
   Title,
+  Anchor,
 } from '@mantine/core'
 
 import { useRegister } from 'lib/auth'
@@ -20,23 +21,18 @@ export function ChangePassword() {
     validateInputOnBlur: true,
     initialValues: {
       password: '',
+      newPassword: '',
       confirmPassword: '',
     },
 
     validate: {
       confirmPassword: (value, values) =>
-        value !== values.password ? 'Passwords did not match' : null,
+        value !== values.newPassword ? 'Passwords did not match' : null,
     },
   })
 
   const { mutate, isLoading, isError, isSuccess } = useRegister()
   const navigate = useNavigate()
-  //   if (isLoading) return <div>Loading...</div>
-  //     if (isError) return <div>Error</div>
-  //     if (isSuccess) {
-  //       navigate('../login')
-  //       return <div>Success</div>
-  //     }
 
   return (
     <>
@@ -55,6 +51,12 @@ export function ChangePassword() {
             placeholder="Password"
             {...form.getInputProps('password')}
           />
+          <PasswordInput
+            mt="sm"
+            label="New Password"
+            placeholder="New Password"
+            {...form.getInputProps('newPassword')}
+          />
 
           <PasswordInput
             mt="sm"
@@ -66,6 +68,9 @@ export function ChangePassword() {
             <Button disabled={isLoading} type="submit" style={{ width: 340 }}>
               Reset Password
             </Button>
+            <Anchor href="#" onClick={(e) => navigate('../../auth/forgot')}>
+              Forgot Password? Click here to Reset
+            </Anchor>
           </Group>
         </form>
       </Box>

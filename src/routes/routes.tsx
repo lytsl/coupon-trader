@@ -9,18 +9,15 @@ import { Center, Loader } from '@mantine/core'
 import { Layout } from 'components/Layout'
 import { lazyImport } from 'lib/lazyImports'
 import storage from 'lib/storage'
-import { Dashboard } from 'features/user/Dashboard'
 import { NotFoundAuth } from 'features/static/NotFoundAuth'
 import { NotFound } from 'features/static/NotFound'
+import { ProfileRoutes } from 'features/user/routes'
+import { Navbar } from 'features/user/components/Navbar'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
   'AuthRoutes',
 )
-// const { Landing } = lazyImport(
-//   () => import('features/static/Landing'),
-//   'Landing',
-// )
 
 const App = () => {
   return (
@@ -40,12 +37,12 @@ const App = () => {
 
 const protectedRoutes = [
   {
-    path: '/app',
+    path: '/app/*',
     element: <App />,
     children: [
+      ...ProfileRoutes,
       // { path: '/inquiry/*', element: <Inquiry /> },
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: '*', element: <Navigate to="." /> },
+      // { path: '*', element: <Navigate to="." /> },
     ],
   },
   {
@@ -78,11 +75,6 @@ export const AppRoutes = () => {
   const routes = auth ? protectedRoutes : publicRoutes
 
   const element = useRoutes([...routes, ...commonRoutes])
-  // const element = useRoutes([
-  //   ...protectedRoutes,
-  //   ...publicRoutes,
-  //   ...commonRoutes,
-  // ])
 
   return <>{element}</>
 }

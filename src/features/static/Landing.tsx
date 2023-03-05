@@ -22,7 +22,7 @@ export const Landing = () => {
   return (
     <Blob>
       <Layout hasLoggedIn={auth}>
-        <Hero />
+        <Hero hasLoggedIn={auth} />
         <Features />
         <Faq />
       </Layout>

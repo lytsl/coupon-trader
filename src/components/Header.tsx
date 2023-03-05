@@ -204,7 +204,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
     <>
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
-          <Group>
+          <Group onClick={(e) => navigate('/')}>
             <IconTicket size={32} stroke={1.1} color="#AEBAF8" />
             <Text
               variant="gradient"
@@ -227,7 +227,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
                 size={32}
                 stroke={1.1}
                 color="#AEBAF8"
-                onClick={(e) => navigate('app/dashboard')}
+                onClick={(e) => navigate('app/user/profile')}
               />
             ) : (
               <>
@@ -274,7 +274,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
               size={32}
               stroke={1.1}
               color="#AEBAF8"
-              onClick={(e) => navigate('app/dashboard')}
+              onClick={(e) => navigate('app/user/profile')}
             />
           ) : (
             <>

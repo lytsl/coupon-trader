@@ -7,12 +7,12 @@ import {
   LoadingOverlay,
   Title,
   Space,
+  Flex,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
 import { useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
-import { MantineNavbar } from 'features/user/components/Navbar'
 
 let form: any
 const nameAtom = atom('')
@@ -63,18 +63,20 @@ export function Profile() {
   // if (isLoading) return <div>Loading...</div>
 
   return (
-    <>
-      <Space h="xl" />
-      <Space h="xl" />
-      <Space h="xl" />
-      <Space h="xl" />
+    <Flex
+      gap="xl"
+      justify="center"
+      align="center"
+      direction="column"
+      mx="auto"
+      // wrap="wrap"
+    >
       <center>
         <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
           Profile
         </Title>
       </center>
-      <Space h="xl" />
-      <Box sx={{ maxWidth: 340 }} mx="auto">
+      <Box sx={{ maxWidth: 340 }}>
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form
           onSubmit={form.onSubmit((values: any) =>
@@ -120,10 +122,6 @@ export function Profile() {
           </Group>
         </form>
       </Box>
-      <Space h="xl" />
-      <Space h="xl" />
-      <Space h="xl" />
-      <Space h="xl" />
-    </>
+    </Flex>
   )
 }
