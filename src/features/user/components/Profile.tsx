@@ -12,7 +12,6 @@ import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
 import { useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
-import { MantineNavbar } from 'features/user/components/Navbar'
 
 let form: any
 const nameAtom = atom('')
