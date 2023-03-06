@@ -9,6 +9,7 @@ import {
   Space,
   Title,
   Anchor,
+  Flex,
 } from '@mantine/core'
 
 import { useRegister } from 'lib/auth'
@@ -35,7 +36,7 @@ export function ChangePassword() {
   const navigate = useNavigate()
 
   return (
-    <>
+    <Flex gap="xl" justify="center" align="center" direction="column" mx="auto">
       <Box sx={{ maxWidth: 340 }} mx="auto">
         <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
           Change New Password
@@ -74,8 +75,6 @@ export function ChangePassword() {
           </Group>
         </form>
       </Box>
-      <Space h="xl" />
-      <Space h="xl" />
-    </>
+    </Flex>
   )
 }

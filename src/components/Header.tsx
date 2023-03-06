@@ -8,7 +8,6 @@ import {
   Group,
   Button,
   Burger,
-  Box,
   Drawer,
   Collapse,
   ScrollArea,
@@ -16,7 +15,7 @@ import {
   UnstyledButton,
   Stack,
   Text,
-  Loader,
+  rem,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
@@ -30,6 +29,11 @@ import { ThemeSwitch } from './ThemeSwitch'
 const HEADER_HEIGHT = 60
 
 const useStyles = createStyles((theme) => ({
+  header: {
+    borderBottom: `${rem(1)} solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+    }`,
+  },
   inner: {
     height: HEADER_HEIGHT,
     display: 'flex',
@@ -201,7 +205,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
   const navigate = useNavigate()
 
   return (
-    <>
+    <div className={classes.header}>
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group onClick={(e) => navigate('/')}>
@@ -293,6 +297,6 @@ export function Header(props: { hasLoggedIn: boolean }) {
           )}
         </ScrollArea>
       </Drawer>
-    </>
+    </div>
   )
 }
