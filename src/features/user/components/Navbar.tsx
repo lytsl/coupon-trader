@@ -8,6 +8,8 @@ import {
   rem,
   UnstyledButton,
   Flex,
+  Box,
+  SimpleGrid,
 } from '@mantine/core'
 import {
   IconSwitchHorizontal,
@@ -22,6 +24,18 @@ import { useLogout } from 'lib/auth'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
+  navbar: {
+    height: 600,
+    [theme.fn.largerThan('md')]: {
+      width: 300,
+      padding: theme.spacing.md,
+    },
+    [theme.fn.smallerThan('md')]: {
+      width: 80,
+      padding: theme.spacing.sm,
+    },
+  },
+
   header: {
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
@@ -40,15 +54,23 @@ const useStyles = createStyles((theme) => ({
 
   link: {
     ...theme.fn.focusStyles(),
+    height: 50,
+    [theme.fn.smallerThan('md')]: {
+      width: 50,
+      fontSize: theme.fontSizes.lg,
+      justifyContent: 'center',
+    },
+    [theme.fn.largerThan('md')]: {
+      fontSize: theme.fontSizes.sm,
+      padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
+    },
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    fontSize: theme.fontSizes.sm,
     color:
       theme.colorScheme === 'dark'
         ? theme.colors.dark[1]
         : theme.colors.gray[7],
-    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     fontWeight: 500,
 
@@ -71,7 +93,13 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark'
         ? theme.colors.dark[2]
         : theme.colors.gray[6],
-    marginRight: theme.spacing.sm,
+  },
+
+  linkLabel: {
+    marginLeft: theme.spacing.sm,
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
+    },
   },
 
   linkActive: {
@@ -122,7 +150,7 @@ export function Navbar() {
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
+      <span className={classes.linkLabel}>{item.label}</span>
     </Link>
   ))
 
@@ -134,22 +162,24 @@ export function Navbar() {
       direction="row"
       wrap="wrap"
     >
-      <MantineNavbar height={600} width={{ sm: 300 }} p="md">
+      <MantineNavbar className={classes.navbar}>
         <MantineNavbar.Section grow>{links}</MantineNavbar.Section>
 
         <MantineNavbar.Section className={classes.footer}>
           <UnstyledButton
-            w={'100%'}
             disabled={isLoading}
             className={classes.link}
             onClick={(event) => mutate()}
+            w="100%"
           >
             <IconLogout className={classes.linkIcon} stroke={1.5} />
-            <span>Logout</span>
+            <span className={classes.linkLabel}>Logout</span>
           </UnstyledButton>
         </MantineNavbar.Section>
       </MantineNavbar>
-      <Outlet />
+      <Box sx={{ flex: 1 }}>
+        <Outlet />
+      </Box>
     </Flex>
   )
 }
