@@ -94,8 +94,6 @@ export function Profile() {
               {avatarText}
             </Avatar>
           </center>
-          <Space h="xl" />
-          <Space h="xl" />
           <TextInput
             label="Name"
             placeholder="Full Name"
