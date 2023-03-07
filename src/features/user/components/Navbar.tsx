@@ -25,13 +25,13 @@ import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   navbar: {
-    height: 600,
+    height: 585,
     [theme.fn.largerThan('md')]: {
       width: 300,
       padding: theme.spacing.md,
     },
     [theme.fn.smallerThan('md')]: {
-      width: 80,
+      width: 75,
       padding: theme.spacing.sm,
     },
   },

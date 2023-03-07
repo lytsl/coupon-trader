@@ -34,13 +34,19 @@ export function ForgotPassword() {
     <>
       <Space h="xl" />
       <Space h="xl" />
-      <Grid sx={{ maxWidth: 340 }} mx="auto">
+      <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
+      <Space h="xl" />
+      <Grid sx={{ maxWidth: 270 }} mx="auto">
         <Grid.Col>
           <div
             className="heading"
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           >
-            <Title mt="sm" style={{ fontSize: 34, fontWeight: 900 }}>
+            <Title mt="sm" style={{ fontSize: 24, fontWeight: 700 }}>
               Reset Password
             </Title>
 
