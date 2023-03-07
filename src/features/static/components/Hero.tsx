@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 import image from 'assets/image.svg'
 import { useNavigate } from 'react-router-dom'
+import { ContactUs } from './ContactUs'
 
 const useStyles = createStyles((theme) => ({
   inner: {
