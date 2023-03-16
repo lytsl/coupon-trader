@@ -72,7 +72,7 @@ export function ChangePassword() {
             <Button disabled={isLoading} type="submit" style={{ width: 270 }}>
               Reset Password
             </Button>
-            <Anchor href="#" onClick={(e) => navigate('../../auth/forgot')}>
+            <Anchor href="#" onClick={(e) => navigate('../../../auth/forgot')}>
               Forgot Password? Click here to Reset
             </Anchor>
           </Group>
