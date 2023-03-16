@@ -5,6 +5,7 @@ import { Faq } from './components/Faq'
 import { Features } from './components/Features'
 import { Hero } from './components/Hero'
 import { Blob } from './components/Blob'
+import { ContactUs } from './components/ContactUs'
 
 export const Landing = () => {
   const navigate = useNavigate()
@@ -25,6 +26,7 @@ export const Landing = () => {
         <Hero hasLoggedIn={auth} />
         <Features />
         <Faq />
+        <ContactUs />
       </Layout>
     </Blob>
   )

@@ -72,11 +72,11 @@ export function Profile() {
       // wrap="wrap"
     >
       <center>
-        <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
+        <Title mt="sm" style={{ fontSize: 24, fontWeight: 700 }}>
           Profile
         </Title>
       </center>
-      <Box sx={{ maxWidth: 340 }}>
+      <Box sx={{ maxWidth: 270 }}>
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form
           onSubmit={form.onSubmit((values: any) =>
@@ -114,7 +114,7 @@ export function Profile() {
             {...form.getInputProps('upiId')}
           />
           <Group position="center" mt="md">
-            <Button disabled={isLoading} type="submit" style={{ width: 340 }}>
+            <Button disabled={isLoading} type="submit" style={{ width: 270 }}>
               Save Changes
             </Button>
           </Group>

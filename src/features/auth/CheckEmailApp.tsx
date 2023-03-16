@@ -27,7 +27,7 @@ export function CheckEmailApp() {
     <center>
       <Space h="xl" />
       <Space h="xl" />
-      <Grid sx={{ maxWidth: 340 }} mx="auto">
+      <Grid sx={{ maxWidth: 270 }} mx="auto">
         <Grid.Col>
           <IconBrandGmail size={50} stroke={1.5} />
         </Grid.Col>
@@ -36,7 +36,7 @@ export function CheckEmailApp() {
             className="heading"
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           >
-            <Title mt="sm" style={{ fontSize: 34, fontWeight: 900 }}>
+            <Title mt="sm" style={{ fontSize: 24, fontWeight: 700 }}>
               Check your Email
             </Title>
 
