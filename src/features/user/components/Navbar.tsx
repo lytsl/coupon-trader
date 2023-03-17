@@ -123,8 +123,8 @@ const data = [
   { link: 'profile', label: 'Profile', icon: IconIcons },
   { link: 'password', label: 'Password', icon: IconPassword },
   { link: '', label: 'Transactions', icon: IconTransferIn },
-  { link: '', label: 'Add Coupon', icon: IconPlus },
-  { link: '', label: 'Update Coupon', icon: IconIndentIncrease },
+  { link: 'add', label: 'Add Coupon', icon: IconPlus },
+  // { link: '', label: 'Update Coupon', icon: IconIndentIncrease },
 ]
 
 export function Navbar() {
@@ -158,7 +158,7 @@ export function Navbar() {
     <Flex
       gap="xl"
       justify="flex-start"
-      align="center"
+      align="flex-start"
       direction="row"
       wrap="wrap"
     >
@@ -177,7 +177,7 @@ export function Navbar() {
           </UnstyledButton>
         </MantineNavbar.Section>
       </MantineNavbar>
-      <Box sx={{ flex: 1 }}>
+      <Box py="md" sx={{ flex: 1, height: '100svh' }}>
         <Outlet />
       </Box>
     </Flex>
