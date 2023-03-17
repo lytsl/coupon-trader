@@ -68,6 +68,10 @@ const commonRoutes = [
     element: <ForgotPassword />,
   },
   {
+    path: '/auth/forgot',
+    element: <ForgotPassword />,
+  },
+  {
     path: '*',
     element: <NotFound />,
   },
