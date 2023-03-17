@@ -231,7 +231,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
                 size={32}
                 stroke={1.1}
                 color="#AEBAF8"
-                onClick={(e) => navigate('app/user/profile')}
+                onClick={(e) => navigate('../app/user/profile')}
               />
             ) : (
               <>

@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom'
 import { Landing } from 'features/static/Landing'
 
 import { Suspense } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 import { Center, Loader } from '@mantine/core'
 import { Layout } from 'components/Layout'
@@ -12,7 +12,7 @@ import storage from 'lib/storage'
 import { NotFoundAuth } from 'features/static/NotFoundAuth'
 import { NotFound } from 'features/static/NotFound'
 import { ProfileRoutes } from 'features/user/routes'
-import { Navbar } from 'features/user/components/Navbar'
+import { ForgotPassword } from 'components/ForgotPassword'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -62,6 +62,10 @@ const commonRoutes = [
   {
     path: '/',
     element: <Landing />,
+  },
+  {
+    path: '/auth/forgot',
+    element: <ForgotPassword />,
   },
   {
     path: '*',

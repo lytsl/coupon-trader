@@ -69,6 +69,14 @@ export function ForgotPassword() {
               <Button disabled={isLoading} type="submit" style={{ width: 330 }}>
                 Send Instructions
               </Button>
+              <Button
+                onClick={(e) => navigate('/')}
+                disabled={isLoading}
+                type="submit"
+                style={{ width: 330 }}
+              >
+                Back to Home Page
+              </Button>
             </Group>
           </form>
         </Grid.Col>
