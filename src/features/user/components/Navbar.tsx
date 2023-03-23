@@ -2,24 +2,19 @@ import { useState } from 'react'
 import {
   createStyles,
   Navbar as MantineNavbar,
-  Group,
-  Text,
   getStylesRef,
   rem,
   UnstyledButton,
   Flex,
   Box,
-  SimpleGrid,
 } from '@mantine/core'
 import {
-  IconSwitchHorizontal,
   IconLogout,
-  IconTicket,
   IconDashboard,
   IconIcons,
   IconTransferIn,
 } from '@tabler/icons-react'
-import { IconIndentIncrease, IconPassword, IconPlus } from '@tabler/icons-react'
+import { IconPassword, IconPlus } from '@tabler/icons-react'
 import { useLogout } from 'lib/auth'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
@@ -177,7 +172,7 @@ export function Navbar() {
           </UnstyledButton>
         </MantineNavbar.Section>
       </MantineNavbar>
-      <Box py="md" sx={{ flex: 1, height: '100svh' }}>
+      <Box py="md" sx={{ flex: 1, minHeight: '100svh' }}>
         <Outlet />
       </Box>
     </Flex>

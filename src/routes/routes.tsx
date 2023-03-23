@@ -13,6 +13,7 @@ import { NotFoundAuth } from 'features/static/NotFoundAuth'
 import { NotFound } from 'features/static/NotFound'
 import { ProfileRoutes } from 'features/user/routes'
 import { ForgotPassword } from 'components/ForgotPassword'
+import { CouponCard } from 'features/user/components/CouponCard'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -68,8 +69,8 @@ const commonRoutes = [
     element: <ForgotPassword />,
   },
   {
-    path: '/auth/forgot',
-    element: <ForgotPassword />,
+    path: '/coupon',
+    element: <CouponCard />,
   },
   {
     path: '*',
