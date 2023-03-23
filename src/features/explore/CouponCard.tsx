@@ -23,6 +23,14 @@ const useStyles = createStyles((theme) => ({
     fontFamily: 'Righteous, Helvetica',
   },
 
+  title: {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 2,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
   circle1: {
     background:
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.white,
@@ -94,7 +102,7 @@ export function CouponCard() {
                 alt="COMPANY NAME logo"
               />
 
-              <Text fz="lg" fw={600}>
+              <Text fz="lg" fw={600} className={classes.title}>
                 Flat Rs 400 Off on orders above Rs 999
               </Text>
             </Flex>
@@ -108,7 +116,7 @@ export function CouponCard() {
                 <Text fz="sm" c="dimmed" fw={500} sx={{ lineHeight: 1 }}>
                   Expires On
                 </Text>
-                <Text fz="md" fw={500} sx={{ lineHeight: 1 }} mt={rem(4)}>
+                <Text fz="md" fw={600} sx={{ lineHeight: 1 }} mt={rem(4)}>
                   30 Apr 2023
                 </Text>
               </Box>

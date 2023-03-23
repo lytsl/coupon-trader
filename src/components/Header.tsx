@@ -16,6 +16,7 @@ import {
   Stack,
   Text,
   rem,
+  Anchor,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
@@ -81,7 +82,7 @@ const useStyles = createStyles((theme) => ({
 
 const links = [
   {
-    link: '#',
+    link: '../app/explore',
     label: 'Explore',
   },
   {
@@ -156,7 +157,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
         key={link.label}
         href={link.link}
         className={classes.link}
-        onClick={(event) => event.preventDefault()}
+        onClick={(event) => navigate(link.link)}
       >
         {link.label}
       </a>

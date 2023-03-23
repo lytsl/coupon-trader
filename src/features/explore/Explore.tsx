@@ -4,18 +4,24 @@ import {
   Flex,
   Box,
   rem,
+  Text,
 } from '@mantine/core'
 import { CouponCard } from './CouponCard'
 
 const useStyles = createStyles((theme) => ({
+  navbar: {
+    height: 585,
+    width: rem(270),
+  },
+
   grid: {
     margin: '0 auto',
     display: 'grid',
-    gap: rem(16),
-    [theme.fn.largerThan('sm')]: {
+    gap: `${rem(32)} ${rem(24)}`,
+    [theme.fn.largerThan(rem(900))]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
-    [theme.fn.largerThan('md')]: {
+    [theme.fn.largerThan(rem(1200))]: {
       gridTemplateColumns: 'repeat(3, 1fr)',
     },
   },
@@ -36,9 +42,13 @@ export function Explore() {
       justify="flex-start"
       align="flex-start"
       direction="row"
-      wrap="wrap"
+      wrap="nowrap"
     >
-      {/* <MantineNavbar ></MantineNavbar> */}
+      <MantineNavbar className={classes.navbar}>
+        <MantineNavbar.Section grow>
+          <Text>filter</Text>
+        </MantineNavbar.Section>
+      </MantineNavbar>
       <Box
         py="md"
         sx={{ flex: 1, minHeight: '100svh' }}
