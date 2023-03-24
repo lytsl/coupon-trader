@@ -1,4 +1,3 @@
-import { Center, Loader } from '@mantine/core'
 import * as React from 'react'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -10,9 +9,33 @@ type ContentLayoutProps = {
 }
 
 export const Layout = ({ children, hasLoggedIn }: ContentLayoutProps) => {
+  const [show, setShow] = React.useState(true)
+  const [lastScrollY, setLastScrollY] = React.useState(0)
+
+  const controlNavbar = () => {
+    if (typeof window !== 'undefined') {
+      if (window.scrollY > lastScrollY) {
+        setShow(false)
+      } else {
+        setShow(true)
+      }
+      setLastScrollY(window.scrollY)
+    }
+  }
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', controlNavbar)
+
+      return () => {
+        window.removeEventListener('scroll', controlNavbar)
+      }
+    }
+  }, [lastScrollY])
+
   return (
     <>
-      <Header hasLoggedIn={hasLoggedIn} />
+      <Header hasLoggedIn={hasLoggedIn} sx={show ? { top: 0 } : {}} />
       {children}
       <Footer />
     </>

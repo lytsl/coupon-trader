@@ -4,14 +4,23 @@ import {
   Flex,
   Box,
   rem,
-  Text,
+  ScrollArea,
+  TextInput,
+  Checkbox,
 } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
+import { IconSearch } from '@tabler/icons-react'
+import { HEADER_HEIGHT } from 'components/Header'
+import { useState } from 'react'
 import { CouponCard } from './CouponCard'
+import { ExploreNavbar } from './ExploreNavbar'
 
 const useStyles = createStyles((theme) => ({
   navbar: {
-    height: 585,
+    height: '80svh',
     width: rem(270),
+    position: 'sticky',
+    top: `${HEADER_HEIGHT}`,
   },
 
   grid: {
@@ -28,29 +37,33 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const data: number[] = []
+const companies: string[] = [
+  'PhonePay',
+  'PayTm',
+  'GooglePay',
+  'Swiggy',
+  'Zomato',
+  'Airtel',
+]
 
 export function Explore() {
   const { classes } = useStyles()
+  const [value, setValue] = useState('')
+  const [debounced] = useDebouncedValue(value, 200)
 
   for (let i = 0; i < 50; i++) data.push(i)
 
   const cards = data.map((item) => <CouponCard />)
+  const companyCheckBox = companies.map((item) => (
+    <Checkbox value={item} label={item} key={item} />
+  ))
 
   return (
-    <Flex
-      gap="xl"
-      justify="flex-start"
-      align="flex-start"
-      direction="row"
-      wrap="nowrap"
-    >
-      <MantineNavbar className={classes.navbar}>
-        <MantineNavbar.Section grow>
-          <Text>filter</Text>
-        </MantineNavbar.Section>
-      </MantineNavbar>
+    <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
+      <ExploreNavbar />
       <Box
-        py="md"
+        py="xl"
+        px="lg"
         sx={{ flex: 1, minHeight: '100svh' }}
         className={classes.grid}
       >

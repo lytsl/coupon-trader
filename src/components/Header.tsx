@@ -17,6 +17,7 @@ import {
   Text,
   rem,
   Anchor,
+  Box,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
@@ -24,13 +25,16 @@ import {
   IconTicket,
   IconUserCircle,
 } from '@tabler/icons-react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ThemeSwitch } from './ThemeSwitch'
 
-const HEADER_HEIGHT = 60
+export const HEADER_HEIGHT = 60
 
 const useStyles = createStyles((theme) => ({
   header: {
+    zIndex: 10,
+    position: 'sticky',
     borderBottom: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
@@ -117,8 +121,9 @@ const links = [
   },
 ]
 
-export function Header(props: { hasLoggedIn: boolean }) {
-  const { hasLoggedIn } = props
+export function Header(props: { hasLoggedIn: boolean; sx: any }) {
+  const { hasLoggedIn, sx } = props
+
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
@@ -206,7 +211,7 @@ export function Header(props: { hasLoggedIn: boolean }) {
   const navigate = useNavigate()
 
   return (
-    <div className={classes.header}>
+    <Box className={classes.header} sx={sx}>
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
           <Group onClick={(e) => navigate('/')}>
@@ -298,6 +303,6 @@ export function Header(props: { hasLoggedIn: boolean }) {
           )}
         </ScrollArea>
       </Drawer>
-    </div>
+    </Box>
   )
 }
