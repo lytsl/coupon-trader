@@ -94,7 +94,7 @@ const links = [
     label: 'About',
   },
   {
-    link: '#',
+    link: '../app/inquiry',
     label: 'Inquiry',
   },
   {

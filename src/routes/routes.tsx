@@ -15,6 +15,7 @@ import { ProfileRoutes } from 'features/user/routes'
 import { ForgotPassword } from 'components/ForgotPassword'
 import { CouponCard } from 'features/explore/CouponCard'
 import { Explore } from 'features/explore/Explore'
+import { Inquiry } from 'features/inquiry/Inquiry'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -44,6 +45,7 @@ const protectedRoutes = [
     children: [
       ...ProfileRoutes,
       { path: 'explore/', element: <Explore /> },
+      { path: 'inquiry/', element: <Inquiry /> },
       // { path: '*', element: <Navigate to="." /> },
     ],
   },
