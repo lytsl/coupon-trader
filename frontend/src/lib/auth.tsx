@@ -6,17 +6,10 @@ import {
   getUser,
   registerWithEmailAndPassword,
   logout,
-  AuthUser,
 } from 'features/auth/api'
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-} from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import storage from 'lib/storage'
 import React from 'react'
-import { useCallback } from 'react'
 
 async function handleUserResponse(data: UserResponse) {
   const { jwt, user } = data
@@ -66,6 +59,7 @@ const useRegister = () => {
     mutationFn: async (data: RegisterDTO) => {
       console.log(data)
       const response = await registerWithEmailAndPassword(data)
+      console.log(response)
       // const user = await handleUserResponse(response)
       // return user
     },

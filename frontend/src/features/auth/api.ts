@@ -1,3 +1,5 @@
+import { axios } from 'lib/axios'
+
 export type AuthUser = {
   id: string
   email: string
@@ -18,11 +20,10 @@ export type LoginDTO = {
 }
 
 export type RegisterDTO = {
-  name: ''
+  username: ''
   email: ''
-  phoneNumber: ''
-  upiId: ''
   password: ''
+  cpassword: ''
 }
 
 const tempUser: AuthUser = {
@@ -58,14 +59,7 @@ export const loginWithEmailAndPassword = (
 
 export const registerWithEmailAndPassword = (
   data: RegisterDTO,
-): Promise<UserResponse> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(tempUserResponse)
-      resolve(tempUserResponse)
-    }, 1000)
-  })
-}
+): Promise<UserResponse> => axios.post('/auth/register', data)
 
 export function logout(): Promise<{ message: string }> {
   return new Promise((resolve) => {
