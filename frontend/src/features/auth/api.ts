@@ -1,61 +1,39 @@
 import { axios } from 'lib/axios'
 
 export type AuthUser = {
-  id: string
+  _id: string
   email: string
-  name: string
-  upi_id: string
+  username: string
   avatar: string
-  // role: 'ADMIN' | 'USER'
 }
 
 export type UserResponse = {
-  jwt: string
-  user: AuthUser
+  _id: string
+  username: string
+  email: string
+  emailverified: boolean
+  accessToken: string
 }
 
 export type LoginDTO = {
-  email: string
+  username: string
   password: string
 }
 
 export type RegisterDTO = {
-  username: ''
-  email: ''
-  password: ''
-  cpassword: ''
+  username: string
+  email: string
+  password: string
+  cpassword: string
 }
 
-const tempUser: AuthUser = {
-  id: '123',
-  email: 'temp@temp.com',
-  name: 'temp_name',
-  upi_id: 'temp_upi@temp',
-  avatar: '',
-}
-
-const tempUserResponse: UserResponse = {
-  jwt: 'jwtToken',
-  user: tempUser,
-}
-
-export const getUser = (): Promise<AuthUser> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(tempUser)
-    }, 1000)
-  })
-}
+// export const getUser = (): Promise<AuthUser> => {
+//   return axios.get('/user/' + )
+// }
 
 export const loginWithEmailAndPassword = (
   data: LoginDTO,
-): Promise<UserResponse> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(tempUserResponse)
-    }, 1000)
-  })
-}
+): Promise<UserResponse> => axios.post('/auth/login', data)
 
 export const registerWithEmailAndPassword = (
   data: RegisterDTO,

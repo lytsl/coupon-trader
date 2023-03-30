@@ -5,63 +5,61 @@ import {
   TextInput,
   Button,
   Group,
-  Center,
-  Loader,
   LoadingOverlay,
   Title,
   Space,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
-import { atom, useAtom } from 'jotai'
 import { useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
 import { RegisterDTO } from 'features/auth/api'
+import { useState } from 'react'
 
-let form: any
-// const nameAtom = atom('')
-// const avatarAtom = atom((get) => {
-//   let text = get(nameAtom)
-//   text = text.trim()
-
-//   if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text) && text.length == 0)) {
-//     form.setFieldError(
-//       'name',
-//       'Name must have at least 2 letters and only contain letters',
-//     )
-//     return ''
-//   }
-
-//   const words = text.split(/[^A-Za-z]+/)
-//   if (words.length > 1 && words[1].length > 0) {
-//     text = words[0][0] + words[1][0]
-//   } else {
-//     text = words[0][0] + words[0][1]
-//   }
-
-//   form.clearFieldError('name')
-//   return text.toUpperCase()
-// })
+let form: UseFormReturnType<RegisterDTO, (values: RegisterDTO) => RegisterDTO>
 
 export function Register() {
   form = useForm({
     validateInputOnBlur: true,
-    initialValues: {} as RegisterDTO,
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+      cpassword: '',
+    } as RegisterDTO,
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-
+      password: (value) =>
+        value.length < 8 ? 'Password must be at least 8 characters' : null,
       cpassword: (value, values) =>
         value !== values.password ? 'Passwords did not match' : null,
     },
   })
 
-  // const [name, setName] = useAtom(nameAtom)
-  // const [avatarText] = useAtom(avatarAtom)
+  const [avatarText, setAvatarText] = useState('')
   const { mutate, isLoading, isError, isSuccess } = useRegister()
   const navigate = useNavigate()
   if (isSuccess) {
     navigate('../confirmation')
     return <div>Success</div>
+  }
+
+  function handleUserNameChange(e: any) {
+    let text = e.target.value
+    // text = text.trim()
+
+    form.setFieldValue('username', text)
+    if (!(text.length >= 3 && /^[a-zA-Z0-9]+$/.test(text))) {
+      form.setFieldError(
+        'username',
+        'Name must have at least 3 letters and only contain letters',
+      )
+      setAvatarText('')
+    } else {
+      text = text.slice(0, 2).toUpperCase()
+      form.clearFieldError('username')
+      setAvatarText(text)
+    }
   }
 
   return (
@@ -80,20 +78,19 @@ export function Register() {
           <center>
             <Avatar
               src={null}
-              // alt={avatarText}
+              alt={avatarText}
               radius="xs"
               size="xl"
               color="sky"
             >
-              {/* {avatarText} */}
+              {avatarText}
             </Avatar>
           </center>
           <TextInput
             label="Username"
             placeholder="Username"
             {...form.getInputProps('username')}
-            // value={name}
-            // onChange={(e) => setName(e.target.value)}
+            onChange={handleUserNameChange}
           />
           <TextInput
             mt="sm"

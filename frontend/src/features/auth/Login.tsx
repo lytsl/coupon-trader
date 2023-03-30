@@ -14,13 +14,17 @@ import {
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'lib/auth'
+import { LoginDTO } from './api'
 
 export function Login() {
   const form = useForm({
-    initialValues: { email: '', password: '' },
+    initialValues: { username: '', password: '' } as LoginDTO,
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      username: (value) =>
+        value.length >= 3 && /^[a-zA-Z0-9]+$/.test(value)
+          ? null
+          : 'Invalid username',
       password: (value) => (value == null ? 'Enter Password' : null),
     },
   })
@@ -28,7 +32,6 @@ export function Login() {
   const { mutate, isLoading, isError, isSuccess } = useLogin()
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
   if (isSuccess) {
     navigate('/')
     return <div>Success</div>
@@ -58,9 +61,9 @@ export function Login() {
           <form onSubmit={form.onSubmit((values: any) => mutate(values))}>
             <TextInput
               mt="sm"
-              label="Email"
-              placeholder="Email"
-              {...form.getInputProps('email')}
+              label="username"
+              placeholder="username"
+              {...form.getInputProps('username')}
             />
             <PasswordInput
               label="Password"

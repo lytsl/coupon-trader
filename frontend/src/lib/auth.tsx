@@ -3,18 +3,21 @@ import {
   LoginDTO,
   RegisterDTO,
   loginWithEmailAndPassword,
-  getUser,
   registerWithEmailAndPassword,
   logout,
+  AuthUser,
 } from 'features/auth/api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import storage from 'lib/storage'
 import React from 'react'
 
-async function handleUserResponse(data: UserResponse) {
-  const { jwt, user } = data
-  storage.setToken(jwt)
-  return user
+async function handleUserResponse(response: UserResponse) {
+  const data: AuthUser = {
+    ...response,
+    avatar: response.username.slice(0, 2).toUpperCase(),
+  }
+  storage.setToken(response.accessToken)
+  return data
 }
 
 const userKey = ['authenticated-user']
@@ -22,7 +25,7 @@ const userKey = ['authenticated-user']
 const useUser = () =>
   useQuery(['authenticated-user'], async () => {
     if (storage.getToken()) {
-      const data = await getUser()
+      const data = true
       return data
     }
     return null
@@ -32,14 +35,14 @@ const useLogin = () => {
   const queryClient = useQueryClient()
 
   const setUser = React.useCallback(
-    (data: any) => queryClient.setQueryData(userKey, data),
+    (data: AuthUser) => queryClient.setQueryData(userKey, data),
     [queryClient],
   )
 
   return useMutation(
     async (data: LoginDTO) => {
       const response = await loginWithEmailAndPassword(data)
-      const user = await handleUserResponse(response)
+      const user: AuthUser = await handleUserResponse(response)
       return user
     },
     {
@@ -51,19 +54,11 @@ const useLogin = () => {
 const useRegister = () => {
   const queryClient = useQueryClient()
 
-  const setUser = React.useCallback(
-    (data: any) => queryClient.setQueryData(userKey, data),
-    [queryClient],
-  )
   return useMutation({
     mutationFn: async (data: RegisterDTO) => {
       console.log(data)
       const response = await registerWithEmailAndPassword(data)
-      console.log(response)
-      // const user = await handleUserResponse(response)
-      // return user
     },
-    // onSuccess: (user) => setUser(user),
   })
 }
 

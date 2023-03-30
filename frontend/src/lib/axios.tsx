@@ -11,8 +11,8 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   if (token) {
     config.headers.authorization = `${token}`
   }
-  config.withCredentials = false
-  config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+  // config.withCredentials = false
+  config.headers['Content-Type'] = 'application/json'
   return config
 }
 
@@ -26,8 +26,7 @@ axios.interceptors.response.use(
     return response.data
   },
   (error) => {
-    console.log(error)
-    const message = error.response?.data?.message || error.message
+    const message = error.response?.data || error.message
     notifications.show({
       withCloseButton: true,
       autoClose: 5000,
