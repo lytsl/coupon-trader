@@ -13,8 +13,9 @@ import {
   Title,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { useLogin } from 'lib/auth'
+import { useEmailVerify, useLogin } from 'lib/auth'
 import { LoginDTO } from './api'
+import { useEffect } from 'react'
 
 export function Login() {
   const form = useForm({
@@ -29,13 +30,16 @@ export function Login() {
     },
   })
 
-  const { mutate, isLoading, isError, isSuccess } = useLogin()
+  const { mutate: login, isLoading, isError, isSuccess } = useLogin()
+  const { mutate: verify } = useEmailVerify()
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
-  if (isSuccess) {
-    navigate('/')
-    return <div>Success</div>
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      verify()
+      navigate('/confirmation', { state: form.values })
+    }
+  }, [isSuccess])
 
   return (
     <>
@@ -58,7 +62,7 @@ export function Login() {
         </Grid.Col>
         <Grid.Col>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
-          <form onSubmit={form.onSubmit((values: any) => mutate(values))}>
+          <form onSubmit={form.onSubmit((values: any) => login(values))}>
             <TextInput
               mt="sm"
               label="username"

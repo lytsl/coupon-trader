@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 import { axios } from 'lib/axios'
 
 export type AuthUser = {
@@ -31,9 +32,20 @@ export type ResetPassDTO = {
   email: string
 }
 
-// export const getUser = (): Promise<AuthUser> => {
-//   return axios.get('/user/' + )
-// }
+export async function handleApiResponse(response: AxiosResponse) {
+  const data = response.data
+
+  if (response.status === 200) {
+    return data
+  } else {
+    console.error(JSON.stringify(data, null, 2))
+    return Promise.reject(data)
+  }
+}
+
+export const getUser = (): Promise<AuthUser | undefined> => {
+  return axios.get('/user/me')
+}
 
 export const loginWithEmailAndPassword = (
   data: LoginDTO,
@@ -42,6 +54,9 @@ export const loginWithEmailAndPassword = (
 export const registerWithEmailAndPassword = (
   data: RegisterDTO,
 ): Promise<UserResponse> => axios.post('/auth/register', data)
+
+export const sendVerificationEmail = (): Promise<any> =>
+  axios.post('/auth/send_verification_email')
 
 export const sendRestPasswordEmail = (data: ResetPassDTO): Promise<any> =>
   axios.post('/auth/send_reset_email', data)

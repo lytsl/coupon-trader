@@ -8,6 +8,8 @@ import {
   AuthUser,
   ResetPassDTO,
   sendRestPasswordEmail,
+  sendVerificationEmail,
+  getUser,
 } from 'features/auth/api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import storage from 'lib/storage'
@@ -26,12 +28,10 @@ async function handleUserResponse(response: UserResponse) {
 const userKey = ['authenticated-user']
 
 const useUser = () =>
-  useQuery(['authenticated-user'], async () => {
-    if (storage.getToken()) {
-      const data = true
-      return data
-    }
-    return null
+  useQuery(userKey, async () => {
+    const user = getUser()
+    console.log(user)
+    return user ?? null
   })
 
 const useLogin = () => {
@@ -71,7 +71,21 @@ const useResetPassword = () => {
     {
       onSuccess: (data) =>
         showSuccess(
-          'An email has been send to your email. Follow instructions to reset your password',
+          'An email has been send to your email address. Follow instructions to reset your password',
+        ),
+    },
+  )
+}
+
+const useEmailVerify = () => {
+  return useMutation(
+    async () => {
+      const response = await sendVerificationEmail()
+    },
+    {
+      onSuccess: (data) =>
+        showSuccess(
+          'An email has been send to your email address. Follow instructions to verify your email',
         ),
     },
   )
@@ -123,6 +137,7 @@ export {
   useLogin,
   useRegister,
   useResetPassword,
+  useEmailVerify,
   useLogout,
   AuthLoader,
 }

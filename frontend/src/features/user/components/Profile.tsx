@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
-import { useRegister } from 'lib/auth'
+import { useRegister, useUser } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
 
 let form: any
@@ -58,7 +58,9 @@ export function Profile() {
 
   const [name, setName] = useAtom(nameAtom)
   const [avatarText] = useAtom(avatarAtom)
-  const { mutate, isLoading, isError, isSuccess } = useRegister()
+  const { data, isLoading, isError, isSuccess } = useUser()
+  console.log(data)
+
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
 
@@ -79,9 +81,9 @@ export function Profile() {
       <Box sx={{ maxWidth: 270 }}>
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form
-          onSubmit={form.onSubmit((values: any) =>
-            mutate({ ...values, name: name, avatar: avatarText }),
-          )}
+        // onSubmit={form.onSubmit((values: any) =>
+        //   mutate({ ...values, name: name, avatar: avatarText }),
+        // )}
         >
           <center>
             <Avatar

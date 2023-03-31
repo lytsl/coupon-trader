@@ -10,16 +10,17 @@ import {
   LoadingOverlay,
   Anchor,
 } from '@mantine/core'
-import { useNavigate } from 'react-router-dom'
-import { useLogin } from 'lib/auth'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEmailVerify, useLogin } from 'lib/auth'
 import { IconBrandGmail } from '@tabler/icons-react'
+import { RegisterDTO } from './api'
 
 export function CheckEmailApp() {
-  const { mutate, isLoading, isError, isSuccess } = useLogin()
+  const registerData: RegisterDTO = useLocation().state
+  const { mutate, isLoading, isError, isSuccess } = useEmailVerify()
   const navigate = useNavigate()
-  // if (isLoading) return <div>Loading...</div>
   if (isSuccess) {
-    navigate('../login')
+    navigate('/app/user/profile/')
     return <div>Success</div>
   }
 
@@ -41,14 +42,17 @@ export function CheckEmailApp() {
             </Title>
 
             <Text color="dimmed" mt="md">
-              We have sent a password recover instructions to your email.
+              We have sent an email to {registerData.email}.
             </Text>
           </div>
         </Grid.Col>
         <Grid.Col>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
           <Group position="center" mt="md">
-            <Anchor href="#" onClick={(e) => navigate('../login')}>
+            <Button type="submit" onClick={(e) => mutate()}>
+              Resend Verification Email
+            </Button>
+            <Anchor href="#" onClick={(e) => navigate('/app/user/profile/')}>
               Skip, I'll confirm later.
             </Anchor>
           </Group>

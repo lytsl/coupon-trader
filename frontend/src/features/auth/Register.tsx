@@ -10,10 +10,10 @@ import {
   Space,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
-import { useRegister } from 'lib/auth'
+import { useEmailVerify, useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
 import { RegisterDTO } from 'features/auth/api'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 let form: UseFormReturnType<RegisterDTO, (values: RegisterDTO) => RegisterDTO>
 
@@ -37,11 +37,13 @@ export function Register() {
   })
 
   const [avatarText, setAvatarText] = useState('')
-  const { mutate, isLoading, isError, isSuccess } = useRegister()
+  const { mutate: register, isLoading, isError, isSuccess } = useRegister()
+  const { mutate: verify } = useEmailVerify()
+
   const navigate = useNavigate()
+
   if (isSuccess) {
-    navigate('../confirmation')
-    return <div>Success</div>
+    navigate('../login')
   }
 
   function handleUserNameChange(e: any) {
@@ -74,7 +76,9 @@ export function Register() {
       <Space h="xl" />
       <Box sx={{ maxWidth: 340 }} mx="auto">
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
-        <form onSubmit={form.onSubmit((values: any) => mutate({ ...values }))}>
+        <form
+          onSubmit={form.onSubmit((values: any) => register({ ...values }))}
+        >
           <center>
             <Avatar
               src={null}
