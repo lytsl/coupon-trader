@@ -19,6 +19,8 @@ import { Inquiry } from 'features/inquiry/Inquiry'
 import { AddCoupon } from 'features/coupon/AddCoupon'
 import { AuthRequired } from 'features/static/AuthRequired'
 import { Login } from 'features/auth/Login'
+import { CheckEmailApp } from 'features/auth/CheckEmailApp'
+import { VerifyEmail } from 'features/auth/VerifyEmail'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -52,6 +54,8 @@ const protectedRoutes = [
       // { path: '*', element: <Navigate to="." /> },
     ],
   },
+  { path: '/confirmation', element: <CheckEmailApp /> },
+  { path: '/verify_email/:token', element: <VerifyEmail /> },
   {
     path: '/auth/*',
     element: <NotFoundAuth />,

@@ -12,7 +12,7 @@ import {
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
-import { useEmailVerify, useRegister, useUser } from 'lib/auth'
+import { useSendVerificationEmail, useRegister, useUser } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { IconCircleCheck } from '@tabler/icons-react'
@@ -36,7 +36,7 @@ export function Profile() {
   })
 
   const [avatarText, setAvatarText] = useState('')
-  const { mutate: verify } = useEmailVerify()
+  const { mutate: verify } = useSendVerificationEmail()
 
   const navigate = useNavigate()
 

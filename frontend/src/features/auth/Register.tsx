@@ -10,7 +10,7 @@ import {
   Space,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
-import { useEmailVerify, useRegister } from 'lib/auth'
+import { useSendVerificationEmail, useRegister } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
 import { RegisterDTO } from 'features/auth/api'
 import { useEffect, useState } from 'react'
@@ -38,7 +38,7 @@ export function Register() {
 
   const [avatarText, setAvatarText] = useState('')
   const { mutate: register, isLoading, isError, isSuccess } = useRegister()
-  const { mutate: verify } = useEmailVerify()
+  const { mutate: verify } = useSendVerificationEmail()
 
   const navigate = useNavigate()
 

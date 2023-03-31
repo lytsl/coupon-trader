@@ -10,6 +10,7 @@ import {
   sendRestPasswordEmail,
   sendVerificationEmail,
   getUser,
+  verifyEmail,
 } from 'features/auth/api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import storage from 'lib/storage'
@@ -77,7 +78,7 @@ const useResetPassword = () => {
   )
 }
 
-const useEmailVerify = () => {
+const useSendVerificationEmail = () => {
   return useMutation(
     async () => {
       const response = await sendVerificationEmail()
@@ -87,6 +88,22 @@ const useEmailVerify = () => {
         showSuccess(
           'An email has been send to your email address. Follow instructions to verify your email',
         ),
+    },
+  )
+}
+
+const useVerifyEmail = (token: string) => {
+  return useQuery(
+    [...userKey, token],
+    async () => {
+      const response = await verifyEmail(token)
+      return response
+    },
+
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      onSuccess: (data) => showSuccess('Your email was verified successfully'),
     },
   )
 }
@@ -137,7 +154,8 @@ export {
   useLogin,
   useRegister,
   useResetPassword,
-  useEmailVerify,
+  useSendVerificationEmail,
+  useVerifyEmail,
   useLogout,
   AuthLoader,
 }

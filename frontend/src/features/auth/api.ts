@@ -57,7 +57,10 @@ export const registerWithEmailAndPassword = (
 ): Promise<UserResponse> => axios.post('/auth/register', data)
 
 export const sendVerificationEmail = (): Promise<any> =>
-  axios.post('/auth/send_verification_email')
+  axios.get('/auth/send_verification_email')
+
+export const verifyEmail = (token: string): Promise<any> =>
+  axios.get('/auth/verify_email', { params: { verify_email_token: token } })
 
 export const sendRestPasswordEmail = (data: ResetPassDTO): Promise<any> =>
   axios.post('/auth/send_reset_email', data)

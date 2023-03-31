@@ -13,7 +13,7 @@ import {
   Title,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { useEmailVerify, useLogin } from 'lib/auth'
+import { useSendVerificationEmail, useLogin } from 'lib/auth'
 import { LoginDTO } from './api'
 import { useEffect } from 'react'
 
@@ -30,13 +30,13 @@ export function Login() {
     },
   })
 
-  const { mutate: login, isLoading, isError, isSuccess } = useLogin()
-  const { mutate: verify } = useEmailVerify()
+  const { mutate: login, isLoading, isError, isSuccess, data } = useLogin()
+  const { mutate: verify } = useSendVerificationEmail()
   const navigate = useNavigate()
   // if (isLoading) return <div>Loading...</div>
   useEffect(() => {
     if (isSuccess) {
-      verify()
+      if (!data.emailverified) verify()
       navigate('/confirmation', { state: form.values })
     }
   }, [isSuccess])

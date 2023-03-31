@@ -160,7 +160,13 @@ export const sendEmailVerification = {
         { expiresIn: '1d' },
       )
 
-      const mailContent = `Hi ${req.currUser.username} \nclick the below URL to verify your email address. \nhttp://localhost:3000/emailverificationpage/${accessToken} \nIf you will not start the verification process now, than this link will expire in 24hours.`
+      const verificationLink = encodeURI(
+        `${process.env.CLIENT_URL}/verify_email/${accessToken.replace(
+          /\./g,
+          '%dot%',
+        )}`,
+      )
+      const mailContent = `Hi ${req.currUser.username} \nclick the below URL to verify your email address. \n${verificationLink} \nIf you will not start the verification process now, than this link will expire in 24hours.`
 
       console.log('Email verification')
 
@@ -191,15 +197,14 @@ export const verifyEmail = {
   controller: async (req, res) => {
     console.log('in verifyEmail')
     console.log(req.query.verify_email_token)
-    if (!req.query.verify_email_token) {
+    let verify_email_token = req.query.verify_email_token
+    if (!verify_email_token) {
       return res.status(400).send('Invalid Account verification URL')
     }
 
     try {
-      const verified = JWT.verify(
-        req.query.verify_email_token,
-        process.env.JWT_SEC_KEY,
-      )
+      // verify_email_token = verify_email_token.replace(/%dot%/g, '.')
+      const verified = JWT.verify(verify_email_token, process.env.JWT_SEC_KEY)
       const findUser = await User.findOne({
         _id: verified.id,
       })

@@ -10,8 +10,6 @@ export const AuthRoutes = () => {
     <Routes>
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
-      {/* <Route path="forgot" element={<ForgotPassword />} /> */}
-      <Route path="confirmation" element={<CheckEmailApp />} />
     </Routes>
   )
 }

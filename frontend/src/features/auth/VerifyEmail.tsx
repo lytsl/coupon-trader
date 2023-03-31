@@ -1,35 +1,28 @@
-import { useForm } from '@mantine/form'
 import {
   Title,
   Text,
-  TextInput,
   Button,
   Group,
   Grid,
   Space,
   LoadingOverlay,
-  Anchor,
 } from '@mantine/core'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { useSendVerificationEmail, useLogin, useUser } from 'lib/auth'
+import { useNavigate, useParams } from 'react-router-dom'
 import { IconBrandGmail } from '@tabler/icons-react'
-import { RegisterDTO } from './api'
+import { useVerifyEmail } from 'lib/auth'
 
-export function CheckEmailApp() {
-  const { data: userData } = useUser()
-
+export function VerifyEmail() {
   const navigate = useNavigate()
-
-  if (!userData) {
-    return <div>Unknown Error</div>
+  let { token } = useParams()
+  if (!token) {
+    return <h1>Bad Request</h1>
   }
+  token = decodeURI(token.replace(/%dot%/g, '.'))
+  console.log(token)
 
-  const { mutate, isLoading, isError, isSuccess } = useSendVerificationEmail()
-  if (isSuccess) {
-    navigate('/app/user/profile/')
-    // return <div>Success</div>
-  }
+  const { data, isLoading } = useVerifyEmail(token)
 
+  // TODO: set proper ui
   return (
     <center>
       <Space h="xl" />
@@ -48,19 +41,16 @@ export function CheckEmailApp() {
             </Title>
 
             <Text color="dimmed" mt="md">
-              We have sent an email to {userData.email}.
+              We have sent an email to
             </Text>
           </div>
         </Grid.Col>
         <Grid.Col>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
           <Group position="center" mt="md">
-            <Button type="submit" onClick={(e) => mutate()}>
-              Resend Verification Email
+            <Button type="submit" onClick={(e) => navigate('/')}>
+              Get Started
             </Button>
-            <Anchor href="#" onClick={(e) => navigate('/app/user/profile/')}>
-              Skip, I'll confirm later.
-            </Anchor>
           </Group>
         </Grid.Col>
         <Grid.Col>
