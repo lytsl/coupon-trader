@@ -12,6 +12,7 @@ import {
   IconBrandInstagram,
   IconTicket,
 } from '@tabler/icons-react'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -46,28 +47,34 @@ interface FooterCenteredProps {
 
 const links: FooterCenteredProps['links'] = [
   {
-    link: '#',
+    link: '/app/coupon/add',
+    label: 'Add Coupon',
+  },
+  {
+    link: '/explore',
     label: 'Explore',
+  },
+  {
+    link: '/inquiry',
+    label: 'Inquiry',
   },
   {
     link: '#',
     label: 'About',
   },
-  {
-    link: '#',
-    label: 'Inquiry',
-  },
 ]
 
 export function Footer() {
   const { classes } = useStyles()
+  const navigate = useNavigate()
+
   const items = links.map((link) => (
     <Anchor<'a'>
       color="dimmed"
       key={link.label}
       href={link.link}
       sx={{ lineHeight: 1 }}
-      onClick={(event) => event.preventDefault()}
+      onClick={(event) => navigate(link.link)}
       size="sm"
     >
       {link.label}

@@ -46,28 +46,28 @@ const links = [
     link: '#',
     label: 'About',
   },
-  {
-    link: '#2',
-    label: 'members',
-    links: [
-      {
-        link: '#',
-        label: 'Ayush Sakariya',
-      },
-      {
-        link: '#',
-        label: 'Sanket Detroja',
-      },
-      {
-        link: '#',
-        label: 'Ayush Savani',
-      },
-      {
-        link: '#',
-        label: 'Harshil Buha',
-      },
-    ],
-  },
+  // {
+  //   link: '#2',
+  //   label: 'members',
+  //   links: [
+  //     {
+  //       link: '#',
+  //       label: 'Ayush Sakariya',
+  //     },
+  //     {
+  //       link: '#',
+  //       label: 'Sanket Detroja',
+  //     },
+  //     {
+  //       link: '#',
+  //       label: 'Ayush Savani',
+  //     },
+  //     {
+  //       link: '#',
+  //       label: 'Harshil Buha',
+  //     },
+  //   ],
+  // },
 ]
 
 export const HEADER_HEIGHT = 60
@@ -131,35 +131,37 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false)
   const { classes, theme } = useStyles()
-  const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.label}>{item.label}</Menu.Item>
-    ))
+  const navigate = useNavigate()
 
-    if (menuItems) {
-      return (
-        <Menu
-          key={link.label}
-          trigger="hover"
-          transitionProps={{ exitDuration: 0 }}
-          withinPortal
-        >
-          <Menu.Target>
-            <UnstyledButton
-              // href={link.link}
-              className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
-              <Center>
-                <span className={classes.linkLabel}>{link.label}</span>
-                <IconChevronDown size={12} stroke={1.5} />
-              </Center>
-            </UnstyledButton>
-          </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
-        </Menu>
-      )
-    }
+  const items = links.map((link) => {
+    // const menuItems = link.links?.map((item) => (
+    //   <Menu.Item key={item.label}>{item.label}</Menu.Item>
+    // ))
+
+    // if (menuItems) {
+    //   return (
+    //     <Menu
+    //       key={link.label}
+    //       trigger="hover"
+    //       transitionProps={{ exitDuration: 0 }}
+    //       withinPortal
+    //     >
+    //       <Menu.Target>
+    //         <UnstyledButton
+    //           // href={link.link}
+    //           className={classes.link}
+    //           onClick={(event) => event.preventDefault()}
+    //         >
+    //           <Center>
+    //             <span className={classes.linkLabel}>{link.label}</span>
+    //             <IconChevronDown size={12} stroke={1.5} />
+    //           </Center>
+    //         </UnstyledButton>
+    //       </Menu.Target>
+    //       <Menu.Dropdown>{menuItems}</Menu.Dropdown>
+    //     </Menu>
+    //   )
+    // }
 
     return (
       <a
@@ -174,45 +176,43 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
   })
 
   const mItems = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <a
-        href={item.link}
-        className={classes.link}
-        onClick={(event) => event.preventDefault()}
-        key={item.label}
-      >
-        <Center>{item.label}</Center>
-      </a>
-    ))
+    // const menuItems = link.links?.map((item) => (
+    //   <a
+    //     href={item.link}
+    //     className={classes.link}
+    //     onClick={(event) => event.preventDefault()}
+    //     key={item.label}
+    //   >
+    //     <Center>{item.label}</Center>
+    //   </a>
+    // ))
 
-    if (menuItems) {
-      const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
-      return (
-        <Stack key={link.label} align="center" spacing={0} justify="flex-start">
-          <UnstyledButton className={classes.link} onClick={toggleLinks}>
-            <Center>
-              <span className={classes.linkLabel}>{link.label}</span>
-              <IconChevronDown size={12} stroke={1.5} />
-            </Center>
-          </UnstyledButton>
-          <Collapse in={linksOpened}>{menuItems}</Collapse>
-        </Stack>
-      )
-    }
+    // if (menuItems) {
+    //   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false)
+    //   return (
+    //     <Stack key={link.label} align="center" spacing={0} justify="flex-start">
+    //       <UnstyledButton className={classes.link} onClick={toggleLinks}>
+    //         <Center>
+    //           <span className={classes.linkLabel}>{link.label}</span>
+    //           <IconChevronDown size={12} stroke={1.5} />
+    //         </Center>
+    //       </UnstyledButton>
+    //       <Collapse in={linksOpened}>{menuItems}</Collapse>
+    //     </Stack>
+    //   )
+    // }
 
     return (
       <a
         key={link.label}
         href={link.link}
         className={classes.link}
-        onClick={(event) => event.preventDefault()}
+        onClick={(event) => navigate(link.link)}
       >
         <Center> {link.label}</Center>
       </a>
     )
   })
-
-  const navigate = useNavigate()
 
   return (
     <Box className={classes.header} sx={sx}>
