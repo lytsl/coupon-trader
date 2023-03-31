@@ -3,13 +3,14 @@ import { IconX } from '@tabler/icons-react'
 import Axios, { InternalAxiosRequestConfig } from 'axios'
 
 import { API_URL } from './config'
+import { showError } from './notifications'
 import storage from './storage'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   const token = storage.getToken()
   config.headers = config.headers ?? {}
   if (token) {
-    config.headers.authorization = `${token}`
+    config.headers.authorization = `Bearer ${token}`
   }
   // config.withCredentials = false
   config.headers['Content-Type'] = 'application/json'
@@ -27,14 +28,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     const message = error.response?.data || error.message
-    notifications.show({
-      withCloseButton: true,
-      autoClose: 5000,
-      title: 'Error',
-      message: message,
-      color: 'red',
-      icon: <IconX />,
-    })
+    showError(message)
     return Promise.reject(error)
   },
 )

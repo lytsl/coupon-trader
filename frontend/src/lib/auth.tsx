@@ -6,10 +6,13 @@ import {
   registerWithEmailAndPassword,
   logout,
   AuthUser,
+  ResetPassDTO,
+  sendRestPasswordEmail,
 } from 'features/auth/api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import storage from 'lib/storage'
 import React from 'react'
+import { showSuccess } from './notifications'
 
 async function handleUserResponse(response: UserResponse) {
   const data: AuthUser = {
@@ -52,14 +55,26 @@ const useLogin = () => {
 }
 
 const useRegister = () => {
-  const queryClient = useQueryClient()
-
   return useMutation({
     mutationFn: async (data: RegisterDTO) => {
       console.log(data)
       const response = await registerWithEmailAndPassword(data)
     },
   })
+}
+
+const useResetPassword = () => {
+  return useMutation(
+    async (data: ResetPassDTO) => {
+      const response = await sendRestPasswordEmail(data)
+    },
+    {
+      onSuccess: (data) =>
+        showSuccess(
+          'An email has been send to your email. Follow instructions to reset your password',
+        ),
+    },
+  )
 }
 
 const useLogout = () => {
@@ -103,4 +118,11 @@ const AuthLoader = ({
   return <div>Unhandled status: {status}</div>
 }
 
-export { useUser, useLogin, useRegister, useLogout, AuthLoader }
+export {
+  useUser,
+  useLogin,
+  useRegister,
+  useResetPassword,
+  useLogout,
+  AuthLoader,
+}

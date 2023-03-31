@@ -10,25 +10,21 @@ import {
   LoadingOverlay,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { useLogin } from 'lib/auth'
+import { useLogin, useResetPassword } from 'lib/auth'
+import { ResetPassDTO } from 'features/auth/api'
+import { showSuccess } from 'lib/notifications'
 
 export function ForgotPassword() {
   const form = useForm({
-    initialValues: { email: '' },
+    initialValues: { email: '' } as ResetPassDTO,
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   })
 
-  const { mutate, isLoading, isError, isSuccess } = useLogin()
+  const { mutate, isLoading, isError, isSuccess } = useResetPassword()
   const navigate = useNavigate()
-  // if (isLoading) return <div>Loading...</div>
-  // if (isError) return <div>Error</div>
-  // if (isSuccess) {
-  //   navigate('/')
-  //   return <div>Success</div>
-  // }
 
   return (
     <>
@@ -58,7 +54,9 @@ export function ForgotPassword() {
         </Grid.Col>
         <Grid.Col>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
-          <form onSubmit={form.onSubmit((values: any) => mutate(values))}>
+          <form
+            onSubmit={form.onSubmit((values: ResetPassDTO) => mutate(values))}
+          >
             <TextInput
               mt="sm"
               label="Email Address"

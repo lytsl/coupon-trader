@@ -27,6 +27,10 @@ export type RegisterDTO = {
   cpassword: string
 }
 
+export type ResetPassDTO = {
+  email: string
+}
+
 // export const getUser = (): Promise<AuthUser> => {
 //   return axios.get('/user/' + )
 // }
@@ -38,6 +42,9 @@ export const loginWithEmailAndPassword = (
 export const registerWithEmailAndPassword = (
   data: RegisterDTO,
 ): Promise<UserResponse> => axios.post('/auth/register', data)
+
+export const sendRestPasswordEmail = (data: ResetPassDTO): Promise<any> =>
+  axios.post('/auth/send_reset_email', data)
 
 export function logout(): Promise<{ message: string }> {
   return new Promise((resolve) => {
