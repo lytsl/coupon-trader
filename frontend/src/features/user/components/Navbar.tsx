@@ -118,7 +118,7 @@ const data = [
   { link: 'profile', label: 'Profile', icon: IconIcons },
   { link: 'password', label: 'Password', icon: IconPassword },
   { link: '', label: 'Transactions', icon: IconTransferIn },
-  { link: 'add', label: 'Add Coupon', icon: IconPlus },
+  // { link: 'add', label: 'Add Coupon', icon: IconPlus },
   // { link: '', label: 'Update Coupon', icon: IconIndentIncrease },
 ]
 

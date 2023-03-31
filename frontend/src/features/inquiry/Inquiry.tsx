@@ -14,8 +14,10 @@ import { Comment } from './Comment'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    minHeight: 540,
+    minHeight: 470,
     marginTop: rem(100),
+    position: 'relative',
+    minWidth: 370,
   },
 
   title: {
@@ -48,14 +50,18 @@ export function Inquiry() {
       >
         Inquiry Here
       </Title>
-      <SimpleGrid cols={2}>
-        <Container className={classes.wrapper} style={{ minWidth: 470 }}>
+      <SimpleGrid cols={2} mt="xl" breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+        <Container
+          className={classes.wrapper}
+          style={{ marginRight: 50, marginLeft: 50 }}
+        >
           <form onSubmit={form.onSubmit(() => {})}>
             <TextInput
               label="Name Of Required Coupon"
               placeholder="Name"
               name="name"
               variant="filled"
+              size={'md'}
               {...form.getInputProps('name')}
             />
 
@@ -65,7 +71,6 @@ export function Inquiry() {
               placeholder="Details Of Coupon"
               maxRows={10}
               minRows={5}
-              autosize
               name="message"
               variant="filled"
               {...form.getInputProps('message')}

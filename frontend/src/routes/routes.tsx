@@ -1,4 +1,4 @@
-import { useRoutes } from 'react-router-dom'
+import { Navigate, useRoutes } from 'react-router-dom'
 
 import { Landing } from 'features/static/Landing'
 
@@ -16,6 +16,9 @@ import { ForgotPassword } from 'components/ForgotPassword'
 import { CouponCard } from 'features/explore/CouponCard'
 import { Explore } from 'features/explore/Explore'
 import { Inquiry } from 'features/inquiry/Inquiry'
+import { AddCoupon } from 'features/coupon/AddCoupon'
+import { AuthRequired } from 'features/static/AuthRequired'
+import { Login } from 'features/auth/Login'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -43,9 +46,8 @@ const protectedRoutes = [
     path: '/app/*',
     element: <App />,
     children: [
-      ...ProfileRoutes,
-      { path: 'explore/', element: <Explore /> },
-      { path: 'inquiry/', element: <Inquiry /> },
+      ProfileRoutes,
+      { path: 'coupon/add/', element: <AddCoupon /> },
       // { path: '*', element: <Navigate to="." /> },
     ],
   },
@@ -60,6 +62,9 @@ const publicRoutes = [
     path: '/auth/*',
     element: <AuthRoutes />,
   },
+  { path: '/app/coupon/*', element: <Login /> },
+
+  { path: '/app/*', element: <AuthRequired /> },
 ]
 
 const commonRoutes = [
@@ -67,6 +72,8 @@ const commonRoutes = [
     path: '/',
     element: <Landing />,
   },
+  { path: 'inquiry/', element: <Inquiry /> },
+  { path: 'explore/', element: <Explore /> },
   {
     path: '/auth/forgot',
     element: <ForgotPassword />,

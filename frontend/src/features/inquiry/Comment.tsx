@@ -11,6 +11,7 @@ import {
 const useStyles = createStyles((theme) => ({
   comment: {
     padding: `${theme.spacing.lg} ${theme.spacing.xl}`,
+    position: 'relative',
   },
 
   body: {
@@ -37,21 +38,25 @@ interface CommentHtmlProps {
 export function Comment({ body, author }: CommentHtmlProps) {
   const { classes } = useStyles()
   return (
-    <div style={{ maxWidth: 470 }}>
-      <Paper withBorder radius="md" className={classes.comment}>
-        <Group>
-          <Avatar src={author.image} alt={author.name} radius="xl" />
-          <div>
-            <Text fz="sm">{author.name}</Text>
-          </div>
-        </Group>
-        <TypographyStylesProvider className={classes.body}>
-          <div
-            className={classes.content}
-            dangerouslySetInnerHTML={{ __html: body }}
-          />
-        </TypographyStylesProvider>
-      </Paper>
-    </div>
+    <Paper
+      withBorder
+      radius="md"
+      className={classes.comment}
+      // style={{ maxWidth: 470 }}
+      style={{ marginRight: 50, marginLeft: 50 }}
+    >
+      <Group>
+        <Avatar src={author.image} alt={author.name} radius="xl" />
+        <div>
+          <Text fz="sm">{author.name}</Text>
+        </div>
+      </Group>
+      <TypographyStylesProvider className={classes.body}>
+        <div
+          className={classes.content}
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
+      </TypographyStylesProvider>
+    </Paper>
   )
 }

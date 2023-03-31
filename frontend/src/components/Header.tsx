@@ -29,6 +29,47 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ThemeSwitch } from './ThemeSwitch'
 
+const links = [
+  {
+    link: '/app/coupon/add',
+    label: 'Add Coupon',
+  },
+  {
+    link: '/explore',
+    label: 'Explore',
+  },
+  {
+    link: '/inquiry',
+    label: 'Inquiry',
+  },
+  {
+    link: '#',
+    label: 'About',
+  },
+  {
+    link: '#2',
+    label: 'members',
+    links: [
+      {
+        link: '#',
+        label: 'Ayush Sakariya',
+      },
+      {
+        link: '#',
+        label: 'Sanket Detroja',
+      },
+      {
+        link: '#',
+        label: 'Ayush Savani',
+      },
+      {
+        link: '#',
+        label: 'Harshil Buha',
+      },
+    ],
+  },
+]
+
 export const HEADER_HEIGHT = 60
 
 const useStyles = createStyles((theme) => ({
@@ -83,43 +124,6 @@ const useStyles = createStyles((theme) => ({
     marginRight: 5,
   },
 }))
-
-const links = [
-  {
-    link: '../app/explore',
-    label: 'Explore',
-  },
-  {
-    link: '#',
-    label: 'About',
-  },
-  {
-    link: '../app/inquiry',
-    label: 'Inquiry',
-  },
-  {
-    link: '#2',
-    label: 'members',
-    links: [
-      {
-        link: '#',
-        label: 'Ayush Sakariya',
-      },
-      {
-        link: '#',
-        label: 'Sanket Detroja',
-      },
-      {
-        link: '#',
-        label: 'Ayush Savani',
-      },
-      {
-        link: '#',
-        label: 'Harshil Buha',
-      },
-    ],
-  },
-]
 
 export function Header(props: { hasLoggedIn: boolean; sx: any }) {
   const { hasLoggedIn, sx } = props
