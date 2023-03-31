@@ -34,7 +34,11 @@ export function AddCoupon() {
           Add Coupon
         </Title>
       </center>
-      <Box sx={{ maxWidth: 270 }} mx="auto">
+      <Box
+        sx={{ maxWidth: 270 }}
+        mx="auto"
+        style={{ marginBottom: 30, marginTop: 30 }}
+      >
         {/* <LoadingOverlay visible={isLoading} overlayBlur={2} /> */}
         <form onSubmit={form.onSubmit((values: any) => {})}>
           <TextInput

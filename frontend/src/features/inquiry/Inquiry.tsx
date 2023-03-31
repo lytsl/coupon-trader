@@ -15,7 +15,6 @@ import { Comment } from './Comment'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: 470,
-    marginTop: rem(100),
     position: 'relative',
     minWidth: 370,
   },
@@ -47,6 +46,7 @@ export function Inquiry() {
         })}
         weight={900}
         align="center"
+        style={{ marginTop: 60 }}
       >
         Inquiry Here
       </Title>
