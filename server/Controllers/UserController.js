@@ -109,8 +109,8 @@ export const updateUser = {
   },
 }
 
-// !find user
-export const findUser = {
+//get current user
+export const currentUser = {
   controller: async (req, res) => {
     try {
       const findUser = await User.findById(req.currUser._id)
@@ -118,6 +118,19 @@ export const findUser = {
       res.status(201).json(findUser)
     } catch (e) {
       s
+      res.status(500).json('Internal Server Error')
+    }
+  },
+}
+
+// !find user
+export const findUser = {
+  controller: async (req, res) => {
+    try {
+      const findUser = await User.findById(req.params.id)
+      // console.log(req.currUser);
+      res.status(201).json(findUser)
+    } catch (e) {
       res.status(500).json('Internal Server Error')
     }
   },

@@ -8,60 +8,59 @@ import {
   Title,
   Space,
   Flex,
+  rem,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
-import { useRegister, useUser } from 'lib/auth'
+import { useEmailVerify, useRegister, useUser } from 'lib/auth'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { IconCircleCheck } from '@tabler/icons-react'
 
 let form: any
-const nameAtom = atom('')
-const avatarAtom = atom((get) => {
-  let text = get(nameAtom)
-  text = text.trim()
-
-  if (!(text.length >= 2 && /^[a-zA-Z\s]+$/.test(text) && text.length == 0)) {
-    form.setFieldError(
-      'name',
-      'Name must have at least 2 letters and only contain letters',
-    )
-    return ''
-  }
-
-  const words = text.split(/[^A-Za-z]+/)
-  if (words.length > 1 && words[1].length > 0) {
-    text = words[0][0] + words[1][0]
-  } else {
-    text = words[0][0] + words[0][1]
-  }
-
-  form.clearFieldError('name')
-  return text.toUpperCase()
-})
 
 // todo fetch placeholder values from database as from register..............................
 export function Profile() {
+  const { data: userData } = useUser()
+
   form = useForm({
     validateInputOnBlur: true,
     initialValues: {
-      name: '',
-      email: '',
-      upiId: '',
+      username: userData?.username ?? '',
+      email: userData?.email ?? '',
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      upiId: (value) =>
-        /[a-zA-Z0-9_]{3,}@[a-zA-Z]{3,}/.test(value) ? null : 'Invalid UPI ID',
     },
   })
 
-  const [name, setName] = useAtom(nameAtom)
-  const [avatarText] = useAtom(avatarAtom)
-  const { data, isLoading, isError, isSuccess } = useUser()
-  console.log(data)
+  const [avatarText, setAvatarText] = useState('')
+  const { mutate: verify } = useEmailVerify()
 
   const navigate = useNavigate()
+
+  // if (isSuccess) {
+  //   navigate('../login')
+  // }
+
+  function handleUserNameChange(e: any) {
+    let text = e.target.value
+    // text = text.trim()
+
+    form.setFieldValue('username', text)
+    if (!(text.length >= 3 && /^[a-zA-Z0-9]+$/.test(text))) {
+      form.setFieldError(
+        'username',
+        'Name must have at least 3 letters and only contain letters',
+      )
+      setAvatarText('')
+    } else {
+      text = text.slice(0, 2).toUpperCase()
+      form.clearFieldError('username')
+      setAvatarText(text)
+    }
+  }
   // if (isLoading) return <div>Loading...</div>
 
   return (
@@ -79,7 +78,7 @@ export function Profile() {
         </Title>
       </center>
       <Box sx={{ maxWidth: 270 }}>
-        <LoadingOverlay visible={isLoading} overlayBlur={2} />
+        {/* <LoadingOverlay visible={isLoading} overlayBlur={2} /> */}
         <form
         // onSubmit={form.onSubmit((values: any) =>
         //   mutate({ ...values, name: name, avatar: avatarText }),
@@ -97,26 +96,38 @@ export function Profile() {
             </Avatar>
           </center>
           <TextInput
-            label="Name"
-            placeholder="Full Name"
-            {...form.getInputProps('name')}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            label="Username"
+            placeholder="Username"
+            {...form.getInputProps('username')}
+            onChange={handleUserNameChange}
           />
-          <TextInput
-            mt="sm"
-            label="Email"
-            placeholder="Email"
-            {...form.getInputProps('email')}
-          />
-          <TextInput
-            mt="sm"
-            label="UPI ID"
-            placeholder="UPI ID"
-            {...form.getInputProps('upiId')}
-          />
+          <Group position="center" mt="md" spacing="sm">
+            <TextInput
+              label="Email"
+              placeholder="Email"
+              {...form.getInputProps('email')}
+            />
+            {userData?.emailverified && (
+              <IconCircleCheck size={rem(28)} color="blue" />
+            )}
+          </Group>
+          {!userData?.emailverified && (
+            <Button
+              // disabled={isLoading}
+              type="submit"
+              mt="md"
+              style={{ width: 270 }}
+              onClick={(e) => verify()}
+            >
+              Verify Email
+            </Button>
+          )}
           <Group position="center" mt="md">
-            <Button disabled={isLoading} type="submit" style={{ width: 270 }}>
+            <Button
+              // disabled={isLoading}
+              type="submit"
+              style={{ width: 270 }}
+            >
               Save Changes
             </Button>
           </Group>

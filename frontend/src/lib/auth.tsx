@@ -28,7 +28,7 @@ async function handleUserResponse(response: UserResponse) {
 const userKey = ['authenticated-user']
 
 const useUser = () =>
-  useQuery(userKey, async () => {
+  useQuery(userKey, async (): Promise<AuthUser | undefined> => {
     const user = getUser()
     console.log(user)
     return user ?? null

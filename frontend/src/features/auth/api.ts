@@ -5,6 +5,7 @@ export type AuthUser = {
   _id: string
   email: string
   username: string
+  emailverified: boolean
   avatar: string
 }
 
