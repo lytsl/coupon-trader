@@ -26,8 +26,9 @@ const { AuthRoutes } = lazyImport(
 )
 
 const App = () => {
+  const auth = storage.getToken() == null ? false : true
   return (
-    <Layout hasLoggedIn={true}>
+    <Layout hasLoggedIn={auth}>
       <Suspense
         fallback={
           <Center>
@@ -72,8 +73,14 @@ const commonRoutes = [
     path: '/',
     element: <Landing />,
   },
-  { path: 'inquiry/', element: <Inquiry /> },
-  { path: 'explore/', element: <Explore /> },
+  {
+    path: '/*',
+    element: <App />,
+    children: [
+      { path: 'inquiry/', element: <Inquiry /> },
+      { path: 'explore/', element: <Explore /> },
+    ],
+  },
   {
     path: '/auth/forgot',
     element: <ForgotPassword />,

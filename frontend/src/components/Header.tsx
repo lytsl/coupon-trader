@@ -241,14 +241,17 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
                 size={32}
                 stroke={1.1}
                 color="#AEBAF8"
-                onClick={(e) => navigate('../app/user/profile')}
+                onClick={(e) => navigate('/app/user/profile')}
               />
             ) : (
               <>
-                <Button variant="light" onClick={(e) => navigate('auth/login')}>
+                <Button
+                  variant="light"
+                  onClick={(e) => navigate('/auth/login')}
+                >
                   Log In
                 </Button>
-                <Button onClick={(e) => navigate('auth/register')}>
+                <Button onClick={(e) => navigate('/auth/register')}>
                   Sign Up
                 </Button>
               </>
@@ -288,18 +291,18 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
               size={32}
               stroke={1.1}
               color="#AEBAF8"
-              onClick={(e) => navigate('app/user/profile')}
+              onClick={(e) => navigate('/app/user/profile')}
             />
           ) : (
             <>
               <Group position="center" grow pb="xl" px="md">
                 <Button
-                  onClick={(e) => navigate('auth/login')}
+                  onClick={(e) => navigate('/auth/login')}
                   variant="default"
                 >
                   Log in
                 </Button>
-                <Button onClick={(e) => navigate('auth/register')}>
+                <Button onClick={(e) => navigate('/auth/register')}>
                   Sign up
                 </Button>
               </Group>
