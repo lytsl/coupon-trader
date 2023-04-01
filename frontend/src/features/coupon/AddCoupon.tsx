@@ -19,18 +19,20 @@ export function AddCoupon() {
       code: '',
       title: '',
       terms: '',
+      date: new Date(),
       expirydate: '',
       price: 0,
       company: '',
       companylogo: '',
       category: '',
-    } as CreateCouponDTO,
+    } as CreateCouponDTO & {
+      date: Date
+    },
 
     validate: {},
   })
 
   const { mutate: create, isLoading } = useCreateCoupon()
-
   return (
     <>
       <center>
@@ -47,7 +49,12 @@ export function AddCoupon() {
         <form
           onSubmit={form.onSubmit((values: any) => {
             console.log(values)
-            create({ ...values })
+            create({
+              ...values,
+              expirydate: values.date.toLocaleString().split(',')[0],
+              companylogo: values.company,
+              category: values.company,
+            } as CreateCouponDTO)
           })}
         >
           <TextInput
@@ -87,19 +94,20 @@ export function AddCoupon() {
           />
           <DateInput
             mt="sm"
+            minDate={new Date()}
             label="Expiry Date"
             valueFormat="DD MMM YYYY"
             placeholder="Expiry Date"
             maw={400}
-            {...form.getInputProps('expirydate')}
+            {...form.getInputProps('date')}
           />
+          // FIXME: select category
           <NativeSelect
             mt="sm"
             data={['Clothing', 'Electronics', 'Food', 'Service', 'Other']}
             label="Select Category"
             {...form.getInputProps('category')}
           />
-
           <Group position="center" mt="md">
             <Button disabled={isLoading} type="submit" style={{ width: 340 }}>
               Submit

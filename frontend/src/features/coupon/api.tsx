@@ -2,6 +2,7 @@ import { axios } from 'lib/axios'
 import { MutationConfig, queryClient } from 'lib/react-query'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { showSuccess } from 'lib/notifications'
+import { AxiosError } from 'axios'
 
 export type CreateCouponDTO = {
   code: string
@@ -23,6 +24,7 @@ export type CouponDTO = CreateCouponDTO & {
 const couponKey = ['coupons']
 
 export const createCoupon = (data: CreateCouponDTO): Promise<CouponDTO> => {
+  console.log(data)
   return axios.post('/coupon/create', data)
 }
 
@@ -30,10 +32,8 @@ type UseCreateCouponOptions = {
   config?: MutationConfig<typeof createCoupon>
 }
 
-export const useCreateCoupon = (
-  { config }: any = {} as UseCreateCouponOptions,
-) => {
-  return useMutation({
+export const useCreateCoupon = ({ config }: UseCreateCouponOptions = {}) => {
+  return useMutation<CouponDTO, AxiosError, CreateCouponDTO>({
     onMutate: async (newCoupon: CreateCouponDTO) => {
       await queryClient.cancelQueries(couponKey)
 
