@@ -1,8 +1,6 @@
-import { useForm } from '@mantine/form'
 import {
   Title,
   Text,
-  TextInput,
   Button,
   Group,
   Grid,
@@ -10,10 +8,9 @@ import {
   LoadingOverlay,
   Anchor,
 } from '@mantine/core'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { useSendVerificationEmail, useLogin, useUser } from 'lib/auth'
+import { useNavigate } from 'react-router-dom'
+import { useSendVerificationEmail, useUser } from 'lib/auth'
 import { IconBrandGmail } from '@tabler/icons-react'
-import { RegisterDTO } from './api'
 
 export function CheckEmailApp() {
   const { data: userData } = useUser()

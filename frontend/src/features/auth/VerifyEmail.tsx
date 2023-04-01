@@ -20,7 +20,11 @@ export function VerifyEmail() {
   token = decodeURI(token.replace(/%dot%/g, '.'))
   console.log(token)
 
-  const { data, isLoading } = useVerifyEmail(token)
+  const { data, isLoading, error } = useVerifyEmail(token)
+
+  if (error) {
+    return <h1>Could not verify email</h1>
+  }
 
   // TODO: set proper ui
   return (

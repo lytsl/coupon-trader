@@ -17,7 +17,7 @@ import storage from 'lib/storage'
 import React from 'react'
 import { showSuccess } from './notifications'
 
-async function handleUserResponse(response: UserResponse) {
+async function handleUserResponse(response: UserResponse): Promise<AuthUser> {
   const data: AuthUser = {
     ...response,
     avatar: response.username.slice(0, 2).toUpperCase(),
