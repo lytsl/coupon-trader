@@ -16,7 +16,7 @@ router.get('/dashboard', VerifyToken, dashboard.controller)
 
 router.get('/me', VerifyToken, currentUser.controller)
 router.get('/:id', VerifyToken, findUser.controller)
-router.put('/:id', VerifyToken, updateUser.controller)
+router.put('/me', VerifyToken, updateUser.controller)
 router.delete('/:id', VerifyToken, deleteUser.validator, deleteUser.controller)
 
 export default router

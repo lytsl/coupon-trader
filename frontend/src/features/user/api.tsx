@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AuthUser, LoginDTO } from 'features/auth/api'
+import { axios } from 'lib/axios'
 import React from 'react'
 
 const userKey = ['authenticated-user']
@@ -17,5 +18,7 @@ const useLogin = () => {
     [queryClient],
   )
 
-  return useMutation(async (data: UserUpdateDTO) => {})
+  return useMutation(async (data: UserUpdateDTO) => {
+    const response = await axios.put('/user/me', data)
+  })
 }

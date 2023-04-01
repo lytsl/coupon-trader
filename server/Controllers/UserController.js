@@ -5,11 +5,8 @@ import bcrypt from 'bcryptjs'
 // !update user
 export const updateUser = {
   controller: async (req, res) => {
-    if (req.currUser._id.toString() !== req.params.id) {
-      return res
-        .status(400)
-        .send('You are not authenticated to update the profile')
-    }
+    const userID = req.currUser._id.toString()
+    console.log(userID)
     if (!req.body.username || !req.body.email) {
       return res.status(400).json('Please Fill all the fields')
     }
@@ -22,7 +19,7 @@ export const updateUser = {
       req.body.email
     ) {
       try {
-        const findUser = await User.findOne({ userId: req.userId })
+        const findUser = await User.findOne({ userId: userID })
 
         if (!findUser) {
           return res.status(401).send('User Not Found')
@@ -31,7 +28,7 @@ export const updateUser = {
           if (req.body.email !== findUser.email) emailverified = false
 
           const updateUser = await User.findByIdAndUpdate(
-            req.userId,
+            userID,
             {
               username: req.body.username,
               email: req.body.email,
@@ -79,7 +76,7 @@ export const updateUser = {
           if (req.body.newPassword === req.body.rePassword) {
             const bcryptPass = await bcrypt.hash(req.body.newPassword, 12)
             const updateUser = await User.findByIdAndUpdate(
-              req.userId,
+              userID,
               {
                 username: req.body.username,
                 email: req.body.email,
