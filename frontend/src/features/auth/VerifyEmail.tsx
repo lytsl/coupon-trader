@@ -17,7 +17,7 @@ export function VerifyEmail() {
   if (!token) {
     return <h1>Bad Request</h1>
   }
-  token = decodeURI(token.replace(/%dot%/g, '.'))
+  token = token.replace(/%dot%/g, '.')
   console.log(token)
 
   const { data, isLoading, error } = useVerifyEmail(token)

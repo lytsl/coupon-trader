@@ -106,11 +106,11 @@ export function Profile() {
           <TextInput
             label="Email"
             placeholder="Email"
+            rightSection={
+              userData?.emailverified && <IconCircleCheck color="blue" />
+            }
             {...form.getInputProps('email')}
           />
-          {userData?.emailverified && (
-            <IconCircleCheck size={rem(28)} color="blue" />
-          )}
           {/* </Group> */}
           {!userData?.emailverified && (
             <Button

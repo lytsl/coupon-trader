@@ -166,6 +166,7 @@ export const sendEmailVerification = {
           '%dot%',
         )}`,
       )
+
       const mailContent = `Hi ${req.currUser.username} \nclick the below URL to verify your email address. \n${verificationLink} \nIf you will not start the verification process now, than this link will expire in 24hours.`
 
       console.log('Email verification')
