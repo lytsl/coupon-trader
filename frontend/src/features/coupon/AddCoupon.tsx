@@ -10,22 +10,26 @@ import {
   NativeSelect,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
+import { CreateCouponDTO, useCreateCoupon } from './api'
 
 export function AddCoupon() {
   const form = useForm({
     // validateInputOnBlur: true,
     initialValues: {
+      code: '',
       title: '',
       terms: '',
-      code: '',
-      platform: '',
-      price: '',
-      date: '',
+      expirydate: '',
+      price: 0,
+      company: '',
+      companylogo: '',
       category: '',
-    },
+    } as CreateCouponDTO,
 
     validate: {},
   })
+
+  const { mutate: create, isLoading } = useCreateCoupon()
 
   return (
     <>
@@ -40,7 +44,12 @@ export function AddCoupon() {
         style={{ marginBottom: 30, marginTop: 30 }}
       >
         {/* <LoadingOverlay visible={isLoading} overlayBlur={2} /> */}
-        <form onSubmit={form.onSubmit((values: any) => {})}>
+        <form
+          onSubmit={form.onSubmit((values: any) => {
+            console.log(values)
+            create({ ...values })
+          })}
+        >
           <TextInput
             label="Title"
             placeholder="Title"
@@ -62,7 +71,7 @@ export function AddCoupon() {
             mt="sm"
             label="Platform"
             placeholder="Platform"
-            {...form.getInputProps('platform')}
+            {...form.getInputProps('company')}
           />
           <NumberInput
             mt="sm"
@@ -82,7 +91,7 @@ export function AddCoupon() {
             valueFormat="DD MMM YYYY"
             placeholder="Expiry Date"
             maw={400}
-            {...form.getInputProps('date')}
+            {...form.getInputProps('expirydate')}
           />
           <NativeSelect
             mt="sm"
@@ -92,7 +101,7 @@ export function AddCoupon() {
           />
 
           <Group position="center" mt="md">
-            <Button type="submit" style={{ width: 340 }}>
+            <Button disabled={isLoading} type="submit" style={{ width: 340 }}>
               Submit
             </Button>
           </Group>

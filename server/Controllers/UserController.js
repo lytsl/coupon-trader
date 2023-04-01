@@ -19,8 +19,8 @@ export const updateUser = {
       req.body.email
     ) {
       try {
+        // FIXME: user not found
         const findUser = await User.findOne({ userId: userID })
-
         if (!findUser) {
           return res.status(401).send('User Not Found')
         } else {
