@@ -70,6 +70,7 @@ export function Profile() {
       align="center"
       direction="column"
       mx="auto"
+      style={{ marginTop: 30 }}
       // wrap="wrap"
     >
       <center>
@@ -101,16 +102,16 @@ export function Profile() {
             {...form.getInputProps('username')}
             onChange={handleUserNameChange}
           />
-          <Group position="center" mt="md" spacing="sm">
-            <TextInput
-              label="Email"
-              placeholder="Email"
-              {...form.getInputProps('email')}
-            />
-            {userData?.emailverified && (
-              <IconCircleCheck size={rem(28)} color="blue" />
-            )}
-          </Group>
+          {/* <Group position="center" mt="md" spacing="sm"> */}
+          <TextInput
+            label="Email"
+            placeholder="Email"
+            {...form.getInputProps('email')}
+          />
+          {userData?.emailverified && (
+            <IconCircleCheck size={rem(28)} color="blue" />
+          )}
+          {/* </Group> */}
           {!userData?.emailverified && (
             <Button
               // disabled={isLoading}
