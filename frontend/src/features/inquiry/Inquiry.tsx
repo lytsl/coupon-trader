@@ -8,8 +8,16 @@ import {
   createStyles,
   rem,
   Container,
+  Text,
+  Center,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import {
+  CreateInquiryDTO,
+  InquiryDTO,
+  useCreateInquiry,
+  useInquiries,
+} from './api'
 import { Comment } from './Comment'
 
 const useStyles = createStyles((theme) => ({
@@ -27,14 +35,36 @@ const useStyles = createStyles((theme) => ({
 export function Inquiry() {
   const form = useForm({
     initialValues: {
-      name: '',
-      message: '',
-    },
+      title: '',
+      description: '',
+    } as CreateInquiryDTO,
     validate: {
-      name: (value) => value.trim().length < 2,
+      title: (value) => value.trim().length < 2,
     },
   })
   const { classes } = useStyles()
+  const { mutate: createInquiry, isLoading } = useCreateInquiry()
+  const { data: inquiriesData } = useInquiries()
+
+  let inquiries
+  if (inquiriesData) {
+    inquiries = inquiriesData.map((inquiry) => (
+      <Comment
+        body={inquiry.description}
+        author={{
+          name: inquiry.username,
+          image: inquiry.avatar,
+        }}
+        key={inquiry._id}
+      />
+    ))
+  } else {
+    inquiries = (
+      <Center>
+        <Text>Failed to get inquires</Text>
+      </Center>
+    )
+  }
 
   return (
     <>
@@ -55,14 +85,18 @@ export function Inquiry() {
           className={classes.wrapper}
           style={{ marginRight: 50, marginLeft: 50 }}
         >
-          <form onSubmit={form.onSubmit(() => {})}>
+          <form
+            onSubmit={form.onSubmit((values: CreateInquiryDTO) =>
+              createInquiry(values),
+            )}
+          >
             <TextInput
               label="Name Of Required Coupon"
               placeholder="Name"
               name="name"
               variant="filled"
               size={'md'}
-              {...form.getInputProps('name')}
+              {...form.getInputProps('title')}
             />
 
             <Textarea
@@ -73,27 +107,17 @@ export function Inquiry() {
               minRows={5}
               name="message"
               variant="filled"
-              {...form.getInputProps('message')}
+              {...form.getInputProps('description')}
             />
 
             <Group position="center" mt="xl">
-              <Button type="submit" size="md">
+              <Button disabled={isLoading} type="submit" size="md">
                 Send message
               </Button>
             </Group>
           </form>
         </Container>
-        <Container className={classes.wrapper}>
-          <Comment
-            body={
-              'Combines two styles such that style2 will override any styles in style1. If either style is falsy, the other one is returned without allocating an array, saving allocations and maintaining reference equality for PureComponent checks.'
-            }
-            author={{
-              name: 'Paytm',
-              image: '',
-            }}
-          />
-        </Container>
+        <Container className={classes.wrapper}>{inquiries}</Container>
       </SimpleGrid>
     </>
   )

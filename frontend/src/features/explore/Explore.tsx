@@ -1,15 +1,5 @@
-import {
-  createStyles,
-  Navbar as MantineNavbar,
-  Flex,
-  Box,
-  rem,
-  ScrollArea,
-  TextInput,
-  Checkbox,
-} from '@mantine/core'
+import { createStyles, Flex, Box, rem, Checkbox } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
-import { IconSearch } from '@tabler/icons-react'
 import { HEADER_HEIGHT } from 'components/Header'
 import { useState } from 'react'
 import { CouponCard } from './CouponCard'
