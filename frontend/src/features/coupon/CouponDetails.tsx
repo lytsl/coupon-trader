@@ -11,9 +11,12 @@ import {
   Box,
   Flex,
   Button,
+  Loader,
+  LoadingOverlay,
 } from '@mantine/core'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useCouponDetails } from './api/getCouponDetails'
+import { useMakePayment } from './api/makePaymet'
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -59,13 +62,30 @@ export function CouponDetails() {
   if (!id) {
     return <h1>Bad Request</h1>
   }
-  const { data, isLoading, error } = useCouponDetails({ couponId: id })
+  const { data: couponData, isLoading: isCouponLoading, error } = useCouponDetails({ couponId: id })
+  const { mutate: payment, isLoading: isPaymentLoading, data: paymentLink } = useMakePayment()
+  const navigate = useNavigate()
 
+  if (isCouponLoading) {
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    )
+  }
   if (error) {
     return <h1>An Error ouccured</h1>
   }
-  if (!data) {
+  if (!couponData) {
     return <h1>Could not load details</h1>
+  }
+  if (paymentLink) {
+    window.open(paymentLink.url, '_self')
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    )
   }
 
   return (
@@ -75,15 +95,15 @@ export function CouponDetails() {
           <Image
             // src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
             src={`/images/${bannerImages.electronics}`}
-            alt={data.category}
+            alt={couponData.category}
             height="30svh"
           />
         </Card.Section>
 
-        <Badge>{data.category}</Badge>
+        <Badge>{couponData.category}</Badge>
 
         <Text fw={700} className={classes.title} mt="xs">
-          {data.title}
+          {couponData.title}
         </Text>
 
         <Flex justify={'space-between'} align="center" mt={rem(16)} wrap="nowrap">
@@ -92,29 +112,31 @@ export function CouponDetails() {
               Expires On
             </Text>
             <Text fz="md" fw={600} lh="1" mt={rem(4)}>
-              {data.expirydate}
+              {couponData.expirydate}
             </Text>
           </Box>
 
           <Text fz="xl" fw={700} sx={{ lineHeight: 1 }}>
-            ₹{data.price}
+            ₹{couponData.price}
           </Text>
         </Flex>
 
         <Flex justify={'space-between'} align="center" mt={rem(16)}>
           <Group>
-            <Avatar src={data.companylogo} radius="sm" />
-            <Text fw={500}>{data.seller.username}</Text>
+            <Avatar src={couponData.companylogo} radius="sm" />
+            <Text fw={500}>{couponData.seller.username}</Text>
           </Group>
-
-          <Button uppercase>Buy</Button>
+          <LoadingOverlay visible={isPaymentLoading} overlayBlur={2} />
+          <Button onClick={(e) => payment({ couponid: id })} disabled={isPaymentLoading} uppercase>
+            Buy
+          </Button>
         </Flex>
 
         <Card.Section className={classes.footer}>
           <Text fw={700} className={classes.title}>
             Terms & Conditions
           </Text>
-          <Text fz="md">{data.terms}</Text>
+          <Text fz="md">{couponData.terms}</Text>
         </Card.Section>
       </Card>
     </Center>

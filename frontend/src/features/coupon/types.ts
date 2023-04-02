@@ -20,3 +20,7 @@ export type CouponDTO = CreateCouponDTO & {
 export type CouponDetailsDTO = CouponDTO & {
   seller: Omit<UserResponse, 'accessToken'>
 }
+
+export type PaymentDTO = { couponid: string }
+
+export type PaymentLinkDTO = PaymentDTO & { url: string }
