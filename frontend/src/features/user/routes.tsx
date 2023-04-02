@@ -1,5 +1,4 @@
-import { createBrowserRouter, useRoutes } from 'react-router-dom'
-import { AddCoupon } from '../coupon/AddCoupon'
+import { AddCoupon } from 'features/coupon/AddCoupon'
 import { ChangePassword } from './components/ChangePassword'
 import { Navbar } from './components/Navbar'
 import { Profile } from './components/Profile'

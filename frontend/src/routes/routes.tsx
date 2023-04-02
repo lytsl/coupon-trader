@@ -13,14 +13,14 @@ import { NotFoundAuth } from 'features/static/NotFoundAuth'
 import { NotFound } from 'features/static/NotFound'
 import { ProfileRoutes } from 'features/user/routes'
 import { ForgotPassword } from 'components/ForgotPassword'
-import { Explore } from 'features/explore/Explore'
 import { Inquiry } from 'features/inquiry/Inquiry'
-import { AddCoupon } from 'features/coupon/AddCoupon'
 import { AuthRequired } from 'features/static/AuthRequired'
 import { Login } from 'features/auth/Login'
 import { CheckEmailApp } from 'features/auth/CheckEmailApp'
 import { VerifyEmail } from 'features/auth/VerifyEmail'
-import { CouponDetails } from 'features/explore/CouponDetails'
+import { AddCoupon } from 'features/coupon/AddCoupon'
+import { CouponDetails } from 'features/coupon/CouponDetails'
+import { Explore } from 'features/coupon/Explore'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),

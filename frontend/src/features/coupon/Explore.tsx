@@ -1,18 +1,10 @@
-import {
-  createStyles,
-  Flex,
-  Box,
-  rem,
-  Checkbox,
-  Center,
-  Loader,
-} from '@mantine/core'
+import { createStyles, Flex, Box, rem, Checkbox, Center, Loader } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { HEADER_HEIGHT } from 'components/Header'
 import { useState } from 'react'
-import { useCoupons } from './api'
-import { CouponCard } from './CouponCard'
-import { ExploreNavbar } from './ExploreNavbar'
+import { useCoupons } from './api/getCoupons'
+import { CouponCard } from './components/CouponCard'
+import { ExploreNavbar } from './components/ExploreNavbar'
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -35,14 +27,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const companies: string[] = [
-  'PhonePay',
-  'PayTm',
-  'GooglePay',
-  'Swiggy',
-  'Zomato',
-  'Airtel',
-]
+const companies: string[] = ['PhonePay', 'PayTm', 'GooglePay', 'Swiggy', 'Zomato', 'Airtel']
 
 // FIXME: set proper UI
 export function Explore() {
@@ -71,12 +56,7 @@ export function Explore() {
   return (
     <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
       <ExploreNavbar />
-      <Box
-        py="xl"
-        px="lg"
-        sx={{ flex: 1, minHeight: '100svh' }}
-        className={classes.grid}
-      >
+      <Box py="xl" px="lg" sx={{ flex: 1, minHeight: '100svh' }} className={classes.grid}>
         {cards}
       </Box>
     </Flex>

@@ -5,13 +5,13 @@ import {
   Button,
   Group,
   Title,
-  Space,
   NumberInput,
   NativeSelect,
   Textarea,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
-import { CreateCouponDTO, useCreateCoupon } from './api'
+import { useCreateCoupon } from './api/createCoupon'
+import { CreateCouponDTO } from './types'
 
 export function AddCoupon() {
   const form = useForm({
@@ -41,11 +41,7 @@ export function AddCoupon() {
           Add Coupon
         </Title>
       </center>
-      <Box
-        sx={{ maxWidth: 270 }}
-        mx="auto"
-        style={{ marginBottom: 30, marginTop: 30 }}
-      >
+      <Box sx={{ maxWidth: 270 }} mx="auto" style={{ marginBottom: 30, marginTop: 30 }}>
         {/* <LoadingOverlay visible={isLoading} overlayBlur={2} /> */}
         <form
           onSubmit={form.onSubmit((values: any) => {
@@ -58,23 +54,14 @@ export function AddCoupon() {
             } as CreateCouponDTO)
           })}
         >
-          <TextInput
-            label="Title"
-            placeholder="Title"
-            {...form.getInputProps('title')}
-          />
+          <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} />
           <Textarea
             mt="sm"
             label="Terms"
             placeholder="Terms & Conditions"
             {...form.getInputProps('terms')}
           />
-          <TextInput
-            mt="sm"
-            label="Code"
-            placeholder="Code"
-            {...form.getInputProps('code')}
-          />
+          <TextInput mt="sm" label="Code" placeholder="Code" {...form.getInputProps('code')} />
           <TextInput
             mt="sm"
             label="Platform"

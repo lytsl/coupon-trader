@@ -2,7 +2,6 @@ import {
   createStyles,
   Card,
   Image,
-  ActionIcon,
   Group,
   Text,
   Avatar,
@@ -13,14 +12,12 @@ import {
   Flex,
   Button,
 } from '@mantine/core'
-import { IconHeart, IconBookmark, IconShare } from '@tabler/icons-react'
 import { useParams } from 'react-router-dom'
-import { useCouponDetails } from './api'
+import { useCouponDetails } from './api/getCouponDetails'
 
 const useStyles = createStyles((theme) => ({
   card: {
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     [theme.fn.largerThan('md')]: {
       width: '50svw',
       height: '100svh',
@@ -89,12 +86,7 @@ export function CouponDetails() {
           {data.title}
         </Text>
 
-        <Flex
-          justify={'space-between'}
-          align="center"
-          mt={rem(16)}
-          wrap="nowrap"
-        >
+        <Flex justify={'space-between'} align="center" mt={rem(16)} wrap="nowrap">
           <Box>
             <Text fz="sm" c="dimmed" fw={600} lh="1">
               Expires On
