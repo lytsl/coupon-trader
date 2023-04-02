@@ -6,6 +6,7 @@ import {
   TypographyStylesProvider,
   Paper,
   rem,
+  Card,
 } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
@@ -31,6 +32,7 @@ interface CommentHtmlProps {
   body: string
   author: {
     name: string
+    username: string
     image: string
   }
 }
@@ -38,17 +40,24 @@ interface CommentHtmlProps {
 export function Comment({ body, author }: CommentHtmlProps) {
   const { classes } = useStyles()
   return (
-    <Paper
+    <Card
       withBorder
       radius="md"
       className={classes.comment}
       // style={{ maxWidth: 470 }}
       style={{ marginRight: 50, marginLeft: 50 }}
+      m="md"
+      p="sm"
     >
       <Group>
         <Avatar src={author.image} alt={author.name} radius="xl" />
         <div>
-          <Text fz="sm">{author.name}</Text>
+          <Text fz="sm">{author.username} :</Text>
+        </div>
+        <div>
+          <b>
+            <Text fz="sm">{author.name}</Text>
+          </b>
         </div>
       </Group>
       <TypographyStylesProvider className={classes.body}>
@@ -57,6 +66,6 @@ export function Comment({ body, author }: CommentHtmlProps) {
           dangerouslySetInnerHTML={{ __html: body }}
         />
       </TypographyStylesProvider>
-    </Paper>
+    </Card>
   )
 }

@@ -40,12 +40,8 @@ export function VerifyEmail() {
             className="heading"
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           >
-            <Title mt="sm" style={{ fontSize: 24, fontWeight: 700 }}>
-              Check your Email
-            </Title>
-
             <Text color="dimmed" mt="md">
-              We have sent an email to
+              Your Email has successfully verified.
             </Text>
           </div>
         </Grid.Col>
@@ -56,12 +52,6 @@ export function VerifyEmail() {
               Get Started
             </Button>
           </Group>
-        </Grid.Col>
-        <Grid.Col>
-          <Text mt="md">
-            Did not receive the email? Check your spam filter, or try another
-            email address.
-          </Text>
         </Grid.Col>
       </Grid>
       <Space h="xl" />

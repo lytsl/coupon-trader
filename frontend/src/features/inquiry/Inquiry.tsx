@@ -52,7 +52,8 @@ export function Inquiry() {
       <Comment
         body={inquiry.description}
         author={{
-          name: inquiry.username,
+          name: inquiry.title,
+          username: inquiry.username,
           image: inquiry.avatar,
         }}
         key={inquiry._id}
