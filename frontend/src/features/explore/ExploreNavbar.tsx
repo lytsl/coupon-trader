@@ -11,7 +11,7 @@ import { IconSearch } from '@tabler/icons-react'
 import { HEADER_HEIGHT } from 'components/Header'
 import { useState } from 'react'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   navbar: {
     height: '80svh',
     width: rem(240),
@@ -20,7 +20,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const data: number[] = []
 const companies: string[] = [
   'PhonePay',
   'PayTm',

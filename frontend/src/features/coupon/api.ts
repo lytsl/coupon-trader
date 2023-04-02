@@ -1,6 +1,6 @@
 import { axios } from 'lib/axios'
 import { MutationConfig, queryClient } from 'lib/react-query'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { showSuccess } from 'lib/notifications'
 import { AxiosError } from 'axios'
 
@@ -21,7 +21,7 @@ export type CouponDTO = CreateCouponDTO & {
   _id: string
 }
 
-const couponKey = ['coupons']
+const couponsKey = ['coupons']
 
 export const createCoupon = (data: CreateCouponDTO): Promise<CouponDTO> => {
   console.log(data)
@@ -35,11 +35,11 @@ type UseCreateCouponOptions = {
 export const useCreateCoupon = ({ config }: UseCreateCouponOptions = {}) => {
   return useMutation<CouponDTO, AxiosError, CreateCouponDTO>({
     onMutate: async (newCoupon: CreateCouponDTO) => {
-      await queryClient.cancelQueries(couponKey)
+      await queryClient.cancelQueries(couponsKey)
 
-      const previousCoupons = queryClient.getQueryData<CouponDTO[]>(couponKey)
+      const previousCoupons = queryClient.getQueryData<CouponDTO[]>(couponsKey)
 
-      queryClient.setQueryData(couponKey, [
+      queryClient.setQueryData(couponsKey, [
         ...(previousCoupons || []),
         newCoupon,
       ])
@@ -48,11 +48,11 @@ export const useCreateCoupon = ({ config }: UseCreateCouponOptions = {}) => {
     },
     onError: (context: any) => {
       if (context?.previousCoupons) {
-        queryClient.setQueryData(couponKey, context.previousCoupons)
+        queryClient.setQueryData(couponsKey, context.previousCoupons)
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(couponKey)
+      queryClient.invalidateQueries(couponsKey)
       showSuccess('Coupon Created')
     },
     ...config,

@@ -1,8 +1,7 @@
 import { axios } from 'lib/axios'
 import { MutationConfig, queryClient, QueryConfig } from 'lib/react-query'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import { showSuccess } from 'lib/notifications'
-import { AxiosError } from 'axios'
 
 export type CreateInquiryDTO = {
   title: string

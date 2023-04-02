@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 
 import { Landing } from 'features/static/Landing'
 
@@ -13,7 +13,6 @@ import { NotFoundAuth } from 'features/static/NotFoundAuth'
 import { NotFound } from 'features/static/NotFound'
 import { ProfileRoutes } from 'features/user/routes'
 import { ForgotPassword } from 'components/ForgotPassword'
-import { CouponCard } from 'features/explore/CouponCard'
 import { Explore } from 'features/explore/Explore'
 import { Inquiry } from 'features/inquiry/Inquiry'
 import { AddCoupon } from 'features/coupon/AddCoupon'
@@ -21,6 +20,7 @@ import { AuthRequired } from 'features/static/AuthRequired'
 import { Login } from 'features/auth/Login'
 import { CheckEmailApp } from 'features/auth/CheckEmailApp'
 import { VerifyEmail } from 'features/auth/VerifyEmail'
+import { CouponDetails } from 'features/explore/CouponDetails'
 
 const { AuthRoutes } = lazyImport(
   () => import('../features/auth/routes'),
@@ -83,6 +83,7 @@ const commonRoutes = [
     children: [
       { path: 'inquiry/', element: <Inquiry /> },
       { path: 'explore/', element: <Explore /> },
+      { path: 'coupon/:id', element: <CouponDetails /> },
     ],
   },
   {

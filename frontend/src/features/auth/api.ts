@@ -1,14 +1,6 @@
 import { AxiosResponse } from 'axios'
 import { axios } from 'lib/axios'
 
-export type AuthUser = {
-  _id: string
-  email: string
-  username: string
-  emailverified: boolean
-  avatar: string
-}
-
 export type UserResponse = {
   _id: string
   username: string
@@ -16,6 +8,17 @@ export type UserResponse = {
   emailverified: boolean
   accessToken: string
 }
+
+export type AuthUser = Omit<UserResponse, 'accessToken'> & {
+  avatar: string
+}
+// {
+//   _id: string
+//   username: string
+//   email: string
+//   emailverified: boolean
+//   avatar: string
+// }
 
 export type LoginDTO = {
   username: string

@@ -8,6 +8,7 @@ import {
   Space,
   NumberInput,
   NativeSelect,
+  Textarea,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import { CreateCouponDTO, useCreateCoupon } from './api'
@@ -62,7 +63,7 @@ export function AddCoupon() {
             placeholder="Title"
             {...form.getInputProps('title')}
           />
-          <TextInput
+          <Textarea
             mt="sm"
             label="Terms"
             placeholder="Terms & Conditions"
@@ -101,7 +102,7 @@ export function AddCoupon() {
             maw={400}
             {...form.getInputProps('date')}
           />
-          // FIXME: select category
+          {/* FIXME: select category */}
           <NativeSelect
             mt="sm"
             data={['Clothing', 'Electronics', 'Food', 'Service', 'Other']}

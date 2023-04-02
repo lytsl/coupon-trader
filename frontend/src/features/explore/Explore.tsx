@@ -1,7 +1,16 @@
-import { createStyles, Flex, Box, rem, Checkbox } from '@mantine/core'
+import {
+  createStyles,
+  Flex,
+  Box,
+  rem,
+  Checkbox,
+  Center,
+  Loader,
+} from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { HEADER_HEIGHT } from 'components/Header'
 import { useState } from 'react'
+import { useCoupons } from './api'
 import { CouponCard } from './CouponCard'
 import { ExploreNavbar } from './ExploreNavbar'
 
@@ -26,7 +35,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const data: number[] = []
 const companies: string[] = [
   'PhonePay',
   'PayTm',
@@ -36,17 +44,29 @@ const companies: string[] = [
   'Airtel',
 ]
 
+// FIXME: set proper UI
 export function Explore() {
   const { classes } = useStyles()
   const [value, setValue] = useState('')
   const [debounced] = useDebouncedValue(value, 200)
 
-  for (let i = 0; i < 50; i++) data.push(i)
+  const { data, isLoading, error } = useCoupons()
 
-  const cards = data.map((item) => <CouponCard />)
-  const companyCheckBox = companies.map((item) => (
-    <Checkbox value={item} label={item} key={item} />
-  ))
+  if (isLoading) {
+    return (
+      <Center>
+        <Loader></Loader>
+      </Center>
+    )
+  }
+  if (error) {
+    return <h1>An Error ouccured</h1>
+  }
+  if (!data) {
+    return <h1>Could not load details</h1>
+  }
+
+  const cards = data.map((item) => <CouponCard props={item} key={item._id} />)
 
   return (
     <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
