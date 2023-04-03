@@ -21,25 +21,23 @@ const useStyles = createStyles((theme) => ({
   label: {
     fontFamily: 'monsterrat',
     textAlign: 'center',
-    fontWeight: 500,
-    fontSize: rem(125),
+    fontWeight: 800,
+    fontSize: rem(100),
     lineHeight: 1,
     marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
     color: theme.colorScheme === 'dark' ? theme.colors.green : theme.colors.green[4],
-
     [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(120),
+      fontSize: rem(70),
     },
   },
 
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     textAlign: 'center',
-    fontWeight: 900,
-    fontSize: rem(28),
-
+    fontWeight: 600,
+    fontSize: rem(32),
     [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(32),
+      fontSize: rem(24),
     },
   },
 
@@ -51,15 +49,15 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export function Successpayment() {
+export function SuccessPayment() {
   const { classes } = useStyles()
 
   return (
     <Container className={classes.root}>
       <div className={classes.label}>SUCCESS</div>
       <Group position="center">
-        <Title className={classes.title}>Your payment has been successfully done.</Title>
         <IconDiscountCheckFilled size={50} stroke={1.5} />
+        <Title className={classes.title}>Your payment has been successfully done.</Title>
       </Group>
 
       <Text color="dimmed" size="lg" align="center" className={classes.description}>

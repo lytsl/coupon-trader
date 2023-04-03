@@ -105,7 +105,6 @@ export function AddCoupon() {
             maw={400}
             {...form.getInputProps('date')}
           />
-          {/* FIXME: select category */}
           <NativeSelect
             mt="sm"
             label="Select Category"
