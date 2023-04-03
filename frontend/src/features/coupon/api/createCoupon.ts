@@ -17,7 +17,7 @@ type UseCreateCouponOptions = {
 }
 
 export const useCreateCoupon = ({ config }: UseCreateCouponOptions = {}) => {
-  return useMutation<CouponDTO, AxiosError, CreateCouponDTO>({
+  return useMutation({
     onMutate: async (newCoupon: CreateCouponDTO) => {
       await queryClient.cancelQueries(couponsKey)
 

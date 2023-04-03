@@ -17,6 +17,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCouponDetails } from './api/getCouponDetails'
 import { useMakePayment } from './api/makePaymet'
+import { bannerImages } from './data'
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -43,18 +44,6 @@ const useStyles = createStyles((theme) => ({
     }`,
   },
 }))
-
-const bannerImages = {
-  food: 'brooke-lark-lcZ9NxhOSlo-unsplash.jpg',
-  electronics: 'christopher-gower-_aXa21cf7rY-unsplash.jpg',
-  beauty: 'element5-digital-ceWgSMd8rvQ-unsplash.jpg',
-  books: 'lilian-dibbern-GX1Dz9cZHc0-unsplash.jpg',
-  travel: 'mantas-hesthaven-_g1WdcKcV3w-unsplash.jpg',
-  toys: 'michal-bozek-RcxR1aLw8X0-unsplash.jpg',
-  home: 'planetcare-23coWmkTNSg-unsplash.jpg',
-  fashion: 'tamas-pap-N7lIJLtAegc-unsplash.jpg',
-  medicine: 'towfiqu-barbhuiya-w8p9cQDLX7I-unsplash.jpg',
-}
 
 export function CouponDetails() {
   const { classes, theme } = useStyles()
@@ -94,7 +83,11 @@ export function CouponDetails() {
         <Card.Section mb="sm">
           <Image
             // src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
-            src={`/images/${bannerImages.electronics}`}
+            src={`/images/${
+              couponData.category in bannerImages
+                ? bannerImages[couponData.category]
+                : bannerImages.other
+            }`}
             alt={couponData.category}
             height="30svh"
           />

@@ -20,7 +20,7 @@ export const makePayment = {
     const findCoupon = await Coupon.findById(req.body.couponid)
     const session = await stripe.checkout.sessions.create({
       customer: customer.id,
-      // customer_email: customer.email,
+      // customer_email: req.currUser.email,
       line_items: [
         {
           price_data: {

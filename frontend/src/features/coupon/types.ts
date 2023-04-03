@@ -1,4 +1,5 @@
 import { UserResponse } from 'features/auth/api'
+import { bannerImages } from './data'
 
 export type CreateCouponDTO = {
   code: string
@@ -8,7 +9,7 @@ export type CreateCouponDTO = {
   price: number
   company: string
   companylogo: string
-  category: string
+  category: keyof typeof bannerImages
 }
 
 export type CouponDTO = CreateCouponDTO & {
