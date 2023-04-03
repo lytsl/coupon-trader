@@ -15,8 +15,11 @@ const useStyles = createStyles((theme) => ({
   },
 
   grid: {
+    flex: 1,
+    minHeight: '100svh',
     margin: '0 auto',
     display: 'grid',
+    gridAutoRows: '1fr',
     gap: `${rem(32)} ${rem(24)}`,
     [theme.fn.largerThan(rem(900))]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
@@ -56,7 +59,7 @@ export function Explore() {
   return (
     <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
       <ExploreNavbar />
-      <Box py="xl" px="lg" sx={{ flex: 1, minHeight: '100svh' }} className={classes.grid}>
+      <Box py="xl" px="lg" className={classes.grid}>
         {cards}
       </Box>
     </Flex>

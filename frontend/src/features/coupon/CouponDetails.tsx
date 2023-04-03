@@ -93,7 +93,10 @@ export function CouponDetails() {
           />
         </Card.Section>
 
-        <Badge>{couponData.category}</Badge>
+        <Group>
+          <Badge>{couponData.category}</Badge>
+          <Badge>{couponData.company}</Badge>
+        </Group>
 
         <Text fw={700} className={classes.title} mt="xs">
           {couponData.title}
