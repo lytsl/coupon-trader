@@ -6,7 +6,10 @@ import { CouponDTO } from '../types'
 const couponsKey = ['coupons']
 
 const getCoupons = (): Promise<CouponDTO[]> => {
-  return axios.get(`/coupon/findall`)
+  return axios.get(`/coupon/findall`, { params: { limit: 100 } })
+  // coupons.map((coupon) =>{
+  //   const {seller:{},...others} = coupon
+  // })
 }
 
 type CouponsFnType = typeof getCoupons

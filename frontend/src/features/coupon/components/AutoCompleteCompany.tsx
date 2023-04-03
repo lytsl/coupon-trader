@@ -2,10 +2,10 @@ import { Text, Group, Avatar, Autocomplete } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { forwardRef, useState } from 'react'
 import { useCompanies } from '../api/autoCompleteCompany'
-import { CompanyProps } from '../types'
+import { CompanyDTO } from '../types'
 
-const CompanyAutoCompleteItem = forwardRef<HTMLDivElement, CompanyProps>(
-  ({ name, value, logo, domain, ...others }: CompanyProps, ref) => (
+const CompanyAutoCompleteItem = forwardRef<HTMLDivElement, CompanyDTO>(
+  ({ name, value, logo, domain, ...others }: CompanyDTO, ref) => (
     <div ref={ref} {...others}>
       <Group noWrap>
         <Avatar src={logo} />
@@ -21,27 +21,22 @@ const CompanyAutoCompleteItem = forwardRef<HTMLDivElement, CompanyProps>(
 )
 
 type companyProps = {
-  company: string
-  setCompany: any
+  companies: CompanyDTO[] | undefined
+  companyName: string
+  setCompanyName: any
 }
 
-export function AutoCompleteCompany({ company, setCompany }: companyProps) {
-  const [query] = useDebouncedValue(company, 300)
-  const { data } = useCompanies(query)
-
+export function AutoCompleteCompany({ companyName, setCompanyName, companies }: companyProps) {
   return (
     <Autocomplete
       label="Company"
       placeholder="Select a Company"
       itemComponent={CompanyAutoCompleteItem}
-      value={company}
-      onChange={(e) => setCompany(e)}
-      data={data ?? []}
+      value={companyName}
+      onChange={(e) => setCompanyName(e)}
+      data={companies ?? []}
       limit={4}
       mt="sm"
     />
   )
-}
-function useDebounce(company: string, arg1: number) {
-  throw new Error('Function not implemented.')
 }

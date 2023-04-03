@@ -8,6 +8,7 @@ import {
   NumberInput,
   NativeSelect,
   Textarea,
+  LoadingOverlay,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import { useCreateCoupon } from './api/createCoupon'
@@ -15,6 +16,8 @@ import { CreateCouponDTO } from './types'
 import { useCallback, useState } from 'react'
 import { categories } from './data'
 import { AutoCompleteCompany } from './components/AutoCompleteCompany'
+import { useCompanies } from './api/autoCompleteCompany'
+import { useDebouncedValue } from '@mantine/hooks'
 
 export function AddCoupon() {
   const form = useForm({
@@ -36,11 +39,14 @@ export function AddCoupon() {
   })
 
   const [category, setCategory] = useState('other')
-  const [company, setCompany] = useState('')
+
+  const [companyName, setCompanyName] = useState('')
+  const [query] = useDebouncedValue(companyName, 300)
+  const { data: companiesData } = useCompanies(query)
 
   const { mutate: create, isLoading } = useCreateCoupon()
 
-  const handleCompanyChange = useCallback((value: string) => setCompany(value), [company])
+  const handleCompanyChange = useCallback((value: string) => setCompanyName(value), [companyName])
 
   return (
     <>
@@ -50,16 +56,20 @@ export function AddCoupon() {
         </Title>
       </center>
       <Box sx={{ maxWidth: 270 }} mx="auto" style={{ marginBottom: 30, marginTop: 30 }}>
-        {/* <LoadingOverlay visible={isLoading} overlayBlur={2} /> */}
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form
           onSubmit={form.onSubmit((values: any) => {
             console.log(values)
-            create({
+            const company = companiesData?.find((cmp) => cmp.value == companyName)
+            const coupon = {
               ...values,
               expirydate: values.date.toLocaleString().split(',')[0],
-              companylogo: values.company,
+              company: companyName,
+              companylogo: company?.logo ?? 'undefined',
               category: category,
-            } as CreateCouponDTO)
+            } as CreateCouponDTO
+            console.log(coupon)
+            create(coupon)
           })}
         >
           <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} />
@@ -76,7 +86,11 @@ export function AddCoupon() {
             placeholder="Platform"
             {...form.getInputProps('company')}
           /> */}
-          <AutoCompleteCompany company={company} setCompany={handleCompanyChange} />
+          <AutoCompleteCompany
+            companyName={companyName}
+            setCompanyName={handleCompanyChange}
+            companies={companiesData}
+          />
 
           <NumberInput
             mt="sm"
@@ -115,7 +129,4 @@ export function AddCoupon() {
       </Box>
     </>
   )
-}
-function useDebounce(searchValue: any, arg1: number) {
-  throw new Error('Function not implemented.')
 }

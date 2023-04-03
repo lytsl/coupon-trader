@@ -1,5 +1,5 @@
-import { AutocompleteItem, MantineColor, SelectItemProps } from '@mantine/core'
-import { UserResponse } from 'features/auth/api'
+import { AutocompleteItem } from '@mantine/core'
+import { AuthUser } from 'features/auth/api'
 import { bannerImages } from './data'
 
 export type CreateCouponDTO = {
@@ -20,7 +20,7 @@ export type CouponDTO = CreateCouponDTO & {
 }
 
 export type CouponDetailsDTO = CouponDTO & {
-  seller: Omit<UserResponse, 'accessToken'>
+  seller: AuthUser
 }
 
 export type CompanyResponseDTO = {
@@ -29,7 +29,7 @@ export type CompanyResponseDTO = {
   logo: string
 }
 
-export type CompanyProps = CompanyResponseDTO & AutocompleteItem
+export type CompanyDTO = CompanyResponseDTO & AutocompleteItem
 
 export type PaymentDTO = { couponid: string }
 

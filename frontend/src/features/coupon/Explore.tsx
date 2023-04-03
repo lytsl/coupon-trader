@@ -30,8 +30,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const companies: string[] = ['PhonePay', 'PayTm', 'GooglePay', 'Swiggy', 'Zomato', 'Airtel']
-
 // FIXME: set proper UI
 export function Explore() {
   const { classes } = useStyles()

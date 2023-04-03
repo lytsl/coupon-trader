@@ -14,7 +14,7 @@ import { useState } from 'react'
 const useStyles = createStyles(() => ({
   navbar: {
     height: '80svh',
-    width: rem(140),
+    width: rem(240),
     position: 'sticky',
     top: `${HEADER_HEIGHT}`,
   },

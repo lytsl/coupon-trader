@@ -1,6 +1,6 @@
 import { QueryConfig } from 'lib/react-query'
 import { useQuery } from '@tanstack/react-query'
-import { CompanyProps, CompanyResponseDTO } from '../types'
+import { CompanyDTO, CompanyResponseDTO } from '../types'
 import { CLEARBIT_KEY } from 'lib/config'
 import { axios } from 'lib/axios'
 
@@ -15,7 +15,7 @@ export const useCompanies = (query: string) => {
     [companiesKey, query],
     async () => {
       const response = await getCompanies(query)
-      const companies = response.map((item) => ({ ...item, value: item.name } as CompanyProps))
+      const companies = response.map((item) => ({ ...item, value: item.name } as CompanyDTO))
       return companies
     },
     {

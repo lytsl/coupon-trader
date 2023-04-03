@@ -21,8 +21,11 @@ const useStyles = createStyles((theme) => ({
   companyName: {
     writingMode: 'sideways-lr',
     fontFamily: 'Righteous, Helvetica',
-    overflow: 'hidden',
     textAlign: 'center',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+    overflow: 'hidden',
   },
 
   title: {
