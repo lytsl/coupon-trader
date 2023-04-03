@@ -10,7 +10,7 @@ import {
   Tooltip,
   ActionIcon,
 } from '@mantine/core'
-import { IconCheck, IconCopy } from '@tabler/icons-react'
+import { IconCheck, IconCopy, IconDiscountCheckFilled } from '@tabler/icons-react'
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -19,9 +19,10 @@ const useStyles = createStyles((theme) => ({
   },
 
   label: {
+    fontFamily: 'monsterrat',
     textAlign: 'center',
     fontWeight: 500,
-    fontSize: rem(175),
+    fontSize: rem(125),
     lineHeight: 1,
     marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
     color: theme.colorScheme === 'dark' ? theme.colors.green : theme.colors.green[4],
@@ -35,7 +36,7 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     textAlign: 'center',
     fontWeight: 900,
-    fontSize: rem(38),
+    fontSize: rem(28),
 
     [theme.fn.smallerThan('sm')]: {
       fontSize: rem(32),
@@ -56,11 +57,14 @@ export function Successpayment() {
   return (
     <Container className={classes.root}>
       <div className={classes.label}>SUCCESS</div>
-      <Title className={classes.title}>Your payment has been successfully done.</Title>
+      <Group position="center">
+        <Title className={classes.title}>Your payment has been successfully done.</Title>
+        <IconDiscountCheckFilled size={50} stroke={1.5} />
+      </Group>
+
       <Text color="dimmed" size="lg" align="center" className={classes.description}>
-        Congratulations! Your payment has been successfully processed. Thank you for choosing our
-        services. If you have any questions or concerns, please don't hesitate to contact us. Thank
-        you again for your trust and support.
+        Congratulations! Your payment has been successfully processed. If you have any questions or
+        concerns, please don't hesitate to contact us. Thank you for your trust and support.
       </Text>
 
       <Group position="center">
