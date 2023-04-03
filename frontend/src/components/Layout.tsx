@@ -41,7 +41,7 @@ export const Layout = ({ children, hasLoggedIn }: ContentLayoutProps) => {
       {children}
       <Footer />
       <Successpayment />
-      {/* <Failedpayment /> */}
+      <Failedpayment />
     </>
   )
 }
