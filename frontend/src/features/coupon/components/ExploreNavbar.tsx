@@ -14,20 +14,13 @@ import { useState } from 'react'
 const useStyles = createStyles(() => ({
   navbar: {
     height: '80svh',
-    width: rem(240),
+    width: rem(140),
     position: 'sticky',
     top: `${HEADER_HEIGHT}`,
   },
 }))
 
-const companies: string[] = [
-  'PhonePay',
-  'PayTm',
-  'GooglePay',
-  'Swiggy',
-  'Zomato',
-  'Airtel',
-]
+const companies: string[] = ['PhonePay', 'PayTm', 'GooglePay', 'Swiggy', 'Zomato', 'Airtel']
 
 export function ExploreNavbar() {
   const { classes } = useStyles()
@@ -63,13 +56,7 @@ export function ExploreNavbar() {
         />
         <ScrollArea h="50svh" type="auto" scrollbarSize={4}>
           <Checkbox.Group>
-            <Flex
-              gap="sm"
-              align="stretch"
-              justify="flex-start"
-              direction="column"
-              mt="xs"
-            >
+            <Flex gap="sm" align="stretch" justify="flex-start" direction="column" mt="xs">
               {companyCheckBox}
             </Flex>
           </Checkbox.Group>

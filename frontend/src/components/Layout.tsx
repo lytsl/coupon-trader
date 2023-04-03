@@ -41,8 +41,6 @@ export const Layout = ({ children, hasLoggedIn }: ContentLayoutProps) => {
       <Header hasLoggedIn={hasLoggedIn} sx={show ? { top: 0 } : {}} />
       {children}
       <Footer />
-      <SuccessPayment />
-      <FailedPayment />
     </>
   )
 }
