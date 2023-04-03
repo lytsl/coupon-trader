@@ -1,5 +1,3 @@
-import { FailedPayment } from 'features/coupon/Failedpayment'
-import { SuccessPayment } from 'features/coupon/Successpayment'
 import * as React from 'react'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -41,8 +39,6 @@ export const Layout = ({ children, hasLoggedIn }: ContentLayoutProps) => {
       <Header hasLoggedIn={hasLoggedIn} sx={show ? { top: 0 } : {}} />
       {children}
       <Footer />
-      <SuccessPayment />
-      <FailedPayment />
     </>
   )
 }

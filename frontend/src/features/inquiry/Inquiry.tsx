@@ -10,14 +10,12 @@ import {
   Container,
   Text,
   Center,
+  Loader,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import {
-  CreateInquiryDTO,
-  InquiryDTO,
-  useCreateInquiry,
-  useInquiries,
-} from './api'
+import storage from 'lib/storage'
+import { useNavigate } from 'react-router-dom'
+import { CreateInquiryDTO, InquiryDTO, useCreateInquiry, useInquiries } from './api'
 import { Comment } from './Comment'
 
 const useStyles = createStyles((theme) => ({
@@ -44,7 +42,9 @@ export function Inquiry() {
   })
   const { classes } = useStyles()
   const { mutate: createInquiry, isLoading } = useCreateInquiry()
-  const { data: inquiriesData } = useInquiries()
+  const { data: inquiriesData, error, isLoading: loadingInquiries } = useInquiries()
+  const auth = storage.getToken() == null ? false : true
+  const navigate = useNavigate()
 
   let inquiries
   if (inquiriesData) {
@@ -59,7 +59,13 @@ export function Inquiry() {
         key={inquiry._id}
       />
     ))
-  } else {
+  } else if (loadingInquiries) {
+    inquiries = (
+      <Center>
+        <Loader />
+      </Center>
+    )
+  } else if (error) {
     inquiries = (
       <Center>
         <Text>Failed to get inquires</Text>
@@ -82,15 +88,8 @@ export function Inquiry() {
         Inquiry Here
       </Title>
       <SimpleGrid cols={2} mt="xl" breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
-        <Container
-          className={classes.wrapper}
-          style={{ marginRight: 50, marginLeft: 50 }}
-        >
-          <form
-            onSubmit={form.onSubmit((values: CreateInquiryDTO) =>
-              createInquiry(values),
-            )}
-          >
+        <Container className={classes.wrapper} style={{ marginRight: 50, marginLeft: 50 }}>
+          <form onSubmit={form.onSubmit((values: CreateInquiryDTO) => createInquiry(values))}>
             <TextInput
               label="Name Of Required Coupon"
               placeholder="Name"
@@ -112,9 +111,15 @@ export function Inquiry() {
             />
 
             <Group position="center" mt="xl">
-              <Button disabled={isLoading} type="submit" size="md">
-                Send message
-              </Button>
+              {auth ? (
+                <Button disabled={isLoading} type="submit" size="md">
+                  Send message
+                </Button>
+              ) : (
+                <Button onClick={(e) => navigate('/auth/login')} size="md">
+                  Login to add inquiries
+                </Button>
+              )}
             </Group>
           </form>
         </Container>
