@@ -301,22 +301,52 @@ export const searchCoupon = {
 export const findAllCoupons = {
   controller: async (req, res) => {
     try {
-      const page = req.query.page - 1 || 0
-      const limit = req.query.limit || 12
-      console.log(page)
-      console.log(limit)
+      const page = Number(req.query.page) || 1
+      const limit = Number(req.query.limit) || 12
+      const category = req.query.category
 
-      const currentCouponidx = page * limit
-      const allCoupons = await Coupon.find()
+      const skipIndex = (page - 1) * limit
 
-      if (allCoupons.length - 1 < currentCouponidx)
-        return res.status(401).send('more Coupons not available')
+      // use $dateFromString to parse expirydate strings into date objects
+      const result = await Coupon.aggregate([
+        {
+          $match: { ...(category && { category }) },
+        },
+        {
+          $facet: {
+            parsedCoupons: [
+              {
+                $addFields: {
+                  expiry_date: {
+                    $dateFromString: { dateString: '$expirydate', format: '%m/%d/%Y' },
+                  },
+                },
+              },
+              { $sort: { expiry_date: 1 } },
+              { $skip: skipIndex },
+              { $limit: limit },
+            ],
+            totalCount: [
+              {
+                $count: 'total',
+              },
+            ],
+          },
+        },
+      ]).exec()
 
-      const currentPageCoupons = allCoupons.slice(currentCouponidx, currentCouponidx + limit)
-      const hasMore = allCoupons.length - 1 >= (page + 1) * limit
+      const parsedCoupons = result[0].parsedCoupons
+      const totalCount = result[0].totalCount[0]?.total ?? 0
 
-      res.status(200).send({ coupons: currentPageCoupons, hasMore: hasMore })
+      if (parsedCoupons.length === 0) {
+        return res.status(404).send('No More Coupons')
+      }
+
+      const hasMore = totalCount > skipIndex + limit
+
+      res.status(200).send({ coupons: parsedCoupons, hasMore: hasMore, totalCount: totalCount })
     } catch (e) {
+      console.error(e)
       return res.status(400).send('Internal server error')
     }
   },

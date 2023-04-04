@@ -9,7 +9,7 @@ import {
 
 const queryConfig: DefaultOptions = {
   queries: {
-    useErrorBoundary: true,
+    // useErrorBoundary: true,
     refetchOnWindowFocus: false,
     retry: false,
   },
@@ -22,9 +22,8 @@ export type QueryConfig<QueryFnType extends (...args: any) => any> = Omit<
   'queryKey' | 'queryFn'
 >
 
-export type MutationConfig<MutationFnType extends (...args: any) => any> =
-  UseMutationOptions<
-    Awaited<ReturnType<MutationFnType>>,
-    AxiosError,
-    Parameters<MutationFnType>[0]
-  >
+export type MutationConfig<MutationFnType extends (...args: any) => any> = UseMutationOptions<
+  Awaited<ReturnType<MutationFnType>>,
+  AxiosError,
+  Parameters<MutationFnType>[0]
+>

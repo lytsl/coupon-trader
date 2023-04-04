@@ -18,6 +18,9 @@ export type CouponDTO = CreateCouponDTO & {
   couponverified: boolean
   _id: string
 }
+
+export type getCouponsDTO = { coupons: CouponDTO[]; hasMore: boolean; totalCount: number }
+
 export const isCouponDTOList = (x: any): x is CouponDTO[] =>
   Array.isArray(x) && 'sellerid' in x.at(0)
 

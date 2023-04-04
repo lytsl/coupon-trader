@@ -6,10 +6,13 @@ import {
   ScrollArea,
   TextInput,
   Checkbox,
+  Radio,
+  Group,
 } from '@mantine/core'
 import { IconSearch } from '@tabler/icons-react'
 import { HEADER_HEIGHT } from 'components/Header'
 import { useState } from 'react'
+import { categories } from '../data'
 
 const useStyles = createStyles(() => ({
   navbar: {
@@ -22,31 +25,45 @@ const useStyles = createStyles(() => ({
 
 const companies: string[] = ['PhonePay', 'PayTm', 'GooglePay', 'Swiggy', 'Zomato', 'Airtel']
 
-export function ExploreNavbar() {
+export function ExploreNavbar(props: { category: string; setCategory: (value: string) => any }) {
   const { classes } = useStyles()
-  const [navbarState, setNavbarState] = useState<{
-    query: string
-    list: string[]
-  }>({
-    query: '',
-    list: companies,
-  })
-  const handleChange = (e: any) => {
-    const result = companies.filter((company) => {
-      if (e.target.value === '') return companies
-      return company.toLocaleLowerCase().includes(e.target.value.toLowerCase())
-    })
-    setNavbarState({ query: e.target.value, list: result })
-  }
+  // const [navbarState, setNavbarState] = useState<{
+  //   query: string
+  //   list: string[]
+  // }>({
+  //   query: '',
+  //   list: companies,
+  // })
+  // const handleChange = (e: any) => {
+  //   const result = companies.filter((company) => {
+  //     if (e.target.value === '') return companies
+  //     return company.toLocaleLowerCase().includes(e.target.value.toLowerCase())
+  //   })
+  //   setNavbarState({ query: e.target.value, list: result })
+  // }
 
-  const companyCheckBox = navbarState.list.map((item) => (
-    <Checkbox value={item} label={item} key={item} />
+  // const companyCheckBox = navbarState.list.map((item) => (
+  //   <Checkbox value={item} label={item} key={item} />
+  // ))
+
+  const categoriesRadio = [{ value: 'all', label: 'All' }, ...categories].map((item) => (
+    <Radio value={item.value} label={item.label} key={item.value} />
   ))
 
   return (
     <MantineNavbar className={classes.navbar}>
       <MantineNavbar.Section p="md" grow>
-        <TextInput
+        <Radio.Group
+          value={props.category}
+          onChange={(e) => props.setCategory(e)}
+          name="favoriteFramework"
+          label="Select a Category"
+        >
+          <Flex gap="sm" align="stretch" justify="flex-start" direction="column" mt="sm">
+            {categoriesRadio}
+          </Flex>
+        </Radio.Group>
+        {/* <TextInput
           placeholder="Company"
           size="xs"
           value={navbarState.query}
@@ -60,7 +77,7 @@ export function ExploreNavbar() {
               {companyCheckBox}
             </Flex>
           </Checkbox.Group>
-        </ScrollArea>
+        </ScrollArea> */}
       </MantineNavbar.Section>
     </MantineNavbar>
   )

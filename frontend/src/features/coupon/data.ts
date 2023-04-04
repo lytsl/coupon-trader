@@ -12,7 +12,6 @@ export const bannerImages = {
 }
 
 export const categories: { value: keyof typeof bannerImages; label: string }[] = [
-  { value: 'other', label: 'Select a category' },
   { value: 'electronics', label: 'Electronics' },
   { value: 'clothing', label: 'Clothing & Accessories' },
   { value: 'beauty', label: 'Beauty & Personal Care' },
@@ -22,4 +21,5 @@ export const categories: { value: keyof typeof bannerImages; label: string }[] =
   { value: 'books', label: 'Books' },
   { value: 'home', label: 'Household supplies' },
   { value: 'toys', label: 'Toys' },
+  { value: 'other', label: 'Other' },
 ]

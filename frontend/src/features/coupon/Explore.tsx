@@ -1,11 +1,12 @@
 import { createStyles, Flex, Box, rem, Checkbox, Center, Loader, Group } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { HEADER_HEIGHT } from 'components/Header'
-import { Fragment, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { useCoupons } from './api/getCoupons'
 import { CouponCard } from './components/CouponCard'
 import { ExploreNavbar } from './components/ExploreNavbar'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
+import { AxiosError } from 'axios'
 // import InfiniteScroll from 'react-infinite-scroller'
 
 const useStyles = createStyles((theme) => ({
@@ -35,15 +36,21 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-// FIXME: set proper UI
 export function Explore() {
   const { classes } = useStyles()
-  const [value, setValue] = useState('')
-  const [debounced] = useDebouncedValue(value, 200)
 
   // const { data, isLoading, error } = useCoupons()
-  const { data, error, isSuccess, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useCoupons()
+  const [category, setCategory] = useState('all')
+  const handleCategoryChange = useCallback(
+    (value: string) => {
+      setCategory(value)
+      console.log(category)
+    },
+    [category],
+  )
+  const { data, error, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useCoupons(category)
+
   const [sentryRef] = useInfiniteScroll({
     loading: isFetchingNextPage,
     hasNextPage: hasNextPage ?? false,
@@ -53,24 +60,25 @@ export function Explore() {
     rootMargin: '0px 0px 400px 0px',
   })
 
+  let couponGrid
+
   if (isLoading) {
-    return (
+    couponGrid = (
       <Center>
         <Loader></Loader>
       </Center>
     )
-  }
-  if (error) {
-    return <h1>An Error ouccured</h1>
-  }
-  if (!data) {
-    return <h1>Could not load Coupons</h1>
-  }
-
-  return (
-    <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
-      <ExploreNavbar />
-      <Box className={classes.gridContainer}>
+  } else if (error) {
+    let errorMessage = 'No coupon were found'
+    if (error instanceof AxiosError) {
+      errorMessage = JSON.stringify(error.response?.data) || error.message
+    }
+    couponGrid = <h1>{errorMessage}</h1>
+  } else if (!data) {
+    couponGrid = <h1>Could not load Coupons</h1>
+  } else {
+    couponGrid = (
+      <>
         <Box py="xl" px="lg" className={classes.grid}>
           {data.pages.map((group, i) => (
             <Fragment key={i}>
@@ -87,7 +95,14 @@ export function Explore() {
             </Center>
           </Box>
         )}
-      </Box>
+      </>
+    )
+  }
+
+  return (
+    <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
+      <ExploreNavbar category={category} setCategory={handleCategoryChange} />
+      <Box className={classes.gridContainer}>{couponGrid}</Box>
     </Flex>
   )
 }
