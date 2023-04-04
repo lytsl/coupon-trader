@@ -55,9 +55,7 @@ export const register = {
       return res.status(400).send('Password must be at least 8 characters')
     }
     if (password !== cpassword) {
-      return res
-        .status(400)
-        .send('Password and confirm password field must be same')
+      return res.status(400).send('Password and confirm password field must be same')
     }
     next()
   },
@@ -112,10 +110,7 @@ export const login = {
         return res.status(401).send('Invalid credintials find')
       }
 
-      const isMatch = await bycrypt.compare(
-        req.body.password,
-        findUser.password,
-      )
+      const isMatch = await bycrypt.compare(req.body.password, findUser.password)
 
       if (!isMatch) {
         return res.status(401).send('Invalid credintials pass')
@@ -126,7 +121,7 @@ export const login = {
           id: findUser._id,
         },
         process.env.JWT_SEC_KEY,
-        { expiresIn: '3d' },
+        { expiresIn: '28d' },
       )
 
       // ! creater cookie
@@ -161,10 +156,7 @@ export const sendEmailVerification = {
       )
 
       const verificationLink = encodeURI(
-        `${process.env.CLIENT_URL}/verify_email/${accessToken.replace(
-          /\./g,
-          '%dot%',
-        )}`,
+        `${process.env.CLIENT_URL}/verify_email/${accessToken.replace(/\./g, '%dot%')}`,
       )
 
       const mailContent = `Hi ${req.currUser.username} \nclick the below URL to verify your email address. \n${verificationLink} \nIf you will not start the verification process now, than this link will expire in 24hours.`
@@ -173,11 +165,7 @@ export const sendEmailVerification = {
 
       const mailSubject = 'Coupon Trader Email verification'
 
-      const emailSentRes = await sendMail(
-        mailContent,
-        mailSubject,
-        req.currUser,
-      )
+      const emailSentRes = await sendMail(mailContent, mailSubject, req.currUser)
 
       // if (emailSentRes) {
       return res.status(200).send('Verification email has been sent')
@@ -239,9 +227,7 @@ export const sendResetEmail = {
       const findUser = await User.findOne({ email: req.body.email })
 
       if (!findUser) {
-        return res
-          .status(404)
-          .send('User not found associated to this email id')
+        return res.status(404).send('User not found associated to this email id')
       }
 
       const accessToken = JWT.sign(
@@ -276,10 +262,7 @@ export const resetTokenVerify = {
     }
 
     try {
-      const verified = JWT.verify(
-        req.query.reset_password_token,
-        process.env.JWT_SEC_KEY,
-      )
+      const verified = JWT.verify(req.query.reset_password_token, process.env.JWT_SEC_KEY)
 
       const findUser = await User.findOne({
         _id: verified.id,

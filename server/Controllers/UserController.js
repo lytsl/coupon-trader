@@ -20,7 +20,7 @@ export const updateUser = {
     ) {
       try {
         // FIXME: user not found
-        const findUser = await User.findOne({ userId: userID })
+        const findUser = await User.findOne({ _id: userID })
         if (!findUser) {
           return res.status(401).send('User Not Found')
         } else {
@@ -64,10 +64,7 @@ export const updateUser = {
           //     findUser.password,
           //     process.env.AES_SEC_KEY
           // ).toString(CryptoJS.enc.Utf8);
-          const decryptedPass = await bcrypt.compare(
-            req.body.password,
-            findUser.password,
-          )
+          const decryptedPass = await bcrypt.compare(req.body.password, findUser.password)
 
           if (!decryptedPass) {
             return res.status(401).send('Incorrect Current Password')
@@ -92,9 +89,7 @@ export const updateUser = {
 
             return res.status(200).json({ ...others })
           } else {
-            return res
-              .status(401)
-              .send('Password and re-Enter Password Must be Same')
+            return res.status(401).send('Password and re-Enter Password Must be Same')
           }
         }
       } catch (e) {
@@ -153,10 +148,7 @@ export const findAllUsers = {
       if (allUsers.length - 1 < currentUseridx)
         return res.status(401).send('more users not available')
 
-      const currentPageUsers = allUsers.slice(
-        currentUseridx,
-        currentUseridx + limit,
-      )
+      const currentPageUsers = allUsers.slice(currentUseridx, currentUseridx + limit)
       // console.log(currentPageUsers);
 
       res.status(200).send(currentPageUsers)
@@ -171,9 +163,7 @@ export const findAllUsers = {
 export const deleteUser = {
   validator: async (req, res, next) => {
     if (req.currUser._id.toString() !== req.params.id) {
-      return res
-        .status(400)
-        .send('You are not authenticated to delete this user')
+      return res.status(400).send('You are not authenticated to delete this user')
     }
     next()
   },

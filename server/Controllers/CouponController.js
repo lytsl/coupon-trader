@@ -3,6 +3,8 @@ import User from '../Models/User.js'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import axios from 'axios'
+import ColorThief from 'colorthief'
+import invert from 'invert-color'
 
 dotenv.config()
 
@@ -37,10 +39,14 @@ const sendMail = async (mailContent, mailSubject) => {
   })
 }
 
+function rgbToHex(r, g, b) {
+  return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)
+}
+
 // !create coupon
 export const createCoupon = {
   validator: async (req, res, next) => {
-    const { code, title, terms, expirydate, price, company, companylogo, category } = req.body
+    const { code, title, terms, expirydate, price, company, companylogo, category, url } = req.body
 
     if (
       !code ||
@@ -50,7 +56,8 @@ export const createCoupon = {
       !price ||
       !company ||
       !companylogo ||
-      !category
+      !category ||
+      !url
     ) {
       return res.status(400).send('Please Fill all the Fields')
     }
@@ -64,10 +71,35 @@ export const createCoupon = {
     next()
   },
   controller: async (req, res) => {
-    const { code, title, terms, expirydate, price, company, companylogo, category } = req.body
+    const { code, title, terms, expirydate, price, company, companylogo, category, url } = req.body
 
     const sellerid = req.currUser._id
     try {
+      // const response = await axios.get(companylogo, { responseType: 'arraybuffer' })
+      // const buffer = Buffer.from(response.data, 'utf-8')
+      // axios({
+      //   method: 'get',
+      //   url: imageUrl,
+      //   responseType: 'arraybuffer',
+      // })
+      //   .then((response) => {
+      //     const colorThief = new ColorThief()
+      //     const color = colorThief.getColor(Buffer.from(response.data))
+      //     console.log(color)
+      //   })
+      //   .catch((err) => {
+      //     console.error(`Error downloading image: ${err.message}`)
+      //   })
+      let dmcolor
+      try {
+        dmcolor = await ColorThief.getColor(companylogo)
+        dmcolor = rgbToHex(dmcolor)
+        console.log(dmcolor)
+      } catch (e) {
+        console.error(e)
+      }
+      const incolor = invert(dmcolor)
+
       const newCoupon = await Coupon.create({
         code,
         title,
@@ -78,19 +110,19 @@ export const createCoupon = {
         companylogo,
         category,
         sellerid,
+        dmcolor,
+        incolor,
+        url,
       })
 
       await newCoupon.save()
 
       const coupon_id = newCoupon._doc._id
-
       const couponDetails = `Coupon Code: ${code} \nTitle: ${title} \nTerms and Conditions: ${terms} \nExpiry Date: ${expirydate} \nPrice: ${price} \nCompany: ${company}`
-
       const mailContent = `${couponDetails} \nUser Name: ${req.currUser.username} \nclick the below URL to verify coupon details. \nhttp://localhost:5000/api/coupon/verify_coupon/${coupon_id}`
+      const mailSubject = 'Coupon Trader Coupon verification'
 
       console.log('Coupon verification')
-
-      const mailSubject = 'Coupon Trader Coupon verification'
 
       const emailSentRes = await sendMail(mailContent, mailSubject)
 
@@ -104,6 +136,76 @@ export const createCoupon = {
     }
   },
 }
+// export const createCoupon = {
+//   validator: async (req, res, next) => {
+//     const { code, title, terms, expirydate, price, company, companylogo, category, url } = req.body
+
+//     if (
+//       !code ||
+//       !title ||
+//       !terms ||
+//       !expirydate ||
+//       !price ||
+//       !company ||
+//       !companylogo ||
+//       !category ||
+//       !url
+//     ) {
+//       return res.status(400).send('Please Fill all the Fields')
+//     }
+//     if (title.length < 3) {
+//       return res.status(400).send('Title shoud be more than 3 characters')
+//     }
+//     if (terms.length < 2) {
+//       return res.status(400).send('Terms and condidtions shoud be more than 2 characters')
+//     }
+
+//     next()
+//   },
+//   controller: async (req, res) => {
+//     const { code, title, terms, expirydate, price, company, companylogo, category, url } = req.body
+
+//     const sellerid = req.currUser._id
+//     try {
+//       const newCoupon = await Coupon.create({
+//         code,
+//         title,
+//         terms,
+//         expirydate,
+//         price,
+//         company,
+//         companylogo,
+//         category,
+//         sellerid,
+//         dmcolor,
+//         incolor,
+//         url,
+//       })
+
+//       await newCoupon.save()
+
+//       const coupon_id = newCoupon._doc._id
+
+//       const couponDetails = `Coupon Code: ${code} \nTitle: ${title} \nTerms and Conditions: ${terms} \nExpiry Date: ${expirydate} \nPrice: ${price} \nCompany: ${company}`
+
+//       const mailContent = `${couponDetails} \nUser Name: ${req.currUser.username} \nclick the below URL to verify coupon details. \nhttp://localhost:5000/api/coupon/verify_coupon/${coupon_id}`
+
+//       console.log('Coupon verification')
+
+//       const mailSubject = 'Coupon Trader Coupon verification'
+
+//       const emailSentRes = await sendMail(mailContent, mailSubject)
+
+//       return res.status(200).send({
+//         message: 'Coupon uploaded successful',
+//         ...newCoupon._doc,
+//       })
+//     } catch (e) {
+//       console.log(e)
+//       return res.status(500).send('Product upload Failed')
+//     }
+//   },
+// }
 
 // !verify coupon
 export const verifyCoupon = {
@@ -301,49 +403,30 @@ export const searchCoupon = {
 export const findAllCoupons = {
   controller: async (req, res) => {
     try {
-      const page = Number(req.query.page) || 1
-      const limit = Number(req.query.limit) || 12
+      const page = Number(req.query.page || 1)
+      const itemsPerPage = Number(req.query.limit) || 12
       const category = req.query.category
-
-      const skipIndex = (page - 1) * limit
-
-      // use $dateFromString to parse expirydate strings into date objects
-      const result = await Coupon.aggregate([
-        {
-          $match: { ...(category && { category }) },
-        },
-        {
-          $facet: {
-            parsedCoupons: [
-              {
-                $addFields: {
-                  expiry_date: {
-                    $dateFromString: { dateString: '$expirydate', format: '%m/%d/%Y' },
-                  },
-                },
-              },
-              { $sort: { expiry_date: 1 } },
-              { $skip: skipIndex },
-              { $limit: limit },
-            ],
-            totalCount: [
-              {
-                $count: 'total',
-              },
-            ],
-          },
-        },
-      ]).exec()
-
-      const parsedCoupons = result[0].parsedCoupons
-      const totalCount = result[0].totalCount[0]?.total ?? 0
-
-      if (parsedCoupons.length === 0) {
-        return res.status(404).send('No More Coupons')
+      let query = {}
+      if (category) {
+        query.category = category
       }
 
-      const hasMore = totalCount > skipIndex + limit
+      const totalCount = await Coupon.countDocuments(query)
+      const totalPages = Math.ceil(totalCount / itemsPerPage)
+      if (page > totalPages) {
+        return res.status(404).send(`Invalid page number. There are only ${totalPages} pages.`)
+      }
 
+      const parsedCoupons = await Coupon.find(query)
+        .sort({ expirydate: 1 })
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage)
+
+      if (parsedCoupons.length === 0) {
+        return res.status(404).send('No Coupons Found')
+      }
+
+      const hasMore = page < totalPages
       res.status(200).send({ coupons: parsedCoupons, hasMore: hasMore, totalCount: totalCount })
     } catch (e) {
       console.error(e)

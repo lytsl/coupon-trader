@@ -64,11 +64,12 @@ type CouponCardProps = {
     company: string
     companylogo: string
     title: string
-    expirydate: string
+    expirydate: Date
     price: number
   }
 }
 
+// FIXME: set proper value
 export function CouponCard({ props }: CouponCardProps) {
   const { classes } = useStyles()
   const navigate = useNavigate()
@@ -115,7 +116,7 @@ export function CouponCard({ props }: CouponCardProps) {
                 Expires On
               </Text>
               <Text fz="md" fw={600} sx={{ lineHeight: 1 }} mt={rem(4)}>
-                {props.expirydate}
+                {props.expirydate.toString()}
               </Text>
             </Box>
 

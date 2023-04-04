@@ -3,10 +3,10 @@ import { AuthUser } from 'features/auth/api'
 import { bannerImages } from './data'
 
 export type CreateCouponDTO = {
-  code: string
+  code: string | undefined
   title: string
   terms: string
-  expirydate: string
+  expirydate: Date
   price: number
   company: string
   companylogo: string
@@ -15,6 +15,10 @@ export type CreateCouponDTO = {
 
 export type CouponDTO = CreateCouponDTO & {
   sellerid: string
+  buyerid: string | undefined
+  dmcolor: string
+  incolor: string
+  url: string
   couponverified: boolean
   _id: string
 }

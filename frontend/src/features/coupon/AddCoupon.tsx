@@ -26,14 +26,12 @@ export function AddCoupon() {
       code: '',
       title: '',
       terms: '',
-      date: new Date(),
-      expirydate: '',
+      // date: new Date(),
+      expirydate: new Date(),
       price: 0,
       company: '',
       companylogo: '',
-    } as CreateCouponDTO & {
-      date: Date
-    },
+    } as CreateCouponDTO,
 
     validate: {},
   })
@@ -63,9 +61,10 @@ export function AddCoupon() {
             const company = companiesData?.find((cmp) => cmp.value == companyName)
             const coupon = {
               ...values,
-              expirydate: values.date.toLocaleString().split(',')[0],
+              expirydate: values.date,
               company: companyName,
-              companylogo: company?.logo ?? 'undefined',
+              companylogo: company?.logo ?? `/images/company-logo.jpg`,
+              url: company?.domain ?? `https://www.google.com/search?q=${companyName}`,
               category: category,
             } as CreateCouponDTO
             console.log(coupon)
