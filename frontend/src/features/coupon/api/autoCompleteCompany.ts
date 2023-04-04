@@ -4,7 +4,7 @@ import { CompanyDTO, CompanyResponseDTO } from '../types'
 import { CLEARBIT_KEY } from 'lib/config'
 import { axios } from 'lib/axios'
 
-const companiesKey = ['company']
+export const companiesKey = ['company']
 
 const getCompanies = (query: string): Promise<CompanyResponseDTO[]> => {
   return axios.get(`/coupon/company/${query}`)
@@ -19,7 +19,8 @@ export const useCompanies = (query: string) => {
       return companies
     },
     {
-      enabled: !!query,
+      enabled: query.length > 2,
+      staleTime: 4 * (60 * 1000),
     },
   )
 }

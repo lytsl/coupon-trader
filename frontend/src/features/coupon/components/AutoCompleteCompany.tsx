@@ -1,7 +1,8 @@
 import { Text, Group, Avatar, Autocomplete } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
+import { useQueryClient } from '@tanstack/react-query'
 import { forwardRef, useState } from 'react'
-import { useCompanies } from '../api/autoCompleteCompany'
+import { companiesKey, useCompanies } from '../api/autoCompleteCompany'
 import { CompanyDTO } from '../types'
 
 const CompanyAutoCompleteItem = forwardRef<HTMLDivElement, CompanyDTO>(
@@ -27,6 +28,7 @@ type companyProps = {
 }
 
 export function AutoCompleteCompany({ companyName, setCompanyName, companies }: companyProps) {
+  const queryClient = useQueryClient()
   return (
     <Autocomplete
       label="Company"
@@ -34,6 +36,7 @@ export function AutoCompleteCompany({ companyName, setCompanyName, companies }: 
       itemComponent={CompanyAutoCompleteItem}
       value={companyName}
       onChange={(e) => setCompanyName(e)}
+      onBlur={() => queryClient.invalidateQueries(companiesKey)}
       data={companies ?? []}
       limit={4}
       mt="sm"

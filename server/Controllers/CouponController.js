@@ -237,15 +237,17 @@ export const searchCompany = {
   controller: async (req, res, next) => {
     const query = req.params.name
     try {
-      const responseData = await axios
-        .get(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`, {
+      const responseData = await axios.get(
+        `https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`,
+        {
+          transformResponse: (r) => r,
           headers: {
             Authorization: `Bearer ${process.env.CLEARBIT_KEY}`,
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
           },
-        })
-        .then((res) => res.data)
-      return res.status(200).json(responseData)
+        },
+      )
+      return res.status(200).send(responseData.data)
     } catch (e) {
       console.log(e)
       return res.status(500).send('Company finding failed')
@@ -260,7 +262,7 @@ export const searchCoupon = {
       const keyword = req.query.keyword || ''
       const category = req.query.category || null
       const page = req.query.page || 1
-      const limit = req.query.limit || 2
+      const limit = req.query.limit || 12
 
       const categoryArr = category ? category.split(',') : ''
 
@@ -284,8 +286,8 @@ export const searchCoupon = {
           }
 
       const result = await Coupon.find(queryForSearch)
-      // .skip((page - 1)*limit)
-      // .limit(limit);
+        .skip((page - 1) * limit)
+        .limit(limit)
 
       return res.send(result)
     } catch (e) {
@@ -300,7 +302,9 @@ export const findAllCoupons = {
   controller: async (req, res) => {
     try {
       const page = req.query.page - 1 || 0
-      const limit = req.query.limit || 10
+      const limit = req.query.limit || 12
+      console.log(page)
+      console.log(limit)
 
       const currentCouponidx = page * limit
       const allCoupons = await Coupon.find()
@@ -309,8 +313,9 @@ export const findAllCoupons = {
         return res.status(401).send('more Coupons not available')
 
       const currentPageCoupons = allCoupons.slice(currentCouponidx, currentCouponidx + limit)
+      const hasMore = allCoupons.length - 1 >= (page + 1) * limit
 
-      res.status(200).send(currentPageCoupons)
+      res.status(200).send({ coupons: currentPageCoupons, hasMore: hasMore })
     } catch (e) {
       return res.status(400).send('Internal server error')
     }
