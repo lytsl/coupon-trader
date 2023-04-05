@@ -1,7 +1,8 @@
 import { ChangePassword } from './components/ChangePassword'
 import { Navbar } from './components/Navbar'
 import { Profile } from './components/Profile'
-import { UserCouponsGrid } from './components/UserCouponsGrid'
+import { BoughtCoupons } from './components/BoughtCoupons'
+import { ForSellCoupons } from './components/ForSellCoupons'
 
 export const ProfileRoutes = {
   path: 'user/*',
@@ -10,7 +11,8 @@ export const ProfileRoutes = {
     { path: 'profile', element: <Profile /> },
     { path: 'password', element: <ChangePassword /> },
     // { path: 'add', element: <AddCoupon /> },
-    { path: 'buy', element: <UserCouponsGrid /> },
+    { path: 'buy', element: <BoughtCoupons /> },
+    { path: 'sell', element: <ForSellCoupons /> },
 
     // { path: '/inquiry/*', element: <Inquiry /> },
     // { path: 'dashboard', element: <Dashboard /> },

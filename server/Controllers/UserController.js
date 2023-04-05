@@ -251,7 +251,7 @@ export const sellingCoupons = {
       const page = Number(req.query.page || 1)
       const itemsPerPage = Number(req.query.limit) || 12
       let query = {
-        sellerid: req.currUser._id,
+        sellerid: req.currUser._id.toString(),
       }
 
       const totalCount = await Coupon.countDocuments(query)
@@ -267,6 +267,7 @@ export const sellingCoupons = {
         .sort({ expirydate: 1 })
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
+      console.log(coupons)
 
       const hasMore = page < totalPages
       return res.status(200).send({ coupons: coupons, hasMore: hasMore, totalCount: totalCount })

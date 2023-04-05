@@ -36,7 +36,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export function UserCouponsGrid() {
+export function BoughtCoupons() {
   const { classes } = useStyles()
 
   const { data, error, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
