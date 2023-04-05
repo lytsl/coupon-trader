@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import axios from 'axios'
 import { getColorFromURL } from 'color-thief-node'
 import invert from 'invert-color'
+import JWT from 'jsonwebtoken'
 
 dotenv.config()
 
@@ -91,7 +92,7 @@ export const createCoupon = {
       // const img = await loadImage(companylogo)
       // const dmcolor = await ColorThief.getColor(img.src)
       // dmcolor = rgbToHex(dmcolor)
-      let dmcolor = await getColorFromURL(companylogo, 1)
+      let dmcolor = await getColorFromURL(companylogo, 10)
       console.log(dmcolor)
       dmcolor = rgbToHex(dmcolor)
       const incolor = invert(dmcolor)
@@ -292,14 +293,50 @@ export const findCoupon = {
   },
   controller: async (req, res, next) => {
     try {
-      const findCoupon = await Coupon.findById(req.params.id)
-
+      const findCoupon = await Coupon.find({
+        $and: [{ _id: req.params.id }, { couponverified: true }],
+      })
       if (!findCoupon) {
         return res.status(401).send('Coupon not found')
       }
 
-      const coupon = findCoupon._doc
+      // const { code, buyerid, sellerid, ...couponOther } = findCoupon[0]._doc
+      // const userId = req.currUser._id
 
+      // let coupon = { buyerid, sellerid, ...couponOther }
+      // if (userId === buyerid || userId === sellerid) {
+      //   const coupon = { code, ...coupon }
+      // }
+      const authHeader = req.headers['authorization']
+      const token = authHeader && authHeader.split(' ')[1]
+
+      let coupon
+      if (token) {
+        const verified = await JWT.verify(token, process.env.JWT_SEC_KEY)
+
+        const currUser = await User.findOne({
+          _id: verified.id,
+        })
+
+        const buyer = findCoupon[0].buyerid
+        const sellers = findCoupon[0].sellerid
+        const user = currUser._id.toString()
+        console.log(buyer)
+        console.log(sellers)
+        console.log(user)
+
+        if (user === buyer || user === sellers) {
+          coupon = findCoupon[0]._doc
+        } else {
+          const { code, ...other } = findCoupon[0]._doc
+          coupon = other
+        }
+      } else {
+        const { code, ...other } = findCoupon[0]._doc
+        coupon = other
+      }
+
+      console.log(coupon)
       const seller = await User.findById(coupon.sellerid)
 
       if (!seller) {
@@ -316,6 +353,8 @@ export const findCoupon = {
           ...other,
         },
       }
+
+      console.log(responseData)
 
       return res.status(200).json(responseData)
     } catch (e) {
@@ -403,7 +442,7 @@ export const findAllCoupons = {
       const page = Number(req.query.page || 1)
       const itemsPerPage = Number(req.query.limit) || 12
       const category = req.query.category
-      let query = {}
+      let query = { couponverified: true }
       if (category) {
         query.category = category
       }
@@ -422,12 +461,17 @@ export const findAllCoupons = {
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
 
+      const output = parsedCoupons.map((item) => {
+        const { code, ...other } = item._doc
+        return other
+      })
+
       if (parsedCoupons.length === 0) {
         return res.status(404).send('No Coupons Found')
       }
 
       const hasMore = page < totalPages
-      res.status(200).send({ coupons: parsedCoupons, hasMore: hasMore, totalCount: totalCount })
+      res.status(200).send({ coupons: output, hasMore: hasMore, totalCount: totalCount })
     } catch (e) {
       console.error(e)
       return res.status(400).send('Internal server error')

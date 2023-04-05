@@ -17,7 +17,6 @@
     "bcryptjs": "^2.4.3",
     "canvas": "^2.11.2",
     "color-thief-node": "^1.0.4",
-    "colorthief": "^2.4.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

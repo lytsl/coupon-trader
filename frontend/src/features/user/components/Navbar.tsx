@@ -8,12 +8,7 @@ import {
   Flex,
   Box,
 } from '@mantine/core'
-import {
-  IconLogout,
-  IconDashboard,
-  IconIcons,
-  IconTransferIn,
-} from '@tabler/icons-react'
+import { IconLogout, IconDashboard, IconIcons, IconTransferIn } from '@tabler/icons-react'
 import { IconPassword, IconPlus } from '@tabler/icons-react'
 import { useLogout } from 'lib/auth'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
@@ -62,18 +57,12 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[1]
-        : theme.colors.gray[7],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
     borderRadius: theme.radius.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
       [`& .${getStylesRef('icon')}`]: {
@@ -84,10 +73,7 @@ const useStyles = createStyles((theme) => ({
 
   linkIcon: {
     ref: getStylesRef('icon'),
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[2]
-        : theme.colors.gray[6],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
   },
 
   linkLabel: {
@@ -103,18 +89,17 @@ const useStyles = createStyles((theme) => ({
         variant: 'light',
         color: theme.primaryColor,
       }).background,
-      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
-        .color,
+      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
       [`& .${getStylesRef('icon')}`]: {
-        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
-          .color,
+        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
       },
     },
   },
 }))
 
 const data = [
-  { link: '', label: 'DashBoard', icon: IconDashboard },
+  { link: 'buy', label: 'Bought', icon: IconDashboard },
+  { link: 'sell', label: 'For Sell', icon: IconDashboard },
   { link: 'profile', label: 'Profile', icon: IconIcons },
   { link: 'password', label: 'Password', icon: IconPassword },
   { link: '', label: 'Transactions', icon: IconTransferIn },
@@ -150,13 +135,7 @@ export function Navbar() {
   ))
 
   return (
-    <Flex
-      gap="xl"
-      justify="flex-start"
-      align="flex-start"
-      direction="row"
-      wrap="wrap"
-    >
+    <Flex gap="xl" justify="flex-start" align="flex-start" direction="row" wrap="wrap">
       <MantineNavbar className={classes.navbar}>
         <MantineNavbar.Section grow>{links}</MantineNavbar.Section>
 

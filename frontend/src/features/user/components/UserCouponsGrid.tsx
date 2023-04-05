@@ -73,13 +73,9 @@ export function UserCouponsGrid() {
         <Box py="xl" px="lg" className={classes.grid}>
           {data.pages.map((group, i) => (
             <Fragment key={i}>
-              {group.coupons.map((coupon) => {
-                if (!!coupon.code) {
-                  return (
-                    <UserCouponCard props={{ ...coupon, code: coupon.code }} key={coupon._id} />
-                  )
-                }
-              })}
+              {group.coupons.map((coupon) => (
+                <UserCouponCard props={coupon} />
+              ))}
             </Fragment>
           ))}
         </Box>

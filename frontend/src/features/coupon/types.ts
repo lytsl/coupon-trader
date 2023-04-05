@@ -3,7 +3,7 @@ import { AuthUser } from 'features/auth/api'
 import { bannerImages } from './data'
 
 export type CreateCouponDTO = {
-  code: string | undefined
+  code: string
   title: string
   terms: string
   expirydate: Date
@@ -13,7 +13,7 @@ export type CreateCouponDTO = {
   category: keyof typeof bannerImages
 }
 
-export type CouponDTO = CreateCouponDTO & {
+export type OwnedCouponDTO = CreateCouponDTO & {
   sellerid: string
   buyerid: string | undefined
   dmcolor: string
@@ -23,12 +23,14 @@ export type CouponDTO = CreateCouponDTO & {
   _id: string
 }
 
-export type getCouponsDTO = { coupons: CouponDTO[]; hasMore: boolean; totalCount: number }
+export type CouponDTO = Omit<OwnedCouponDTO, 'code'>
 
-export const isCouponDTOList = (x: any): x is CouponDTO[] =>
+export type getCouponsDTO = { coupons: OwnedCouponDTO[]; hasMore: boolean; totalCount: number }
+
+export const isCouponDTOList = (x: any): x is OwnedCouponDTO[] =>
   Array.isArray(x) && 'sellerid' in x.at(0)
 
-export type CouponDetailsDTO = CouponDTO & {
+export type CouponDetailsDTO = OwnedCouponDTO & {
   seller: AuthUser
 }
 

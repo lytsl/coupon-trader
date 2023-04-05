@@ -219,7 +219,7 @@ export const boughtCoupons = {
       const page = Number(req.query.page || 1)
       const itemsPerPage = Number(req.query.limit) || 12
       let query = {
-        buyerid: req.currUser._id,
+        buyerid: req.currUser._id.toString(),
       }
 
       const totalCount = await Coupon.countDocuments(query)
@@ -236,8 +236,9 @@ export const boughtCoupons = {
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
 
-      return res.staus(200).send(coupon)
+      return res.status(200).send(coupon)
     } catch (e) {
+      console.log(e)
       return res.status(500).send(e)
     }
   },
@@ -266,8 +267,9 @@ export const sellingCoupons = {
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
 
-      return res.staus(200).send(coupon)
+      return res.status(200).send(coupon)
     } catch (e) {
+      console.error(e)
       return res.status(500).send(e)
     }
   },

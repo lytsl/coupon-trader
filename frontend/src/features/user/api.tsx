@@ -4,7 +4,7 @@ import { axios } from 'lib/axios'
 import React from 'react'
 import { QueryConfig } from 'lib/react-query'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { CouponDTO } from 'features/coupon/types'
+import { OwnedCouponDTO } from 'features/coupon/types'
 
 // const userKey = ['authenticated-user']
 
@@ -32,10 +32,10 @@ const LIMIT = 12
 const getCoupons = async (
   page: number,
   couponType: string,
-): Promise<{ coupons: CouponDTO[]; hasMore: boolean; totalCount: number }> => {
+): Promise<{ coupons: OwnedCouponDTO[]; hasMore: boolean; totalCount: number }> => {
   console.log(page)
-  return axios.get(`/coupon/${couponType}`, {
-    params: { page: page, limit: LIMIT, coupon_type: couponType },
+  return axios.get(`/user/${couponType}`, {
+    params: { page: page, limit: LIMIT },
   })
 }
 
