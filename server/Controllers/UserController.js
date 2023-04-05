@@ -231,12 +231,13 @@ export const boughtCoupons = {
         return res.status(404).send(`Invalid page number. There are only ${totalPages} pages.`)
       }
 
-      const coupon = await Coupon.find(query)
+      const coupons = await Coupon.find(query)
         .sort({ expirydate: 1 })
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
 
-      return res.status(200).send(coupon)
+      const hasMore = page < totalPages
+      return res.status(200).send({ coupons: coupons, hasMore: hasMore, totalCount: totalCount })
     } catch (e) {
       console.log(e)
       return res.status(500).send(e)
@@ -262,12 +263,13 @@ export const sellingCoupons = {
         return res.status(404).send(`Invalid page number. There are only ${totalPages} pages.`)
       }
 
-      const coupon = await Coupon.find(query)
+      const coupons = await Coupon.find(query)
         .sort({ expirydate: 1 })
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
 
-      return res.status(200).send(coupon)
+      const hasMore = page < totalPages
+      return res.status(200).send({ coupons: coupons, hasMore: hasMore, totalCount: totalCount })
     } catch (e) {
       console.error(e)
       return res.status(500).send(e)

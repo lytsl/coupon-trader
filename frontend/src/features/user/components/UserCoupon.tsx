@@ -74,7 +74,6 @@ type CouponCardProps = {
   }
 }
 
-// FIXME: set proper value
 export function UserCouponCard({ props }: CouponCardProps) {
   const { classes } = useStyles()
   const navigate = useNavigate()
@@ -84,7 +83,7 @@ export function UserCouponCard({ props }: CouponCardProps) {
     //  <CustomFonts />
     // <Box>
     <Card
-      onClick={(e) => navigate(`../coupon/${props._id}`)}
+      onClick={(e) => navigate(`/coupon/${props._id}`)}
       radius="md"
       className={classes.card}
       p={0}
@@ -134,14 +133,20 @@ export function UserCouponCard({ props }: CouponCardProps) {
                 Expires On
               </Text>
               <Text fz="md" fw={600} sx={{ lineHeight: 1 }} mt={rem(4)}>
-                {props.expirydate.toString()}
+                {new Date(props.expirydate).toLocaleString().split(',')[0]}
               </Text>
             </Box>
 
             <CopyButton value={props.code}>
               {({ copied, copy }) => (
-                <Button color={copied ? 'teal' : 'blue'} onClick={copy}>
-                  {copied ? 'Copied url' : 'Copy url'}
+                <Button
+                  color={copied ? 'teal' : 'blue'}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    copy()
+                  }}
+                >
+                  {copied ? 'Copied Code' : 'Copy Code'}
                 </Button>
               )}
             </CopyButton>
