@@ -9,6 +9,8 @@ import {
   Flex,
   Space,
   Avatar,
+  CopyButton,
+  Button,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 
@@ -68,11 +70,12 @@ type CouponCardProps = {
     price: number
     dmcolor: string
     incolor: string
+    code: string
   }
 }
 
 // FIXME: set proper value
-export function CouponCard({ props }: CouponCardProps) {
+export function UserCouponCard({ props }: CouponCardProps) {
   const { classes } = useStyles()
   const navigate = useNavigate()
   console.log(props.expirydate)
@@ -135,9 +138,13 @@ export function CouponCard({ props }: CouponCardProps) {
               </Text>
             </Box>
 
-            <Text fz="xl" fw={700} sx={{ lineHeight: 1 }}>
-              ₹{props.price}
-            </Text>
+            <CopyButton value={props.code}>
+              {({ copied, copy }) => (
+                <Button color={copied ? 'teal' : 'blue'} onClick={copy}>
+                  {copied ? 'Copied url' : 'Copy url'}
+                </Button>
+              )}
+            </CopyButton>
           </Flex>
         </Flex>
       </Flex>

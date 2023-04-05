@@ -19,7 +19,6 @@ export const updateUser = {
       req.body.email
     ) {
       try {
-        // FIXME: user not found
         const findUser = await User.findOne({ _id: userID })
         if (!findUser) {
           return res.status(401).send('User Not Found')
@@ -109,7 +108,6 @@ export const currentUser = {
       // console.log(req.currUser);
       res.status(201).json(findUser)
     } catch (e) {
-      s
       res.status(500).json('Internal Server Error')
     }
   },
@@ -209,6 +207,66 @@ export const dashboard = {
         buyer,
         seller,
       })
+    } catch (e) {
+      return res.status(500).send(e)
+    }
+  },
+}
+
+export const boughtCoupons = {
+  controller: async (req, res) => {
+    try {
+      const page = Number(req.query.page || 1)
+      const itemsPerPage = Number(req.query.limit) || 12
+      let query = {
+        buyerid: req.currUser._id,
+      }
+
+      const totalCount = await Coupon.countDocuments(query)
+      const totalPages = Math.ceil(totalCount / itemsPerPage)
+      if (totalCount === 0) {
+        return res.status(404).send(`There are no coupons in this category`)
+      }
+      if (page > totalPages) {
+        return res.status(404).send(`Invalid page number. There are only ${totalPages} pages.`)
+      }
+
+      const coupon = await Coupon.find(query)
+        .sort({ expirydate: 1 })
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage)
+
+      return res.staus(200).send(coupon)
+    } catch (e) {
+      return res.status(500).send(e)
+    }
+  },
+}
+
+export const sellingCoupons = {
+  controller: async (req, res) => {
+    try {
+      const page = Number(req.query.page || 1)
+      const itemsPerPage = Number(req.query.limit) || 12
+      let query = {
+        sellerid: req.currUser._id,
+      }
+
+      const totalCount = await Coupon.countDocuments(query)
+      const totalPages = Math.ceil(totalCount / itemsPerPage)
+      if (totalCount === 0) {
+        return res.status(404).send(`There are no coupons in this category`)
+      }
+      if (page > totalPages) {
+        return res.status(404).send(`Invalid page number. There are only ${totalPages} pages.`)
+      }
+
+      const coupon = await Coupon.find(query)
+        .sort({ expirydate: 1 })
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage)
+
+      return res.staus(200).send(coupon)
     } catch (e) {
       return res.status(500).send(e)
     }

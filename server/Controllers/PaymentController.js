@@ -33,7 +33,7 @@ export const makePayment = {
               // company: findCoupon.company,
               // category: findCoupon.category
             },
-            unit_amount: findCoupon.price,
+            unit_amount: findCoupon.price * 100,
           },
           quantity: 1,
         },

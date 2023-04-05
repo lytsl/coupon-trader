@@ -3,7 +3,7 @@ import User from '../Models/User.js'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import axios from 'axios'
-import ColorThief from 'colorthief'
+import { getColorFromURL } from 'color-thief-node'
 import invert from 'invert-color'
 
 dotenv.config()
@@ -39,7 +39,8 @@ const sendMail = async (mailContent, mailSubject) => {
   })
 }
 
-function rgbToHex(r, g, b) {
+function rgbToHex(x) {
+  const [r, g, b] = x
   return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)
 }
 
@@ -75,30 +76,26 @@ export const createCoupon = {
 
     const sellerid = req.currUser._id
     try {
+      // const img = new Image()
+
+      // img.addEventListener('load', async function () {
+      //   dmcolor = await ColorThief.getColor(img)
+      //   dmcolor = rgbToHex(dmcolor)
+      //   console.log(dmcolor)
+      // })
+
+      // img.crossOrigin = 'Anonymous'
+      // img.src = companylogo
       // const response = await axios.get(companylogo, { responseType: 'arraybuffer' })
       // const buffer = Buffer.from(response.data, 'utf-8')
-      // axios({
-      //   method: 'get',
-      //   url: imageUrl,
-      //   responseType: 'arraybuffer',
-      // })
-      //   .then((response) => {
-      //     const colorThief = new ColorThief()
-      //     const color = colorThief.getColor(Buffer.from(response.data))
-      //     console.log(color)
-      //   })
-      //   .catch((err) => {
-      //     console.error(`Error downloading image: ${err.message}`)
-      //   })
-      let dmcolor
-      try {
-        dmcolor = await ColorThief.getColor(companylogo)
-        dmcolor = rgbToHex(dmcolor)
-        console.log(dmcolor)
-      } catch (e) {
-        console.error(e)
-      }
+      // const img = await loadImage(companylogo)
+      // const dmcolor = await ColorThief.getColor(img.src)
+      // dmcolor = rgbToHex(dmcolor)
+      let dmcolor = await getColorFromURL(companylogo, 1)
+      console.log(dmcolor)
+      dmcolor = rgbToHex(dmcolor)
       const incolor = invert(dmcolor)
+      console.log(companylogo)
 
       const newCoupon = await Coupon.create({
         code,
@@ -413,6 +410,9 @@ export const findAllCoupons = {
 
       const totalCount = await Coupon.countDocuments(query)
       const totalPages = Math.ceil(totalCount / itemsPerPage)
+      if (totalCount === 0) {
+        return res.status(404).send(`There are no coupons in this category`)
+      }
       if (page > totalPages) {
         return res.status(404).send(`Invalid page number. There are only ${totalPages} pages.`)
       }
