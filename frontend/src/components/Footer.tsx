@@ -1,11 +1,4 @@
-import {
-  createStyles,
-  Anchor,
-  Group,
-  ActionIcon,
-  Text,
-  rem,
-} from '@mantine/core'
+import { createStyles, Anchor, Group, ActionIcon, Text, rem } from '@mantine/core'
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -41,45 +34,45 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-interface FooterCenteredProps {
-  links: { link: string; label: string }[]
-}
+// interface FooterCenteredProps {
+//   links: { link: string; label: string }[]
+// }
 
-const links: FooterCenteredProps['links'] = [
-  {
-    link: '/app/coupon/add',
-    label: 'Add Coupon',
-  },
-  {
-    link: '/explore',
-    label: 'Explore',
-  },
-  {
-    link: '/inquiry',
-    label: 'Inquiry',
-  },
-  {
-    link: '#',
-    label: 'About',
-  },
-]
+// const links: FooterCenteredProps['links'] = [
+//   {
+//     link: '/app/coupon/add',
+//     label: 'Add Coupon',
+//   },
+//   {
+//     link: '/explore',
+//     label: 'Explore',
+//   },
+//   {
+//     link: '/inquiry',
+//     label: 'Inquiry',
+//   },
+//   {
+//     link: '#',
+//     label: 'About',
+//   },
+// ]
 
 export function Footer() {
   const { classes } = useStyles()
   const navigate = useNavigate()
 
-  const items = links.map((link) => (
-    <Anchor<'a'>
-      color="dimmed"
-      key={link.label}
-      href={link.link}
-      sx={{ lineHeight: 1 }}
-      onClick={(event) => navigate(link.link)}
-      size="sm"
-    >
-      {link.label}
-    </Anchor>
-  ))
+  // const items = links.map((link) => (
+  //   <Anchor<'a'>
+  //     color="dimmed"
+  //     key={link.label}
+  //     href={link.link}
+  //     sx={{ lineHeight: 1 }}
+  //     onClick={(event) => navigate(link.link)}
+  //     size="sm"
+  //   >
+  //     {link.label}
+  //   </Anchor>
+  // ))
 
   return (
     <div className={classes.footer}>
@@ -97,7 +90,12 @@ export function Footer() {
             Coupon Trader
           </Text>
         </Group>
-        <Group className={classes.links}>{items}</Group>
+        {/* <Group className={classes.links}>{items}</Group> */}
+        <div className={classes.links}>
+          <Text align="center" fz="sm" fw={10} c="dimmed">
+            Copyright 2023 Coupon Trader | All Rights Reserved
+          </Text>
+        </div>
 
         <Group spacing="xs" position="right" noWrap>
           <ActionIcon size="lg" variant="default" radius="xl">
@@ -111,11 +109,6 @@ export function Footer() {
           </ActionIcon>
         </Group>
       </div>
-      {/* <div className={classes.info}>
-        <Text align="center" fz="xs" fw={10} fs="italic" c="dimmed">
-          Copyright 2023 Coupon Trader | All Rights Reserved
-        </Text>
-      </div> */}
     </div>
   )
 }
