@@ -1,5 +1,9 @@
-import { Router } from "express";
+import { Router } from 'express'
+import VerifyToken from '../Helper/VerifyToken.js'
+import { userTransction } from '../Controllers/TraceController.js'
 
-const router = Router();
+const router = Router()
 
-export default router;
+router.get('/:id', VerifyToken, userTransction.controller)
+
+export default router

@@ -6,7 +6,7 @@ export type CreateCouponDTO = {
   code: string
   title: string
   terms: string
-  expirydate: Date
+  expirydate: string
   price: number
   company: string
   companylogo: string

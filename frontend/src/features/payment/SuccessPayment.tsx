@@ -9,8 +9,12 @@ import {
   CopyButton,
   Tooltip,
   ActionIcon,
+  Center,
+  Loader,
 } from '@mantine/core'
 import { IconCheck, IconCopy, IconDiscountCheckFilled } from '@tabler/icons-react'
+import { useCouponDetails } from 'features/coupon/api/getCouponDetails'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -51,6 +55,26 @@ const useStyles = createStyles((theme) => ({
 
 export function SuccessPayment() {
   const { classes } = useStyles()
+  const { id } = useParams()
+  const navigate = useNavigate()
+  if (!id) {
+    return <h1>Bad Request</h1>
+  }
+
+  const { data: couponData, isLoading: isCouponLoading, error } = useCouponDetails({ couponId: id })
+  if (isCouponLoading) {
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    )
+  }
+  if (error) {
+    return <h1>An Error ouccured</h1>
+  }
+  if (!couponData) {
+    return <h1>Could not load details</h1>
+  }
 
   return (
     <Container className={classes.root}>
@@ -67,7 +91,7 @@ export function SuccessPayment() {
 
       <Group position="center">
         <Text size="xl" color="">
-          <b>Coupon Code : XJANKJBA68654AB</b>
+          <b>Coupon Code : {couponData.code}</b>
         </Text>
         <CopyButton value="" timeout={2000}>
           {({ copied, copy }) => (
@@ -80,7 +104,7 @@ export function SuccessPayment() {
         </CopyButton>
       </Group>
       <Group position="center" style={{ marginTop: 20 }}>
-        <Button variant="subtle" size="md">
+        <Button onClick={(e) => navigate('/')} variant="subtle" size="md">
           Take me back to home page
         </Button>
       </Group>

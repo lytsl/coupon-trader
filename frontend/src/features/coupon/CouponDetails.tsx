@@ -112,7 +112,7 @@ export function CouponDetails() {
               Expires On
             </Text>
             <Text fz="md" fw={600} lh="1" mt={rem(4)}>
-              {couponData.expirydate}
+              {new Date(couponData.expirydate).toLocaleString()}
             </Text>
           </Box>
 

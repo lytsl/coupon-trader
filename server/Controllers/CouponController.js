@@ -321,9 +321,9 @@ export const findCoupon = {
         const buyer = findCoupon[0].buyerid
         const sellers = findCoupon[0].sellerid
         const user = currUser._id.toString()
-        console.log(buyer)
-        console.log(sellers)
-        console.log(user)
+        // console.log(buyer)
+        // console.log(sellers)
+        // console.log(user)
 
         if (user === buyer || user === sellers) {
           coupon = findCoupon[0]._doc
@@ -336,7 +336,7 @@ export const findCoupon = {
         coupon = other
       }
 
-      console.log(coupon)
+      // console.log(coupon)
       const seller = await User.findById(coupon.sellerid)
 
       if (!seller) {
@@ -354,7 +354,7 @@ export const findCoupon = {
         },
       }
 
-      console.log(responseData)
+      // console.log(responseData)
 
       return res.status(200).json(responseData)
     } catch (e) {
@@ -442,7 +442,8 @@ export const findAllCoupons = {
       const page = Number(req.query.page || 1)
       const itemsPerPage = Number(req.query.limit) || 12
       const category = req.query.category
-      let query = { couponverified: true }
+
+      let query = { couponverified: true, buyerid: null }
       if (category) {
         query.category = category
       }

@@ -9,6 +9,7 @@ const stripe = Stripe(process.env.STRIPE_KEY)
 // !make payment
 export const makePayment = {
   controller: async (req, res) => {
+    const coupon_id = req.body.couponid
     const customer = await stripe.customers.create({
       metadata: {
         userid: req.currUser._id,
@@ -17,7 +18,7 @@ export const makePayment = {
       },
     })
 
-    const findCoupon = await Coupon.findById(req.body.couponid)
+    const findCoupon = await Coupon.findById(coupon_id)
     const session = await stripe.checkout.sessions.create({
       customer: customer.id,
       // customer_email: req.currUser.email,
@@ -39,11 +40,11 @@ export const makePayment = {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.CLIENT_URL}/checkout-success`,
+      success_url: `${process.env.CLIENT_URL}/checkout-success/${coupon_id}`,
       cancel_url: `${process.env.CLIENT_URL}/checkout-fail`,
     })
 
-    res.send({ url: session.url, couponid: req.body.couponid })
+    res.send({ url: session.url, couponid: coupon_id })
   },
 }
 
@@ -62,6 +63,11 @@ const createOrder = async (customer, data) => {
     amount: data.amount_total,
     paymentstatus: data.payment_status,
   })
+
+  // ! save buyerid in coupon database
+  // const updateCoupon = new Coupon({
+  //     buyerid: customer.metadata.userid
+  // });
 
   try {
     const saved = await Transaction.save()

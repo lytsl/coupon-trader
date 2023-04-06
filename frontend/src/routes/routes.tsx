@@ -27,6 +27,8 @@ import { BoughtCoupons } from 'features/user/components/BoughtCoupons'
 import { ChangePassword } from 'features/user/components/ChangePassword'
 import { ForSellCoupons } from 'features/user/components/ForSellCoupons'
 import { Profile } from 'features/user/components/Profile'
+import { SuccessPayment } from 'features/payment/SuccessPayment'
+import { FailedPayment } from 'features/payment/Failedpayment'
 
 const { AuthRoutes } = lazyImport(() => import('../features/auth/routes'), 'AuthRoutes')
 
@@ -69,6 +71,8 @@ const protectedRoutes = [
       // { path: '*', element: <Navigate to="." /> },
     ],
   },
+  { path: '/checkout-success/:id', element: <SuccessPayment /> },
+  { path: '/checkout-fail', element: <FailedPayment /> },
   { path: '/confirmation', element: <CheckEmailApp /> },
   { path: '/verify_email/:token', element: <VerifyEmail /> },
   {

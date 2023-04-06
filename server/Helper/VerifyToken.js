@@ -7,7 +7,7 @@ const VerifyToken = async (req, res, next) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    console.log('In token verification')
+    // console.log('In token verification')
     if (token) {
       const verified = await JWT.verify(token, process.env.JWT_SEC_KEY)
 
