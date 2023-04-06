@@ -131,7 +131,7 @@ export function CouponCard({ props }: CouponCardProps) {
                 Expires On
               </Text>
               <Text fz="md" fw={600} sx={{ lineHeight: 1 }} mt={rem(4)}>
-                {props.expirydate.toString()}
+                {new Date(props.expirydate).toLocaleString().split(',')[0]}
               </Text>
             </Box>
 

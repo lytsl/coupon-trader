@@ -41,10 +41,10 @@ export function AddCoupon() {
   const [companyName, setCompanyName] = useState('')
   const [query] = useDebouncedValue(companyName, 300)
   const { data: companiesData } = useCompanies(query)
-
-  const { mutate: create, isLoading } = useCreateCoupon()
-
+  const { mutate: create, isLoading, data } = useCreateCoupon()
   const handleCompanyChange = useCallback((value: string) => setCompanyName(value), [companyName])
+
+  console.log(data)
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { createStyles, Flex, Box, rem, Checkbox, Center, Loader, Group } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { HEADER_HEIGHT } from 'components/Header'
-import { Fragment, useCallback, useState } from 'react'
+import { Fragment, useCallback, useMemo, useState } from 'react'
 import { useCoupons } from './api/getCoupons'
 import { CouponCard } from './components/CouponCard'
 import { ExploreNavbar } from './components/ExploreNavbar'
@@ -38,11 +38,9 @@ const useStyles = createStyles((theme) => ({
 
 export function Explore() {
   const { classes } = useStyles()
-
-  // const { data, isLoading, error } = useCoupons()
   const [category, setCategory] = useState('all')
-  const handleCategoryChange = useCallback(
-    (value: string) => {
+  const handleCategoryChange = useMemo(
+    () => (value: string) => {
       setCategory(value)
       console.log(category)
     },
@@ -52,7 +50,7 @@ export function Explore() {
     useCoupons(category)
 
   const [sentryRef] = useInfiniteScroll({
-    loading: isFetchingNextPage,
+    loading: isFetchingNextPage || isLoading,
     hasNextPage: hasNextPage ?? false,
     onLoadMore: fetchNextPage,
     disabled: !!error,
@@ -69,18 +67,17 @@ export function Explore() {
       </Center>
     )
   } else if (error) {
+    console.log(error)
     let errorMessage = 'No coupon were found'
     if (error instanceof AxiosError) {
       errorMessage = JSON.stringify(error.response?.data) || error.message
     }
     couponGrid = <h1>{errorMessage}</h1>
-  } else if (!data) {
-    couponGrid = <h1>Could not load Coupons</h1>
   } else {
     couponGrid = (
       <>
         <Box py="xl" px="lg" className={classes.grid}>
-          {data.pages.map((group, i) => (
+          {data?.pages.map((group, i) => (
             <Fragment key={i}>
               {group.coupons.map((coupon) => (
                 <CouponCard props={coupon} key={coupon._id} />
@@ -101,7 +98,7 @@ export function Explore() {
 
   return (
     <Flex justify="flex-start" align="flex-start" direction="row" wrap="nowrap">
-      <ExploreNavbar category={category} setCategory={handleCategoryChange} />
+      <ExploreNavbar category={category} setCategory={(e) => handleCategoryChange(e)} />
       <Box className={classes.gridContainer}>{couponGrid}</Box>
     </Flex>
   )

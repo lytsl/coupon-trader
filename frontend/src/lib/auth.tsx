@@ -30,9 +30,9 @@ const userKey = ['authenticated-user']
 
 const useUser = () =>
   useQuery(userKey, async (): Promise<AuthUser | undefined> => {
-    const user = getUser()
+    const user = await getUser()
     console.log(user)
-    return user ?? null
+    return user ?? undefined
   })
 
 const useLogin = () => {

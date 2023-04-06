@@ -9,6 +9,8 @@ import {
   Space,
   Flex,
   rem,
+  Loader,
+  Center,
 } from '@mantine/core'
 import { Avatar } from '@mantine/core'
 import { atom, useAtom } from 'jotai'
@@ -17,17 +19,17 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { IconCircleCheck } from '@tabler/icons-react'
 
-let form: any
-
 // todo fetch placeholder values from database as from register..............................
 export function Profile() {
-  const { data: userData } = useUser()
+  const { data: userData, isLoading: isLoadingUser } = useUser()
+  const [avatarText, setAvatarText] = useState('')
+  const { mutate: verify } = useSendVerificationEmail()
 
-  form = useForm({
+  const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
-      username: userData?.username ?? '',
-      email: userData?.email ?? '',
+      username: userData?.username || '',
+      email: userData?.email || '',
     },
 
     validate: {
@@ -35,25 +37,14 @@ export function Profile() {
     },
   })
 
-  const [avatarText, setAvatarText] = useState('')
-  const { mutate: verify } = useSendVerificationEmail()
-
-  const navigate = useNavigate()
-
-  // if (isSuccess) {
-  //   navigate('../login')
-  // }
-
   function handleUserNameChange(e: any) {
+    e.preventDefault()
     let text = e.target.value
     // text = text.trim()
 
     form.setFieldValue('username', text)
     if (!(text.length >= 3 && /^[a-zA-Z0-9]+$/.test(text))) {
-      form.setFieldError(
-        'username',
-        'Name must have at least 3 letters and only contain letters',
-      )
+      form.setFieldError('username', 'Name must have at least 3 letters and only contain letters')
       setAvatarText('')
     } else {
       text = text.slice(0, 2).toUpperCase()
@@ -61,7 +52,19 @@ export function Profile() {
       setAvatarText(text)
     }
   }
-  // if (isLoading) return <div>Loading...</div>
+
+  if (isLoadingUser) {
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    )
+  }
+
+  if (userData && form.values.email === '') {
+    form.setFieldValue('email', userData.email)
+    form.setFieldValue('username', userData.username)
+  }
 
   return (
     <Flex
@@ -86,13 +89,7 @@ export function Profile() {
         // )}
         >
           <center>
-            <Avatar
-              src={null}
-              alt={avatarText}
-              radius="xs"
-              size="xl"
-              color="sky"
-            >
+            <Avatar src={null} alt={avatarText} radius="xs" size="xl" color="sky">
               {avatarText}
             </Avatar>
           </center>
@@ -106,19 +103,17 @@ export function Profile() {
           <TextInput
             label="Email"
             placeholder="Email"
-            rightSection={
-              userData?.emailverified && <IconCircleCheck color="blue" />
-            }
+            rightSection={userData?.emailverified && <IconCircleCheck color="blue" />}
             {...form.getInputProps('email')}
           />
           {/* </Group> */}
           {!userData?.emailverified && (
             <Button
               // disabled={isLoading}
-              type="submit"
+              type="button"
               mt="md"
               style={{ width: 270 }}
-              onClick={(e) => verify()}
+              onClick={() => verify()}
             >
               Verify Email
             </Button>

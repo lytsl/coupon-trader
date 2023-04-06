@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { Box } from '@mantine/core'
 
 // import { useAuth } from 'lib/auth'
 
@@ -37,7 +38,7 @@ export const Layout = ({ children, hasLoggedIn }: ContentLayoutProps) => {
   return (
     <>
       <Header hasLoggedIn={hasLoggedIn} sx={show ? { top: 0 } : {}} />
-      {children}
+      <Box sx={{ minHeight: '90svh' }}>{children}</Box>
       <Footer />
     </>
   )

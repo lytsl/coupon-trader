@@ -20,13 +20,9 @@ import {
   Box,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import {
-  IconChevronDown,
-  IconTicket,
-  IconUserCircle,
-} from '@tabler/icons-react'
+import { IconChevronDown, IconTicket, IconUserCircle } from '@tabler/icons-react'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ThemeSwitch } from './ThemeSwitch'
 
 const links = [
@@ -105,18 +101,12 @@ const useStyles = createStyles((theme) => ({
     padding: '8px 12px',
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[0]
-        : theme.colors.gray[7],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
   },
 
@@ -128,8 +118,7 @@ const useStyles = createStyles((theme) => ({
 export function Header(props: { hasLoggedIn: boolean; sx: any }) {
   const { hasLoggedIn, sx } = props
 
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
-    useDisclosure(false)
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false)
   const { classes, theme } = useStyles()
   const navigate = useNavigate()
 
@@ -164,14 +153,14 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
     // }
 
     return (
-      <a
+      <Link
         key={link.label}
-        href={link.link}
+        to={link.link}
         className={classes.link}
-        onClick={(event) => navigate(link.link)}
+        // onClick={(event) => navigate(link.link)}
       >
         {link.label}
-      </a>
+      </Link>
     )
   })
 
@@ -245,15 +234,10 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
               />
             ) : (
               <>
-                <Button
-                  variant="light"
-                  onClick={(e) => navigate('/auth/login')}
-                >
+                <Button variant="light" onClick={(e) => navigate('/auth/login')}>
                   Log In
                 </Button>
-                <Button onClick={(e) => navigate('/auth/register')}>
-                  Sign Up
-                </Button>
+                <Button onClick={(e) => navigate('/auth/register')}>Sign Up</Button>
               </>
             )}
           </Group>
@@ -277,15 +261,9 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
       >
         <ThemeSwitch height={HEADER_HEIGHT} />
         <ScrollArea sx={{ height: 'calc(100vh - 120px)' }} mx="-md">
-          <Divider
-            mb="sm"
-            color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
-          />
+          <Divider mb="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
           {mItems}
-          <Divider
-            my="sm"
-            color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
-          />
+          <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
           {hasLoggedIn ? (
             <IconUserCircle
               size={32}
@@ -296,15 +274,10 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
           ) : (
             <>
               <Group position="center" grow pb="xl" px="md">
-                <Button
-                  onClick={(e) => navigate('/auth/login')}
-                  variant="default"
-                >
+                <Button onClick={(e) => navigate('/auth/login')} variant="default">
                   Log in
                 </Button>
-                <Button onClick={(e) => navigate('/auth/register')}>
-                  Sign up
-                </Button>
+                <Button onClick={(e) => navigate('/auth/register')}>Sign up</Button>
               </Group>
             </>
           )}

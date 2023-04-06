@@ -8,8 +8,15 @@ import {
   Flex,
   Box,
 } from '@mantine/core'
-import { IconLogout, IconDashboard, IconIcons, IconTransferIn } from '@tabler/icons-react'
-import { IconPassword, IconPlus } from '@tabler/icons-react'
+import {
+  IconLogout,
+  IconTransferIn,
+  IconUserCircle,
+  IconBuildingStore,
+  IconShoppingCart,
+  IconReportMoney,
+} from '@tabler/icons-react'
+import { IconPassword } from '@tabler/icons-react'
 import { useLogout } from 'lib/auth'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
@@ -98,13 +105,11 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const data = [
-  { link: 'buy', label: 'Bought', icon: IconDashboard },
-  { link: 'sell', label: 'For Sell', icon: IconDashboard },
-  { link: 'profile', label: 'Profile', icon: IconIcons },
+  { link: 'buy', label: 'Bought', icon: IconShoppingCart },
+  { link: 'sell', label: 'For Sell', icon: IconBuildingStore },
+  { link: 'profile', label: 'Profile', icon: IconUserCircle },
   { link: 'password', label: 'Password', icon: IconPassword },
-  { link: '', label: 'Transactions', icon: IconTransferIn },
-  // { link: 'add', label: 'Add Coupon', icon: IconPlus },
-  // { link: '', label: 'Update Coupon', icon: IconIndentIncrease },
+  { link: '', label: 'Transactions', icon: IconReportMoney },
 ]
 
 export function Navbar() {
@@ -114,7 +119,6 @@ export function Navbar() {
   const navigate = useNavigate()
   if (isSuccess) {
     navigate('/')
-    return <div>Success</div>
   }
 
   const links = data.map((item) => (
