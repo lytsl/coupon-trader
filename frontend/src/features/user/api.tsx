@@ -2,9 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AuthUser, LoginDTO } from 'features/auth/api'
 import { axios } from 'lib/axios'
 import React from 'react'
-import { QueryConfig } from 'lib/react-query'
+import { MutationConfig, QueryConfig, queryClient } from 'lib/react-query'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { OwnedCouponDTO } from 'features/coupon/types'
+import { showSuccess } from 'lib/notifications'
 
 // const userKey = ['authenticated-user']
 
@@ -26,7 +27,7 @@ import { OwnedCouponDTO } from 'features/coupon/types'
 //   })
 // }
 
-const couponsKey = 'coupons'
+export const couponsKey = 'coupons'
 const LIMIT = 12
 
 const getCoupons = async (
@@ -59,4 +60,40 @@ export const useUserCoupons = (couponType: string) => {
         lastPage.hasMore ? allPages.length + 1 : undefined,
     },
   )
+}
+
+const deleteCoupon = (id: string): Promise<string> => {
+  return axios.delete(`/coupon/${id}`)
+}
+
+type UseDeleteCouponOptions = {
+  config?: MutationConfig<typeof deleteCoupon>
+}
+
+export const useDeleteCoupon = ({ config }: UseDeleteCouponOptions = {}) => {
+  return useMutation({
+    onMutate: async (id: string) => {
+      await queryClient.cancelQueries([couponsKey])
+
+      const previousCoupons = queryClient.getQueryData<OwnedCouponDTO[]>([couponsKey])
+
+      queryClient.setQueryData(
+        [couponsKey],
+        previousCoupons?.filter((discussion) => discussion._id !== id),
+      )
+
+      return { previousCoupons }
+    },
+    onError: (context: any) => {
+      if (context?.previousCoupons) {
+        queryClient.setQueryData([couponsKey], context.previousCoupons)
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries([couponsKey])
+      showSuccess('Coupon Deleted')
+    },
+    ...config,
+    mutationFn: deleteCoupon,
+  })
 }

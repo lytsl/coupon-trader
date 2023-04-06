@@ -135,7 +135,7 @@ export function Navbar() {
   ))
 
   return (
-    <Flex gap="xl" justify="flex-start" align="flex-start" direction="row" wrap="wrap">
+    <Flex justify="flex-start" align="flex-start" direction="row" wrap="wrap">
       <MantineNavbar className={classes.navbar}>
         <MantineNavbar.Section grow>{links}</MantineNavbar.Section>
 
@@ -151,7 +151,7 @@ export function Navbar() {
           </UnstyledButton>
         </MantineNavbar.Section>
       </MantineNavbar>
-      <Box py="md" sx={{ flex: 1, minHeight: '100svh' }}>
+      <Box m="md" sx={{ flex: 1, minHeight: '100svh' }}>
         <Outlet />
       </Box>
     </Flex>
