@@ -28,7 +28,7 @@ import { ChangePassword } from 'features/user/components/ChangePassword'
 import { ForSellCoupons } from 'features/user/components/ForSellCoupons'
 import { Profile } from 'features/user/components/Profile'
 import { SuccessPayment } from 'features/payment/SuccessPayment'
-import { FailedPayment } from 'features/payment/Failedpayment'
+import { FailedPayment } from 'features/payment/FailedPayment'
 
 const { AuthRoutes } = lazyImport(() => import('../features/auth/routes'), 'AuthRoutes')
 
@@ -124,37 +124,3 @@ export const AppRoutes = () => {
 
   return <>{element}</>
 }
-
-const tempRoutes = (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/auth">
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Route>
-      <Route path="/app">
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Route>
-      <Route
-        element={
-          <>
-            {/* <Navbar /> */}
-            <Outlet />
-            {/* <ImageSlider /> */}
-          </>
-        }
-      >
-        // routes for authenticated users where navbar & image slider should be displayed
-        {/* <Route path="/home" element={<Home />}></Route> */}
-      </Route>
-
-      <Route element={<Outlet />}>
-        // routes where navbar & image slider is not rendered
-        {/* <Route path="/Signup" element={<Signup />}></Route> */}
-        {/* <Route path="/Login" element={<Login />}></Route> */}
-      </Route>
-    </Routes>
-  </BrowserRouter>
-)
