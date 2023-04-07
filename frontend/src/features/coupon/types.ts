@@ -3,7 +3,7 @@ import { AuthUser } from 'features/auth/api'
 import { bannerImages } from './data'
 
 export type CreateCouponDTO = {
-  code: string
+  code: string | undefined
   title: string
   terms: string
   expirydate: string

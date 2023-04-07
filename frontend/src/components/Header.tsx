@@ -38,10 +38,10 @@ const links = [
     link: '/inquiry',
     label: 'Inquiry',
   },
-  {
-    link: '#',
-    label: 'About',
-  },
+  // {
+  //   link: '#',
+  //   label: 'About',
+  // },
   // {
   //   link: '#2',
   //   label: 'members',
@@ -207,19 +207,21 @@ export function Header(props: { hasLoggedIn: boolean; sx: any }) {
     <Box className={classes.header} sx={sx}>
       <MantineHeader height={HEADER_HEIGHT} sx={{ borderBottom: 0 }}>
         <Container className={classes.inner} fluid>
-          <Group onClick={(e) => navigate('/')}>
-            <IconTicket size={32} stroke={1.1} color="#AEBAF8" />
-            <Text
-              variant="gradient"
-              gradient={{ from: '#9600FF', to: '#AEBAF8', deg: 0 }}
-              sx={{ fontFamily: 'Greycliff CF, sans-serif' }}
-              ta="center"
-              fz="xl"
-              fw={700}
-            >
-              Coupon Trader
-            </Text>
-          </Group>
+          <UnstyledButton>
+            <Group onClick={(e) => navigate('/')}>
+              <IconTicket size={32} stroke={1.1} color="#AEBAF8" />
+              <Text
+                variant="gradient"
+                gradient={{ from: '#9600FF', to: '#AEBAF8', deg: 0 }}
+                sx={{ fontFamily: 'Greycliff CF, sans-serif', textDecoration: 'none' }}
+                ta="center"
+                fz="xl"
+                fw={700}
+              >
+                Coupon Trader
+              </Text>
+            </Group>
+          </UnstyledButton>
           <Group spacing={5} className={classes.hiddenMobile}>
             {items}
           </Group>

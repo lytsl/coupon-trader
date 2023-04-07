@@ -26,7 +26,7 @@ export const Landing = () => {
         <Hero hasLoggedIn={auth} />
         <Features />
         <Faq />
-        <ContactUs />
+        {/* <ContactUs /> */}
       </Layout>
     </Blob>
   )

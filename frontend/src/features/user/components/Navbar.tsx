@@ -109,7 +109,7 @@ const data = [
   { link: 'sell', label: 'For Sell', icon: IconBuildingStore },
   { link: 'profile', label: 'Profile', icon: IconUserCircle },
   { link: 'password', label: 'Password', icon: IconPassword },
-  { link: '', label: 'Transactions', icon: IconReportMoney },
+  // { link: '', label: 'Transactions', icon: IconReportMoney },
 ]
 
 export function Navbar() {

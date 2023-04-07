@@ -11,6 +11,7 @@ import {
   Avatar,
 } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
+import { OwnedCouponDTO } from '../types'
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -58,21 +59,22 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-type CouponCardProps = {
-  props: {
-    _id: string
-    company: string
-    companylogo: string
-    title: string
-    expirydate: Date
-    price: number
-    dmcolor: string
-    incolor: string
-  }
-}
+// type CouponCardProps = {
+//   props: {
+//     _id: string
+//     company: string
+//     companylogo: string
+//     title: string
+//     expirydate: string
+//     price: number
+//     code: string | undefined
+//     dmcolor: string
+//     incolor: string
+//   }
+// }
 
 // FIXME: set proper value
-export function CouponCard({ props }: CouponCardProps) {
+export function CouponCard({ props }: { props: OwnedCouponDTO }) {
   const { classes } = useStyles()
   const navigate = useNavigate()
   console.log(props.expirydate)
@@ -136,7 +138,7 @@ export function CouponCard({ props }: CouponCardProps) {
             </Box>
 
             <Text fz="xl" fw={700} sx={{ lineHeight: 1 }}>
-              ₹{props.price}
+              {/* {(!!props.code)?props.code:`₹${props.price}`} */}₹{props.price}
             </Text>
           </Flex>
         </Flex>

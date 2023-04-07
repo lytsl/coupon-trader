@@ -13,11 +13,13 @@ import {
   Button,
   Loader,
   LoadingOverlay,
+  UnstyledButton,
 } from '@mantine/core'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCouponDetails } from './api/getCouponDetails'
 import { useMakePayment } from './api/makePaymet'
 import { bannerImages } from './data'
+import { useUser } from 'lib/auth'
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -51,11 +53,12 @@ export function CouponDetails() {
   if (!id) {
     return <h1>Bad Request</h1>
   }
+  const { data: user, isLoading: isUserLoading } = useUser()
   const { data: couponData, isLoading: isCouponLoading, error } = useCouponDetails({ couponId: id })
   const { mutate: payment, isLoading: isPaymentLoading, data: paymentLink } = useMakePayment()
   const navigate = useNavigate()
 
-  if (isCouponLoading) {
+  if (isCouponLoading || isUserLoading) {
     return (
       <Center>
         <Loader />
@@ -76,6 +79,7 @@ export function CouponDetails() {
       </Center>
     )
   }
+  console.log(couponData)
 
   return (
     <Center>
@@ -97,9 +101,17 @@ export function CouponDetails() {
           <Badge fz={rem(12)} size="md">
             {couponData.category}
           </Badge>
-          <Badge fz={rem(12)} size="md">
-            {couponData.company}
-          </Badge>
+          <UnstyledButton
+            onClick={(e) => {
+              console.log(couponData.url)
+              window.open('https://' + couponData.url, '_blank', 'noopener,noreferrer')
+            }}
+          >
+            <Badge fz={rem(12)} size="md">
+              {couponData.company}
+            </Badge>
+          </UnstyledButton>
+          {/* </a> */}
         </Group>
 
         <Text fw={700} fz={rem(20)} className={classes.title} mt="xs">
@@ -127,9 +139,19 @@ export function CouponDetails() {
             <Text fw={500}>{couponData.seller.username}</Text>
           </Group>
           <LoadingOverlay visible={isPaymentLoading} overlayBlur={2} />
-          <Button onClick={(e) => payment({ couponid: id })} disabled={isPaymentLoading} uppercase>
-            Buy
-          </Button>
+          {user?._id === couponData.sellerid ? (
+            <Button onClick={(e) => navigate(`/app/coupon/update/${couponData._id}`)} uppercase>
+              Update
+            </Button>
+          ) : (
+            <Button
+              onClick={(e) => payment({ couponid: id })}
+              disabled={isPaymentLoading}
+              uppercase
+            >
+              Buy
+            </Button>
+          )}
         </Flex>
 
         <Card.Section className={classes.footer}>

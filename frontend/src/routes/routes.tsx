@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useRoutes } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 
 import { Landing } from 'features/static/Landing'
 
@@ -11,7 +11,6 @@ import { lazyImport } from 'lib/lazyImports'
 import storage from 'lib/storage'
 import { NotFoundAuth } from 'features/static/NotFoundAuth'
 import { NotFound } from 'features/static/NotFound'
-import { ProfileRoutes } from 'features/user/routes'
 import { ForgotPassword } from 'components/ForgotPassword'
 import { Inquiry } from 'features/inquiry/Inquiry'
 import { AuthRequired } from 'features/static/AuthRequired'
@@ -21,7 +20,6 @@ import { VerifyEmail } from 'features/auth/VerifyEmail'
 import { AddCoupon } from 'features/coupon/AddCoupon'
 import { CouponDetails } from 'features/coupon/CouponDetails'
 import { Explore } from 'features/coupon/Explore'
-import { Register } from 'features/auth/Register'
 import { Navbar } from 'features/user/components/Navbar'
 import { BoughtCoupons } from 'features/user/components/BoughtCoupons'
 import { ChangePassword } from 'features/user/components/ChangePassword'
@@ -29,6 +27,7 @@ import { ForSellCoupons } from 'features/user/components/ForSellCoupons'
 import { Profile } from 'features/user/components/Profile'
 import { SuccessPayment } from 'features/payment/SuccessPayment'
 import { FailedPayment } from 'features/payment/FailedPayment'
+import { UpdateCoupon } from 'features/coupon/UpdateCoupon'
 
 const { AuthRoutes } = lazyImport(() => import('../features/auth/routes'), 'AuthRoutes')
 
@@ -67,6 +66,7 @@ const protectedRoutes = [
           { path: 'sell', element: <ForSellCoupons /> },
         ],
       },
+      { path: 'coupon/update/:id', element: <UpdateCoupon /> },
       { path: 'coupon/add/', element: <AddCoupon /> },
       // { path: '*', element: <Navigate to="." /> },
     ],

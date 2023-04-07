@@ -462,8 +462,24 @@ export const findAllCoupons = {
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage)
 
+        const authHeader = req.headers['authorization']
+        const token = authHeader && authHeader.split(' ')[1]
+  
+        let coupon
+        let user = null
+        if (token) {
+          const verified = await JWT.verify(token, process.env.JWT_SEC_KEY)
+          const currUser = await User.findOne({
+            _id: verified.id,
+          })
+          user = currUser._id.toString()
+        }
+
       const output = parsedCoupons.map((item) => {
         const { code, ...other } = item._doc
+        const seller = other.sellerid
+        if(user && user===other.sellerid)
+          return item._doc
         return other
       })
 

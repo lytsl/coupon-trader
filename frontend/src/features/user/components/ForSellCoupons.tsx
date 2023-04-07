@@ -5,6 +5,7 @@ import { IconEdit, IconRefresh, IconTrashFilled } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { axios } from 'lib/axios'
 import { couponsKey, useDeleteCoupon } from '../api'
+import { useNavigate } from 'react-router-dom'
 
 type CouponTableItem = {
   code: string
@@ -79,7 +80,7 @@ export const ForSellCoupons = () => {
       {
         accessorKey: 'price',
         filterVariant: 'range',
-        header: 'Salary',
+        header: 'Price',
         size: 100,
         Cell: ({ cell }) => (
           <Box
@@ -116,6 +117,7 @@ export const ForSellCoupons = () => {
   )
 
   const { mutate: deleteCoupon, isLoading: isBeingDeleted } = useDeleteCoupon()
+  const navigate = useNavigate()
 
   return (
     <Box pos="absolute">
@@ -160,7 +162,7 @@ export const ForSellCoupons = () => {
                 <Text>{row.original.title}</Text>
               </Group>
               <Group>
-                <Text fw={650}>Terms & Condiyions:</Text>
+                <Text fw={650}>Terms & Conditions:</Text>
                 <Text>{row.original.terms}</Text>
               </Group>
             </Box>
@@ -168,7 +170,12 @@ export const ForSellCoupons = () => {
         }}
         renderRowActionMenuItems={({ row }) => (
           <>
-            <Menu.Item icon={<IconEdit />}>Edit</Menu.Item>
+            <Menu.Item
+              onClick={(e) => navigate('/app/coupon/update/' + row.original._id)}
+              icon={<IconEdit />}
+            >
+              Edit
+            </Menu.Item>
             <Menu.Item onClick={(e) => deleteCoupon(row.original._id)} icon={<IconTrashFilled />}>
               Delete
             </Menu.Item>

@@ -9,30 +9,45 @@ import {
   NativeSelect,
   Textarea,
   LoadingOverlay,
+  Center,
+  Loader,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import { useCreateCoupon } from './api/createCoupon'
-import { CreateCouponDTO } from './types'
+import { CreateCouponDTO, OwnedCouponDTO } from './types'
 import { useCallback, useState } from 'react'
 import { categories } from './data'
 import { AutoCompleteCompany } from './components/AutoCompleteCompany'
 import { useCompanies } from './api/autoCompleteCompany'
 import { useDebouncedValue } from '@mantine/hooks'
+import { useUpdateCoupon } from './api/updateCoupon'
+import { useParams } from 'react-router-dom'
+import { useCouponDetails } from './api/getCouponDetails'
 
-export function AddCoupon() {
+export function UpdateCoupon() {
+  const { id } = useParams()
+  if (!id) {
+    return <h1>Bad Request</h1>
+  }
+  const {
+    data: couponData,
+    isLoading: isCouponLoading,
+    error: couponDetailsError,
+  } = useCouponDetails({ couponId: id })
+
   const form = useForm({
     // validateInputOnBlur: true,
     initialValues: {
-      code: '',
-      title: '',
-      terms: '',
+      code: couponData?.code || '',
+      title: couponData?.title || '',
+      terms: couponData?.terms || '',
       // date: new Date(),
-      expirydate: '',
-      price: 0,
-      company: '',
-      companylogo: '',
-      category: 'other',
-    } as CreateCouponDTO,
+      expirydate: couponData?.expirydate || '',
+      price: couponData?.price || 0,
+      company: couponData?.company || '',
+      companylogo: couponData?.companylogo || '',
+      category: couponData?.category || 'other',
+    } as OwnedCouponDTO,
 
     validate: {},
   })
@@ -42,16 +57,31 @@ export function AddCoupon() {
   const [companyName, setCompanyName] = useState('')
   const [query] = useDebouncedValue(companyName, 300)
   const { data: companiesData } = useCompanies(query)
-  const { mutate: create, isLoading, data } = useCreateCoupon()
+  const { mutate: update, isLoading, data: couponResponse } = useUpdateCoupon()
   const handleCompanyChange = useCallback((value: string) => setCompanyName(value), [companyName])
 
-  console.log(data)
+  if (isCouponLoading) {
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    )
+  }
+  if (couponDetailsError) {
+    return <h1>An Error ouccured</h1>
+  }
+  if (!couponData) {
+    return <h1>Could not load details</h1>
+  }
+
+  console.log(couponData)
+  console.log(couponResponse)
 
   return (
     <>
       <center>
         <Title mt="sm" style={{ fontSize: 28, fontWeight: 900 }}>
-          Add Coupon
+          Update Coupon
         </Title>
       </center>
       <Box sx={{ maxWidth: 270 }} mx="auto" style={{ marginBottom: 30, marginTop: 30 }}>
@@ -69,7 +99,7 @@ export function AddCoupon() {
               category: category,
             } as CreateCouponDTO
             console.log(coupon)
-            create(coupon)
+            update({ ...couponData, ...coupon })
           })}
         >
           <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} />
