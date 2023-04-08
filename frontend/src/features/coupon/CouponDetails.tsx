@@ -143,6 +143,8 @@ export function CouponDetails() {
             <Button onClick={(e) => navigate(`/app/coupon/update/${couponData._id}`)} uppercase>
               Update
             </Button>
+          ) : !!couponData?.buyerid && user?._id === couponData?.buyerid ? (
+            <Text>{couponData.code}</Text>
           ) : (
             <Button
               onClick={(e) => payment({ couponid: id })}

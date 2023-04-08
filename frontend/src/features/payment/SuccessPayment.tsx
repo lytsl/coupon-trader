@@ -14,7 +14,8 @@ import {
 } from '@mantine/core'
 import { IconCheck, IconCopy, IconDiscountCheckFilled } from '@tabler/icons-react'
 import { useCouponDetails } from 'features/coupon/api/getCouponDetails'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useVerifyPayment } from 'features/coupon/api/verifyPayment'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -55,26 +56,34 @@ const useStyles = createStyles((theme) => ({
 
 export function SuccessPayment() {
   const { classes } = useStyles()
-  const { id } = useParams()
   const navigate = useNavigate()
-  if (!id) {
+  const [searchParams] = useSearchParams()
+  let token = searchParams.get('token')
+  let code = searchParams.get('code')
+  if (!token || !code) {
     return <h1>Bad Request</h1>
   }
+  token = token.replace(/%dot%/g, '.')
+  const { data, isLoading: isPaymentLoading, error: paymentError } = useVerifyPayment(token)
 
-  const { data: couponData, isLoading: isCouponLoading, error } = useCouponDetails({ couponId: id })
-  if (isCouponLoading) {
+  // const {
+  //   data: couponData,
+  //   isLoading: isCouponLoading,
+  //   error: couponError,
+  // } = useCouponDetails({ couponId: coupon_id })
+  if (isPaymentLoading) {
     return (
       <Center>
         <Loader />
       </Center>
     )
   }
-  if (error) {
+  if (paymentError) {
     return <h1>An Error ouccured</h1>
   }
-  if (!couponData) {
-    return <h1>Could not load details</h1>
-  }
+
+  console.log(code)
+  console.log(data)
 
   return (
     <Container className={classes.root}>
@@ -91,7 +100,7 @@ export function SuccessPayment() {
 
       <Group position="center">
         <Text size="xl" color="">
-          <b>Coupon Code : {couponData.code}</b>
+          <b>Coupon Code : {code}</b>
         </Text>
         <CopyButton value="" timeout={2000}>
           {({ copied, copy }) => (

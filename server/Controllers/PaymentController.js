@@ -1,6 +1,7 @@
 import Coupon from '../Models/Coupon.js'
 import Stripe from 'stripe'
 import dotenv from 'dotenv'
+import JWT from 'jsonwebtoken'
 
 dotenv.config()
 
@@ -13,10 +14,19 @@ export const makePayment = {
     const customer = await stripe.customers.create({
       metadata: {
         userid: req.currUser._id,
-        couponid: req.body.couponid,
+        couponid: coupon_id,
         // email: req.currUser.email,
       },
     })
+    const accessToken = JWT.sign(
+      {
+        userid: req.currUser._id,
+        couponid: coupon_id,
+      },
+      process.env.JWT_SEC_KEY,
+      { expiresIn: '1h' },
+    )
+    const verificationLink = encodeURI(accessToken.replace(/\./g, '%dot%'))
 
     const findCoupon = await Coupon.findById(coupon_id)
     const session = await stripe.checkout.sessions.create({
@@ -40,7 +50,7 @@ export const makePayment = {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.CLIENT_URL}/checkout-success/${coupon_id}`,
+      success_url: `${process.env.CLIENT_URL}/checkout-success/?code=${findCoupon.code}&token=${verificationLink}`,
       cancel_url: `${process.env.CLIENT_URL}/checkout-fail`,
     })
 
@@ -123,5 +133,75 @@ export const webhook = {
 
     // Return a 200 res to acknowledge receipt of the event
     res.send().end()
+  },
+}
+
+// !verify payment
+export const verifyPayment = {
+  controller: async (req, res) => {
+    console.log('in verify Payment')
+    console.log(req.query.verify_payment_token)
+    let verify_payment_token = req.query.verify_payment_token
+    if (!verify_payment_token) {
+      return res.status(400).send('Invalid Payment link')
+    }
+
+    try {
+      // verify_payment_token = verify_payment_token.replace(/%dot%/g, '.')
+      const verified = JWT.verify(verify_payment_token, process.env.JWT_SEC_KEY)
+      if (verified.userid != req.currUser._id) {
+        return res.status(400).send('User is not verified')
+      }
+      // const findUser = await User.findOne({
+      //   _id: verified.userid,
+      // })
+      // const coupon = await Coupon.findById(verified.couponid)
+      const couponUpdated = await Coupon.findByIdAndUpdate(verified.couponid, {
+        buyerid: verified.userid,
+      })
+
+      res.status(201).send('payment verification successful')
+    } catch (e) {
+      console.log(e)
+      return res.status(400).send('Payment verification failed')
+    }
+  },
+}
+
+// !sendPaymentVerification
+export const sendEmailVerification = {
+  controller: async (req, res, next) => {
+    try {
+      const accessToken = JWT.sign(
+        {
+          id: req.currUser._id,
+        },
+        process.env.JWT_SEC_KEY,
+        { expiresIn: '1d' },
+      )
+
+      const verificationLink = encodeURI(
+        `${process.env.CLIENT_URL}/verify_email/${accessToken.replace(/\./g, '%dot%')}`,
+      )
+
+      const mailContent = `Hi ${req.currUser.username} \nclick the below URL to verify your email address. \n${verificationLink} \nIf you will not start the verification process now, than this link will expire in 24hours.`
+
+      console.log('Email verification')
+
+      const mailSubject = 'Coupon Trader Email verification'
+
+      const emailSentRes = await sendMail(mailContent, mailSubject, req.currUser)
+
+      // if (emailSentRes) {
+      return res.status(200).send('Verification email has been sent')
+      // return res.status(200).send(`http://localhost:3000/emailverificationpage/${accessToken}`);
+      // } else {
+      //     console.log("error");
+      //     return res.status(500).send("Internal server error");
+      // }
+    } catch (e) {
+      console.log(e)
+      return res.status(500).send('Internal server error')
+    }
   },
 }

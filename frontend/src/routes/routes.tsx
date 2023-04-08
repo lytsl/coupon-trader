@@ -71,7 +71,7 @@ const protectedRoutes = [
       // { path: '*', element: <Navigate to="." /> },
     ],
   },
-  { path: '/checkout-success/:id', element: <SuccessPayment /> },
+  { path: '/checkout-success', element: <SuccessPayment /> },
   { path: '/checkout-fail', element: <FailedPayment /> },
   { path: '/confirmation', element: <CheckEmailApp /> },
   { path: '/verify_email/:token', element: <VerifyEmail /> },
