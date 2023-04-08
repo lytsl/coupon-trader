@@ -102,7 +102,7 @@ export function SuccessPayment() {
         <Text size="xl" color="">
           <b>Coupon Code : {code}</b>
         </Text>
-        <CopyButton value="" timeout={2000}>
+        <CopyButton value={code} timeout={2000}>
           {({ copied, copy }) => (
             <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
               <ActionIcon color={copied ? 'teal' : 'gray'} onClick={copy}>
