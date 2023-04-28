@@ -16,6 +16,7 @@ type CouponTableItem = {
   company: string
   companylogo: string
   category: string
+  buyerid: string | undefined
   _id: string
 }
 const couponType = 'sell'
@@ -76,6 +77,21 @@ export const ForSellCoupons = () => {
         enableClickToCopy: true,
         header: 'Coupon Code',
         size: 100,
+        Cell: ({ cell,row }) => {
+          return row.original.buyerid ? <Box
+            sx={(theme) => ({
+              backgroundColor:
+                   theme.colors.blue,
+              borderRadius: '4px',
+              color: '#fff',
+              maxWidth: '9ch',
+              padding: '4px',
+              textAlign: 'center',
+            })}
+          >
+            SOLD
+          </Box>:cell.getValue<number>()
+        },
       },
       {
         accessorKey: 'price',

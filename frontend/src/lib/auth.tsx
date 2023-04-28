@@ -30,9 +30,12 @@ const userKey = ['authenticated-user']
 
 const useUser = () =>
   useQuery(userKey, async (): Promise<AuthUser | undefined> => {
-    const user = await getUser()
-    console.log(user)
-    return user ?? undefined
+    if (storage.getToken()) {
+      const user = await getUser()
+      console.log(user)
+      return user ?? undefined
+    }
+    return undefined
   })
 
 const useLogin = () => {
