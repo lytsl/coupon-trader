@@ -13,3 +13,7 @@ A platform for individuals to share and exchange vouchers and coupons from vario
     2. Install dependencies: `npm install` or `yarn install` or `pnpm install`.
     3. After install, run: `npm run dev` or `yarn dev` or `pnpm run dev`.
  5. Open your browser at: `http://localhost:5173/`
+
+
+## Project Showcase
+![out96](https://user-images.githubusercontent.com/85685866/236679862-7a31795e-2fb1-41f1-a50f-aae259e0da85.gif)
