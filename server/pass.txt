@@ -1,8 +1,0 @@
-mongo pass = V8OJ4zK3ByufFGhv
-mail pass= Zxcvbnma@
-
-eamil verify pass=npypiswutzzwofhx
-
-stripe pass = X6+ik98t+xbRQ{s
-
-stripe key = sk_test_51McB3zSDm3QdevINz5k7OBkFA49gB6nUQfmG2TlBatmFbwOTdL87s1PLwyKHod3K9pxtZaL3YSqUyK7iK6O0y8lF00pWNBBXBb
